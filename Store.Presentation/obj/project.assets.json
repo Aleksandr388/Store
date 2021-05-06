@@ -1,11 +1,48 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "Store.BusinessLogic/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Store.DataAcess": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Store.BusinessLogic.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Store.BusinessLogic.dll": {}
+        }
+      },
+      "Store.DataAcess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Store.DataAcess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Store.DataAcess.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Store.BusinessLogic/1.0.0": {
+      "type": "project",
+      "path": "../Store.BusinessLogic/Store.BusinessLogic.csproj",
+      "msbuildProject": "../Store.BusinessLogic/Store.BusinessLogic.csproj"
+    },
+    "Store.DataAcess/1.0.0": {
+      "type": "project",
+      "path": "../Store.DataAcess/Store.DataAcess.csproj",
+      "msbuildProject": "../Store.DataAcess/Store.DataAcess.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "Store.BusinessLogic >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\": {}
@@ -33,7 +70,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Anuitex-20\\source\\repos\\Store.Presentation\\Store.BusinessLogic\\Store.BusinessLogic.csproj": {
+              "projectPath": "C:\\Users\\Anuitex-20\\source\\repos\\Store.Presentation\\Store.BusinessLogic\\Store.BusinessLogic.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
