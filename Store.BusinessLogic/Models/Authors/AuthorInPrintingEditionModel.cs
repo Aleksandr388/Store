@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Store.BusinessLogic.Models.Authors
 {
-    public class AuthorInProntingEditionModel
+    public class AuthorInPrintingEditionModel
     {
     }
 }
