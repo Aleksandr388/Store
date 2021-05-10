@@ -8,11 +8,14 @@ namespace Store.DataAcess.Entities
 {
     public class StoreUser : IdentityUser<long>
     {
-        public new long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public override string PasswordHash { get; set; }
-        public override string Email { get; set; }
+        public bool IsBlocked { get; set; }
+        public DateTime CreationDate { get; set; }
 
+        public StoreUser()
+        {
+            CreationDate = DateTime.Now;
+        }
     }
 }

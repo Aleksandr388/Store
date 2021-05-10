@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Store.DataAcess.Entities;
+using Store.DataAcess.Initialization;
 using Store.DataAcess.StoreContext;
 
 namespace Store.Presentation
@@ -17,19 +18,20 @@ namespace Store.Presentation
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ShopContext>(options =>
+            services.AddDbContext<ShopDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<StoreUser, IdentityRole<long>>()
-                .AddEntityFrameworkStores<ShopContext>();
+                .AddEntityFrameworkStores<ShopDbContext>();
 
             services.AddControllersWithViews();
+
+            services.InitializeAsync().Wait();
+
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
@@ -39,7 +41,7 @@ namespace Store.Presentation
 
             app.UseRouting();
 
-            app.UseAuthentication();    // ??????????? ??????????????
+            app.UseAuthentication();    
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
