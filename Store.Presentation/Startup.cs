@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Store.BusinessLogic.Middlewares;
 using Store.DataAcess.Entities;
 using Store.DataAcess.Initialization;
 using Store.DataAcess.StoreContext;
@@ -34,13 +35,11 @@ namespace Store.Presentation
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseMiddleware<LoggingErrorsMiddleware>();
             app.UseDeveloperExceptionPage();
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthentication();    
             app.UseAuthorization();
 
