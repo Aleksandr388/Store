@@ -10,7 +10,7 @@ namespace Store.Presentation.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return StatusCode(403);
         }
     }
 }

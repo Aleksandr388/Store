@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Presentation", "Store.Presentation\Store.Presentation.csproj", "{A85D9BAA-F4A3-40AF-B09F-9175B4AAEAA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.Presentation", "Store.Presentation\Store.Presentation.csproj", "{A85D9BAA-F4A3-40AF-B09F-9175B4AAEAA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.BusinessLogic", "Store.BusinessLogic\Store.BusinessLogic.csproj", "{D20E2573-73DB-40C3-8146-4A570EA8ECD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.BusinessLogic", "Store.BusinessLogic\Store.BusinessLogic.csproj", "{D20E2573-73DB-40C3-8146-4A570EA8ECD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.DataAcess", "Store.DataAcess\Store.DataAcess.csproj", "{679E0C77-A995-4AE5-8FC4-5FF773927282}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.DataAcess", "Store.DataAcess\Store.DataAcess.csproj", "{679E0C77-A995-4AE5-8FC4-5FF773927282}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Store.DataAcess.Entities;
 
 namespace Store.DataAcess.Repositories.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserRepository : IBaseRepository<StoreUser>
     {
     }
 }

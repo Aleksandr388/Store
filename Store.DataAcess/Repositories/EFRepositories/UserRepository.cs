@@ -1,10 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Store.DataAcess.Entities;
+using Store.DataAcess.Repositories.Base;
+using Store.DataAcess.StoreContext;
 
 namespace Store.DataAcess.Repositories.EFRepositories
 {
-    public class UserRepository
+    public class UserRepository : BaseEFRepository<StoreUser>
     {
+        private readonly ShopDbContext _ctx;
+
+        public UserRepository(ShopDbContext context) : base(context) 
+        {
+            _ctx = context;
+        }
     }
 }
