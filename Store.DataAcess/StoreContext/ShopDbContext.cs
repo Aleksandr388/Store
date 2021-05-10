@@ -15,7 +15,6 @@ namespace Store.DataAcess.StoreContext
 
         }
         public DbSet<PrintingEdition> PrintingEditions { get; set; }
-        public DbSet<AuthorInPrintingEdition> AuthorInPrintingEditions { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<StoreUser> StoreUsers { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -37,10 +36,24 @@ namespace Store.DataAcess.StoreContext
                 .HasData(
                 new Author
                 {
-                    Name = "Defauld Author",
-                    Id = 1
+                    Id = 1,
+                    Name = "Defauld Author"
 
                 });
+
+            modelBuilder.Entity<PrintingEdition>()
+                .HasData(
+                new PrintingEdition
+                {
+                    Id = 1,
+                    Title = "Default Printing Edition",
+                    Description = "Default Discription",
+                    Price = 300,
+                    Status = (Entities.Enums.Status)1,
+                    Type = (Entities.Enums.Type)2,
+                    Curency = (Entities.Enums.Curency)1
+                }
+                );
         }
     }
 }

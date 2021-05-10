@@ -1,8 +1,6 @@
 ﻿using Store.DataAcess.Entities.Base;
 using Store.DataAcess.Entities.Enums;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Store.DataAcess.Entities
 {
@@ -17,7 +15,5 @@ namespace Store.DataAcess.Entities
 
         public ICollection<Author> Authors { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }
-        public ICollection<AuthorInPrintingEdition> AuthorInPrintingEditions { get; set; }
-
     }
 }

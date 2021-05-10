@@ -9,6 +9,5 @@ namespace Store.DataAcess.Entities
     {
         public string Name { get; set; }
         public ICollection<PrintingEdition> PrintingEditions { get; set; }
-        public ICollection<AuthorInPrintingEdition> AuthorInPrintingEditions { get; set; }
     }
 }
