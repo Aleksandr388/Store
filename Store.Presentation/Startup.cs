@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Store.BusinessLogic.Middlewares;
+using Microsoft.Extensions.Hosting;
 using Store.DataAcess.Entities;
 using Store.DataAcess.Initialization;
 using Store.DataAcess.StoreContext;
+using Store.Presentation.Middlewares;
 
 namespace Store.Presentation
 {
@@ -33,14 +35,25 @@ namespace Store.Presentation
 
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/error");
+                app.UseHsts();
+            }
+
             app.UseMiddleware<LoggingErrorsMiddleware>();
-            app.UseDeveloperExceptionPage();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseRouting();
-            app.UseAuthentication();    
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -48,7 +61,7 @@ namespace Store.Presentation
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+            });           
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Store.BusinessLogic;
 using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Store.BusinessLogic;
 
-namespace Store.BusinessLogic.Middlewares
+namespace Store.Presentation.Middlewares
 {
     public class LoggingErrorsMiddleware
     {
@@ -31,7 +31,6 @@ namespace Store.BusinessLogic.Middlewares
                 context.Response.StatusCode = customExeption.StatusCode;
                 await context.Response.WriteAsync(jsonString);
             }
-
             catch (Exception exeption)
             {
                 _loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logger.txt"));

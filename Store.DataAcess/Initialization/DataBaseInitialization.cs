@@ -11,6 +11,7 @@ namespace Store.DataAcess.Initialization
     {
         public static async Task InitializeAsync(this IServiceCollection services)
         {
+
             var userManager = services.BuildServiceProvider().GetRequiredService<UserManager<StoreUser>>();
             var roleManager = services.BuildServiceProvider().GetRequiredService<RoleManager<IdentityRole<long>>>();
             
@@ -19,6 +20,7 @@ namespace Store.DataAcess.Initialization
             string firstName = "Aleksandr";
             string lastName = "Nesheretnuy";
 
+
             try
             {
                 var role = await roleManager.FindByNameAsync(UserRole.Admin.ToString().ToLower());
@@ -26,6 +28,7 @@ namespace Store.DataAcess.Initialization
                 {
                     await roleManager.CreateAsync(new IdentityRole<long>(UserRole.Admin.ToString().ToLower()));
                 }
+                throw new Exception();
             }
 
             catch (Exception roleExeption)

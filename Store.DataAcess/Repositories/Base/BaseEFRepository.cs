@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Store.DataAcess.Repositories.Base
 {
@@ -18,50 +19,45 @@ namespace Store.DataAcess.Repositories.Base
             _dbSet = context.Set<TEntity>();
         }
 
-        public TEntity Create(TEntity model)
+        public async Task CreateAsync(TEntity model)
         {
-            _dbSet.Add(model);
+            await _dbSet.AddAsync(model);
 
-            _ctx.SaveChanges();
-
-            return model;
+            await _ctx.SaveChangesAsync();
         }
 
-        public void Delete(TEntity model)
+        public async Task DeleteAsync(TEntity model)
         {
-            _dbSet.Attach(model);
-
             _dbSet.Remove(model);
 
-            _ctx.SaveChanges();
+            await _ctx.SaveChangesAsync();
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return _dbSet.AsNoTracking().ToList();
+            return await _dbSet.AsNoTracking().ToListAsync();
         }
 
-        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return _dbSet.AsNoTracking().Where(predicate).ToList();
+            return await _dbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
 
-        public TEntity GetById(long id)
+        public async Task<TEntity> GetByIdAsync(long id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public TEntity Update(TEntity model)
+        public async Task UpdateAsync(TEntity model)
         {
             _ctx.Entry(model).State = EntityState.Modified;
-            _ctx.SaveChanges();
+            await _ctx.SaveChangesAsync();
 
-            return model;
         }
 
-        public void SaveChanges()
+        public async  Task SaveChagesAsync()
         {
-            _ctx.SaveChanges();
+            await _ctx.SaveChangesAsync();
         }
     }
 }
