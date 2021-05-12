@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace Store.BusinessLogic
+namespace Store.Presentation.Middlewares.Providers
 {
     public class FileLogger : ILogger
     {

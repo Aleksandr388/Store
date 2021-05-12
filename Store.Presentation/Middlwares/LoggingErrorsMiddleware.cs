@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Store.BusinessLogic;
+using Store.Presentation.Middlewares.Providers;
 using System;
 using System.IO;
-using System.Text.Json;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace Store.Presentation.Middlewares
 {
@@ -27,16 +28,15 @@ namespace Store.Presentation.Middlewares
             }
             catch (CustomExeption customExeption)
             {
-                string jsonString = JsonSerializer.Serialize(customExeption.ErrorList);
+                string jsonString = JsonSerializer.Serialize(customExeption.Error);
                 context.Response.StatusCode = customExeption.StatusCode;
                 await context.Response.WriteAsync(jsonString);
             }
             catch (Exception exeption)
             {
                 _loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logger.txt"));
-                var logger = _loggerFactory.CreateLogger("FileLogger");
-                string log = $"{DateTime.Now}\n{exeption.Message}\n{exeption.StackTrace}\n{new string('*', 100)}";
-                logger.LogError(log);
+                var logger = _loggerFactory.CreateLogger("logger.txt");
+                logger.LogError($"{DateTime.Now}, {exeption.Message}, {exeption.StackTrace}");
             }
         }
     }

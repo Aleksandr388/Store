@@ -1,22 +1,22 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Store.BusinessLogic
 {
     public class CustomExeption : Exception
     {
-        public List<string> ErrorList { get; set; }
+        public string Error { get; set; }
         public int StatusCode { get; set; }
 
-        public CustomExeption(string error, int statusCode)
+        public CustomExeption()
         {
-            ErrorList = new List<string>() { error };
-            StatusCode = statusCode;
         }
 
-        public CustomExeption(List<string> errorList, int statusCode)
+        public CustomExeption(int statusCode, string error)
         {
-            ErrorList = errorList;
+            Error = error;
             StatusCode = statusCode;
         }
     }

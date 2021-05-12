@@ -24,6 +24,7 @@ namespace Store.DataAcess.StoreContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Author>().Property(x => x.CreationDate).HasDefaultValue(DateTime.MaxValue);

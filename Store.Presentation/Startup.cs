@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Store.DataAcess.Entities;
 using Store.DataAcess.Initialization;
 using Store.DataAcess.StoreContext;
@@ -35,9 +36,8 @@ namespace Store.Presentation
 
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -45,7 +45,6 @@ namespace Store.Presentation
             else
             {
                 app.UseExceptionHandler("/error");
-                app.UseHsts();
             }
 
             app.UseMiddleware<LoggingErrorsMiddleware>();
@@ -61,7 +60,7 @@ namespace Store.Presentation
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-            });           
+            });
         }
     }
 }
