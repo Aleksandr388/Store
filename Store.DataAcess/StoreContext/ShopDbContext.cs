@@ -12,7 +12,6 @@ namespace Store.DataAcess.StoreContext
             :
             base(options)
         {
-
         }
         public DbSet<PrintingEdition> PrintingEditions { get; set; }
         public DbSet<Author> Authors { get; set; }

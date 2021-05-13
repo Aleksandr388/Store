@@ -24,6 +24,7 @@ namespace Store.Presentation.Middlewares
         {
             try
             {
+
                 await _next.Invoke(context);
             }
             catch (CustomExeption customExeption)

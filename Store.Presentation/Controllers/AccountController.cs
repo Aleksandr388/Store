@@ -10,6 +10,7 @@ namespace Store.Presentation.Controllers
     {
         public IActionResult Index()
         {
+            throw new Exception();
             return View();
         }
     }
