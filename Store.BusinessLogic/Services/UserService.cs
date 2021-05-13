@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Store.BusinessLogic.Services
 {
-    public class UserService
+    public class UserService 
     {
     }
 }

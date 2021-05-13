@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Threading.Tasks;
+using Store.BusinessLogic.Models.Users;
 
 namespace Store.BusinessLogic.Services.Interfaces
 {
     public interface IUserService
     {
+        public Task AddUserToRole(UserModel userModel);
+
     }
 }

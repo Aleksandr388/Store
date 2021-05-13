@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Store.BusinessLogic.Services;
+using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
 using Store.DataAcess.Initialization;
 using Store.DataAcess.StoreContext;
@@ -33,6 +35,8 @@ namespace Store.Presentation
             services.AddControllersWithViews();
 
             services.InitializeAsync().Wait();
+
+            services.AddTransient<IAccountService, AccountService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
