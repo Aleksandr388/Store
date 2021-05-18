@@ -23,7 +23,6 @@ namespace Store.DataAcess.StoreContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Author>().Property(x => x.CreationDate).HasDefaultValue(DateTime.MaxValue);
@@ -38,7 +37,7 @@ namespace Store.DataAcess.StoreContext
                 new Author
                 {
                     Id = 1,
-                    Name = "Defauld Author"
+                    Name = Shared.Constants.DedaultValues.DefaultAuthorName
 
                 });
 
@@ -47,8 +46,8 @@ namespace Store.DataAcess.StoreContext
                 new PrintingEdition
                 {
                     Id = 1,
-                    Title = "Default Printing Edition",
-                    Description = "Default Discription",
+                    Title = Shared.Constants.DedaultValues.DefaultPrintingEditionTitle,
+                    Description = Shared.Constants.DedaultValues.DefaultPrintingEditionDescription,
                     Price = 300,
                     Status = (Entities.Enums.Status)1,
                     Type = (Entities.Enums.Type)2,

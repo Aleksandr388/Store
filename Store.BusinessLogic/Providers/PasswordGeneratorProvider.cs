@@ -10,24 +10,12 @@ namespace Store.BusinessLogic.Providers
     {
         public string RandomPasswordGenerator(int length)
         {
-            const string alphanumericCharacters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-        "abcdefghijklmnopqrstuvwxyz" +
-        "0123456789";
-            return GetRandomString(length, alphanumericCharacters);
+            return GetRandomString(length,  Shared.Constants.Values.alphanumericCharacters);
         }
 
         public string GetRandomString(int length, IEnumerable<char> characterSet)
         {
-            if (length < 0)
-                throw new ArgumentException("length must not be negative", "length");
-            if (length > int.MaxValue / 8) // 250 million chars ought to be enough for anybody
-                throw new ArgumentException("length is too big", "length");
-            if (characterSet == null)
-                throw new ArgumentNullException("characterSet");
             var characterArray = characterSet.Distinct().ToArray();
-            if (characterArray.Length is 0)
-                throw new ArgumentException("characterSet must not be empty", "characterSet");
 
             var bytes = new byte[length * 8];
             new RNGCryptoServiceProvider().GetBytes(bytes);

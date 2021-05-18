@@ -1938,6 +1938,16 @@
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
       },
+      "Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Shared.dll": {}
+        }
+      },
       "Store.BusinessLogic/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -1948,6 +1958,7 @@
           "Microsoft.EntityFrameworkCore": "5.0.6",
           "Microsoft.Extensions.Identity.Core": "5.0.6",
           "NETCore.MailKit": "2.0.3",
+          "Shared": "1.0.0",
           "Store.DataAcess": "1.0.0"
         },
         "compile": {
@@ -1965,7 +1976,8 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "5.0.6",
           "Microsoft.EntityFrameworkCore": "5.0.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.6",
-          "NETCore.MailKit": "2.0.3"
+          "NETCore.MailKit": "2.0.3",
+          "Shared": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Store.DataAcess.dll": {}
@@ -6821,6 +6833,11 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "Shared/1.0.0": {
+      "type": "project",
+      "path": "../Shared/Shared.csproj",
+      "msbuildProject": "../Shared/Shared.csproj"
     },
     "Store.BusinessLogic/1.0.0": {
       "type": "project",

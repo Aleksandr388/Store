@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Store.BusinessLogic.Models.Users;
 using Store.BusinessLogic.Providers.Interfaces;
 using Store.BusinessLogic.Services.Interfaces;
@@ -27,10 +28,11 @@ namespace Store.BusinessLogic.Services
 
         public async Task<string> SignUpAsync(UserSignUpModel userSignUpModel)
         {
-            var EmailCheck = await _userManager.FindByEmailAsync(userSignUpModel.Email);
-            if (EmailCheck != null)
+            var checkEmail = await _userManager.FindByEmailAsync(userSignUpModel.Email);
+            
+            if (checkEmail is not null)
             {
-                throw new Exception();
+                throw new CustomException(Shared.Constants.Errors.NoUsersWithThisEmail, StatusCodes.Status400BadRequest);
             }
 
             StoreUser user = new StoreUser
@@ -45,34 +47,46 @@ namespace Store.BusinessLogic.Services
 
             if (!result.Succeeded)
             {
-                throw new Exception();
+                throw new Exception(Shared.Constants.Errors.RegistrationFailed);
             }
 
             var addToRoleResult = await _userManager.AddToRoleAsync(user, UserRole.Client.ToString().ToLower());
 
             if (!addToRoleResult.Succeeded)
             {
-                throw new Exception();
+                throw new Exception(Shared.Constants.Errors.ErrorAddingRole);
             }
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            var callbackUrl = new UriBuilder("https://localhost:5001/api/Account/ConfirmEmail");
+            var callbackUrl = new UriBuilder(Shared.Constants.URLS.UrlConfirmEmail);
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["id"] = user.Id.ToString();
             parameters["code"] = code;
             callbackUrl.Query = parameters.ToString();
             Uri finalUrl = callbackUrl.Uri;
 
-            await _emailProvider.SendEmailAsync(user.Email, "Confirm email",
-            $"For confirmed Email go to link : <a href='{finalUrl}'>registration reference</a>");
+            await _emailProvider.SendEmailAsync(user.Email, Shared.Constants.Messages.ConfirmEmail,
+            $"{Shared.Constants.Messages.ForConfirmedEmailGoToLink} <a href='{finalUrl}'>{Shared.Constants.Messages.RegistrationReference}</a>");
 
-            return "registration done";
+            return Shared.Constants.Messages.RegistrationDone;
 
         }
         public async Task<string> SignInAsync(UserSignInModel userSignInModel)
         {
+            var checkEmail = await _userManager.FindByNameAsync(userSignInModel.Email);
+
+            if (checkEmail is null)
+            {
+                throw new Exception(Shared.Constants.Errors.UserWithThisEmialNotRegiste);
+            }
+
             var result = await _signInManager.PasswordSignInAsync(userSignInModel.Email, userSignInModel.Password, false, false);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception(Shared.Constants.Errors.LoginFailedWrongPassword);
+            }
 
             return result.ToString();
         }
@@ -85,19 +99,20 @@ namespace Store.BusinessLogic.Services
         public async Task<string> ConfirmEmailAsync(string id, string code)
         {
             var user = await _userManager.FindByIdAsync(id);
+
             if (user is null)
             {
-                throw new Exception();
+                throw new Exception(Shared.Constants.Errors.NoUsersWithThisId);
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, code);
 
             if (!result.Succeeded)
             {
-                throw new Exception();
+                throw new Exception(Shared.Constants.Errors.NoUsersWithThisEmail);
             }
 
-            return "ok";
+            return Shared.Constants.Messages.EmailConfirmedSuccessfully;
         }
 
         public async Task<string> ForgotPasswordAsync(ForgotPasswordUser forgotPasswordUser)
@@ -106,22 +121,22 @@ namespace Store.BusinessLogic.Services
             
             if (user is null)
             {
-                throw new CustomExeption();
+                throw new Exception(Shared.Constants.Errors.NoUsersWithThisEmail);
             }
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var createPassword = _passwordGeneratorProvider.RandomPasswordGenerator(8);
+            var createPassword = _passwordGeneratorProvider.RandomPasswordGenerator(Shared.Constants.Values.PasswordValue);
             var result = await _userManager.ResetPasswordAsync(user, code, createPassword);
 
             if (!result.Succeeded)
             {
-                throw new CustomExeption();
+                throw new Exception(Shared.Constants.Errors.NoUsersWithThisEmail);
             }
 
-            await _emailProvider.SendEmailAsync(user.Email, "reset password",
-            $"we create new password is: {createPassword}");
+            await _emailProvider.SendEmailAsync(user.Email, Shared.Constants.Messages.ResetPassword,
+            $"{Shared.Constants.Messages.CreateNewPassword} {createPassword}");
 
-            return "Password sent";
+            return Shared.Constants.Messages.PasswordSent;
         }
     }
 }

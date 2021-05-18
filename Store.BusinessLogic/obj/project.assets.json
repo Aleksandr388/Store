@@ -1938,6 +1938,16 @@
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
       },
+      "Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Shared.dll": {}
+        }
+      },
       "Store.DataAcess/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -1946,7 +1956,8 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "5.0.6",
           "Microsoft.EntityFrameworkCore": "5.0.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.6",
-          "NETCore.MailKit": "2.0.3"
+          "NETCore.MailKit": "2.0.3",
+          "Shared": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Store.DataAcess.dll": {}
@@ -6803,6 +6814,11 @@
         "system.xml.xmlserializer.nuspec"
       ]
     },
+    "Shared/1.0.0": {
+      "type": "project",
+      "path": "../Shared/Shared.csproj",
+      "msbuildProject": "../Shared/Shared.csproj"
+    },
     "Store.DataAcess/1.0.0": {
       "type": "project",
       "path": "../Store.DataAcess/Store.DataAcess.csproj",
@@ -6818,6 +6834,7 @@
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.6",
       "Microsoft.Extensions.Identity.Core >= 5.0.6",
       "NETCore.MailKit >= 2.0.3",
+      "Shared >= 1.0.0",
       "Store.DataAcess >= 1.0.0"
     ]
   },
@@ -6848,6 +6865,9 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
+            "C:\\Users\\Anuitex-20\\source\\repos\\Store.Presentation\\Shared\\Shared.csproj": {
+              "projectPath": "C:\\Users\\Anuitex-20\\source\\repos\\Store.Presentation\\Shared\\Shared.csproj"
+            },
             "C:\\Users\\Anuitex-20\\source\\repos\\Store.Presentation\\Store.DataAcess\\Store.DataAcess.csproj": {
               "projectPath": "C:\\Users\\Anuitex-20\\source\\repos\\Store.Presentation\\Store.DataAcess\\Store.DataAcess.csproj"
             }

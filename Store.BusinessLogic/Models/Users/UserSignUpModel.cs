@@ -10,13 +10,13 @@ namespace Store.BusinessLogic.Models.Users
     public class UserSignUpModel
     {
         public long Id { get; set; }
-        [Required(ErrorMessage = "You entered an incorrect email")]
+        [Required(ErrorMessage = Shared.Constants.ErrorMessages.RegistrationFailedNoEmailInModel)]
         public string Email { get; set; }
-        [Required(ErrorMessage = "You entered an incorrect FirstName")]
+        [Required(ErrorMessage = Shared.Constants.ErrorMessages.RegistrationFailedNoFirstNameInModel)]
         public string FirstName { get; set; }
-        [Required(ErrorMessage = "You entered an incorrect LastName")]
+        [Required(ErrorMessage = Shared.Constants.ErrorMessages.RegistrationFailedNoLastNameInModel)]
         public string LastName { get; set; }
-        [Required(ErrorMessage = "You entered an incorrect password")]
+        [Required(ErrorMessage = Shared.Constants.ErrorMessages.RegistrationFailedNoPasswordInModel)]
         public string Password { get; set; }
         public string IsBlocked { get; set; }
     }

@@ -5,17 +5,19 @@ using System.Net;
 
 namespace Store.BusinessLogic
 {
-    public class CustomExeption : Exception
+    public class CustomException : Exception
     {
         
-        public string Error { get; set; }
+        public List<string> Error { get; set; }
         public int StatusCode { get; set; }
 
-        public CustomExeption()
+        public CustomException(string error, int statusCode)
         {
+            Error = new List<string>() { error };
+            StatusCode = statusCode;
         }
 
-        public CustomExeption(int statusCode, string error)
+        public CustomException(int statusCode, List<string> error)
         {
             Error = error;
             StatusCode = statusCode;

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.BusinessLogic", "Stor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.DataAcess", "Store.DataAcess\Store.DataAcess.csproj", "{679E0C77-A995-4AE5-8FC4-5FF773927282}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{065B9B0D-32FC-4627-939E-A7B6E73AD1A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{679E0C77-A995-4AE5-8FC4-5FF773927282}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{679E0C77-A995-4AE5-8FC4-5FF773927282}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{679E0C77-A995-4AE5-8FC4-5FF773927282}.Release|Any CPU.Build.0 = Release|Any CPU
+		{065B9B0D-32FC-4627-939E-A7B6E73AD1A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{065B9B0D-32FC-4627-939E-A7B6E73AD1A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{065B9B0D-32FC-4627-939E-A7B6E73AD1A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{065B9B0D-32FC-4627-939E-A7B6E73AD1A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

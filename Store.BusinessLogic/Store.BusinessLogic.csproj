@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj" />
     <ProjectReference Include="..\Store.DataAcess\Store.DataAcess.csproj" />
   </ItemGroup>
 

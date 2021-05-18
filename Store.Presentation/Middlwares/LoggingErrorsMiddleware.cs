@@ -27,7 +27,7 @@ namespace Store.Presentation.Middlewares
 
                 await _next.Invoke(context);
             }
-            catch (CustomExeption customExeption)
+            catch (CustomException customExeption)
             {
                 string jsonString = JsonSerializer.Serialize(customExeption.Error);
                 context.Response.StatusCode = customExeption.StatusCode;

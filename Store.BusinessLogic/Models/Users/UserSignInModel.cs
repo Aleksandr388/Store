@@ -10,9 +10,9 @@ namespace Store.BusinessLogic.Models.Users
     public class UserSignInModel
     {
         public long Id { get; set; }
-        [Required(ErrorMessage = "You entered an incorrect email")]
+        [Required(ErrorMessage = Shared.Constants.ErrorMessages.InvalidLoginName)]
         public string Email { get; set; }
-        [Required(ErrorMessage = "You entered an incorrect password")]
+        [Required(ErrorMessage = Shared.Constants.ErrorMessages.InvalidLoginPassword)]
         public string Password { get; set; }
         [Display(Name = "Remember?")]
         public bool RememberMe { get; set; }
