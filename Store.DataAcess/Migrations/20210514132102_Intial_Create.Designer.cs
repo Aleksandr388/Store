@@ -10,15 +10,15 @@ using Store.DataAcess.StoreContext;
 namespace Store.DataAcess.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    [Migration("20210510090248_Add_Printing_Editional")]
-    partial class Add_Printing_Editional
+    [Migration("20210514132102_Intial_Create")]
+    partial class Intial_Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("AuthorPrintingEdition", b =>
@@ -192,7 +192,7 @@ namespace Store.DataAcess.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationDate = new DateTime(2021, 5, 10, 12, 2, 47, 104, DateTimeKind.Local).AddTicks(9696),
+                            CreationDate = new DateTime(2021, 5, 14, 16, 21, 2, 164, DateTimeKind.Local).AddTicks(4934),
                             IsRemoved = false,
                             Name = "Defauld Author"
                         });
@@ -337,7 +337,7 @@ namespace Store.DataAcess.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationDate = new DateTime(2021, 5, 10, 12, 2, 47, 108, DateTimeKind.Local).AddTicks(8895),
+                            CreationDate = new DateTime(2021, 5, 14, 16, 21, 2, 167, DateTimeKind.Local).AddTicks(7289),
                             Curency = 1,
                             Description = "Default Discription",
                             IsRemoved = false,

@@ -13,7 +13,7 @@ namespace Store.BusinessLogic.Models.Users
         [Required(ErrorMessage = "You entered an incorrect email")]
         public string Email { get; set; }
         [Required(ErrorMessage = "You entered an incorrect FirstName")]
-        public string FirsName { get; set; }
+        public string FirstName { get; set; }
         [Required(ErrorMessage = "You entered an incorrect LastName")]
         public string LastName { get; set; }
         [Required(ErrorMessage = "You entered an incorrect password")]

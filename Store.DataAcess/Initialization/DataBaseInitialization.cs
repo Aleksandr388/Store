@@ -19,10 +19,15 @@ namespace Store.DataAcess.Initialization
             string firstName = "Aleksandr";
             string lastName = "Nesheretnuy";
 
-            
+
             try
             {
-                var role = await roleManager.FindByNameAsync(UserRole.Admin.ToString());
+                var role = await roleManager.FindByNameAsync(UserRole.Admin.ToString().ToLower());
+                if (role is null)
+                {
+                    await roleManager.CreateAsync(new IdentityRole<long>(UserRole.Admin.ToString()));
+                }
+                role = await roleManager.FindByNameAsync(UserRole.Client.ToString().ToLower());
                 if (role is null)
                 {
                     await roleManager.CreateAsync(new IdentityRole<long>(UserRole.Client.ToString()));

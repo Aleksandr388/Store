@@ -26,6 +26,20 @@ namespace Store.Presentation.Controllers
             var result = await _accountService.SignInAsync(userSignInModel);
             return Ok(result);
         }
+        [HttpGet("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail([FromQuery] string id, string code)
+        {
+            var result = await _accountService.ConfirmEmailAsync(id, code);
+
+            return Ok(result);
+        }
+        [HttpPost("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordUser forgotPasswordUser)
+        {
+            var result = await _accountService.ForgotPasswordAsync(forgotPasswordUser);
+
+            return Ok(result);
+        }
         //public async Task<IActionResult> Logout()
         //{
         //   return Ok(await _accountService.LogoutAsync());
