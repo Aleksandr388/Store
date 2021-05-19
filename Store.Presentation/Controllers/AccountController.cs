@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Store.BusinessLogic.Models.Users;
 using Store.BusinessLogic.Services.Interfaces;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace Store.Presentation.Controllers
 
             return Ok(result);
         }
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Client")]
         [HttpPost("ForgotPassword")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordUser forgotPasswordUser)
         {

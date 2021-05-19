@@ -12,34 +12,40 @@ namespace Store.BusinessLogic.Providers
 {
     public class JwtProvider : IJwtProvider
     {
+
         private readonly SymmetricSecurityKey _key;
 
-        public JwtProvider(IConfiguration config)
+        public JwtProvider()
         {
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]));          
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Shared.Constants.Values.JwtKeyToken));
         }
 
-		public string CreateToken(StoreUser user, string role)
-		{
-			var claims = new List<Claim> 
-			{ 
-				new Claim(JwtRegisteredClaimNames.NameId, user.Email), 
-				new Claim(ClaimsIdentity.DefaultRoleClaimType, role)
-			};
+        public string CreateToken(StoreUser user, string role)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.NameId, user.UserName),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, role)
+            };
 
-			var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+            var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
-			var tokenDescriptor = new SecurityTokenDescriptor
-			{
-				Subject = new ClaimsIdentity(claims),
-				Expires = DateTime.Now.AddDays(7),
-				SigningCredentials = credentials
-			};
-			var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddSeconds(300),
+                SigningCredentials = credentials
+            };
 
-			var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenHandler = new JwtSecurityTokenHandler();
 
-			return tokenHandler.WriteToken(token);
-		}
-	}
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
+        }
+
+    }
 }
+
+
+

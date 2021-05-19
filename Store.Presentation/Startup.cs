@@ -15,6 +15,9 @@ using Store.DataAcess.Initialization;
 using Store.DataAcess.StoreContext;
 using Store.BusinessLogic.Providers;
 using Store.Presentation.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Store.Presentation
 {
@@ -39,6 +42,20 @@ namespace Store.Presentation
             })
                 .AddEntityFrameworkStores<ShopDbContext>()
                 .AddDefaultTokenProviders();
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Shared.Constants.Values.JwtKeyToken));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(
+                    opt =>
+                    {
+                        opt.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = key,
+                            ValidateAudience = false,
+                            ValidateIssuer = false,
+                        };
+                    });
 
             services.AddControllersWithViews();
 

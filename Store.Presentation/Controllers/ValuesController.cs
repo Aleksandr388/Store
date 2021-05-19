@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,10 @@ namespace Store.Presentation.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-
-        //[HttpGet("test")]
-        //public async Task<IActionResult> Test()
-        //{
-        //    return Ok("test work");
-        //}
+        [HttpGet("test")]
+        public async Task<IActionResult> Test()
+        {
+            return Ok("test work");
+        }
     }
 }

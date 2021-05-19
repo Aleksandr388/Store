@@ -1,8 +1,5 @@
-﻿using Store.DataAcess.Entities.Base;
-using Store.DataAcess.Entities.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Shared.Enums;
+using Store.DataAcess.Entities.Base;
 
 
 namespace Store.DataAcess.Entities
