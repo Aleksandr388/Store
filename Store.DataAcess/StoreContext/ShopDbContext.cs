@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Store.DataAcess.Entities;
 using System;
+using Shared.Enums;
 
 namespace Store.DataAcess.StoreContext
 {
@@ -49,9 +50,9 @@ namespace Store.DataAcess.StoreContext
                     Title = Shared.Constants.DedaultValues.DefaultPrintingEditionTitle,
                     Description = Shared.Constants.DedaultValues.DefaultPrintingEditionDescription,
                     Price = 300,
-                    Status = (Entities.Enums.Status)1,
-                    Type = (Entities.Enums.Type)2,
-                    Curency = (Entities.Enums.Curency)1
+                    Status = (Status)1,
+                    Type = (Shared.Enums.Type)2,
+                    Curency = (Curency)1
                 }
                 );
         }

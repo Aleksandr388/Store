@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Shared.Enums;
 using Store.BusinessLogic.Models.Users;
 using Store.BusinessLogic.Providers.Interfaces;
 using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
-using Store.DataAcess.Entities.Enums;
 using System;
 using System.Threading.Tasks;
 using System.Web;
@@ -17,20 +17,22 @@ namespace Store.BusinessLogic.Services
         private readonly SignInManager<StoreUser> _signInManager;
         private readonly IEmailProvider _emailProvider;
         private readonly IPasswordGeneratorProvider _passwordGeneratorProvider;
+        private readonly IJwtProvider _jwtProvider;
 
-        public AccountService(UserManager<StoreUser> userManager, SignInManager<StoreUser> signInManager, IEmailProvider emailProvider, IPasswordGeneratorProvider passwordGeneratorProvider)
+        public AccountService(UserManager<StoreUser> userManager, SignInManager<StoreUser> signInManager, IEmailProvider emailProvider, IPasswordGeneratorProvider passwordGeneratorProvider, IJwtProvider jwtProvider)
         {
             _userManager = userManager;
             _emailProvider = emailProvider;
             _signInManager = signInManager;
             _passwordGeneratorProvider = passwordGeneratorProvider;
+            _jwtProvider = jwtProvider;
         }
 
         public async Task<string> SignUpAsync(UserSignUpModel userSignUpModel)
         {
-            var checkEmail = await _userManager.FindByEmailAsync(userSignUpModel.Email);
+            var findByEmail = await _userManager.FindByEmailAsync(userSignUpModel.Email);
             
-            if (checkEmail is not null)
+            if (findByEmail is not null)
             {
                 throw new CustomException(Shared.Constants.Errors.NoUsersWithThisEmail, StatusCodes.Status400BadRequest);
             }
@@ -47,14 +49,14 @@ namespace Store.BusinessLogic.Services
 
             if (!result.Succeeded)
             {
-                throw new Exception(Shared.Constants.Errors.RegistrationFailed);
+                throw new CustomException(Shared.Constants.Errors.RegistrationFailed, StatusCodes.Status400BadRequest);
             }
 
             var addToRoleResult = await _userManager.AddToRoleAsync(user, UserRole.Client.ToString().ToLower());
 
             if (!addToRoleResult.Succeeded)
             {
-                throw new Exception(Shared.Constants.Errors.ErrorAddingRole);
+                throw new CustomException(Shared.Constants.Errors.ErrorAddingRole, StatusCodes.Status400BadRequest);
             }
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -70,25 +72,33 @@ namespace Store.BusinessLogic.Services
             $"{Shared.Constants.Messages.ForConfirmedEmailGoToLink} <a href='{finalUrl}'>{Shared.Constants.Messages.RegistrationReference}</a>");
 
             return Shared.Constants.Messages.RegistrationDone;
-
         }
         public async Task<string> SignInAsync(UserSignInModel userSignInModel)
         {
-            var checkEmail = await _userManager.FindByNameAsync(userSignInModel.Email);
+            var singInUser = await _userManager.FindByNameAsync(userSignInModel.Email);
 
-            if (checkEmail is null)
+            if (singInUser is null)
             {
-                throw new Exception(Shared.Constants.Errors.UserWithThisEmialNotRegiste);
+                throw new CustomException(Shared.Constants.Errors.UserWithThisEmialNotRegiste, StatusCodes.Status400BadRequest);
             }
 
             var result = await _signInManager.PasswordSignInAsync(userSignInModel.Email, userSignInModel.Password, false, false);
 
             if (!result.Succeeded)
             {
-                throw new Exception(Shared.Constants.Errors.LoginFailedWrongPassword);
+                throw new CustomException(Shared.Constants.Errors.LoginFailedWrongPassword, StatusCodes.Status400BadRequest);
             }
 
-            return result.ToString();
+            var roles = await _userManager.GetRolesAsync(singInUser);
+            if (roles.Contains(UserRole.Admin.ToString()))
+            {
+                var jwtAdmin = _jwtProvider.CreateToken(singInUser, UserRole.Admin.ToString());
+                return jwtAdmin;
+            }
+
+            var jwtUser = _jwtProvider.CreateToken(singInUser, UserRole.Client.ToString());
+
+            return jwtUser;
         }
 
         public async Task LogoutAsync()
@@ -121,20 +131,20 @@ namespace Store.BusinessLogic.Services
             
             if (user is null)
             {
-                throw new Exception(Shared.Constants.Errors.NoUsersWithThisEmail);
+                throw new CustomException(Shared.Constants.Errors.NoUsersWithThisEmail, StatusCodes.Status400BadRequest);
             }
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var createPassword = _passwordGeneratorProvider.RandomPasswordGenerator(Shared.Constants.Values.PasswordValue);
-            var result = await _userManager.ResetPasswordAsync(user, code, createPassword);
+            var newPassword = _passwordGeneratorProvider.RandomPasswordGenerator(Shared.Constants.Values.PasswordValue);
+            var result = await _userManager.ResetPasswordAsync(user, code, newPassword);
 
             if (!result.Succeeded)
             {
-                throw new Exception(Shared.Constants.Errors.NoUsersWithThisEmail);
+                throw new CustomException(Shared.Constants.Errors.NoUsersWithThisEmail, StatusCodes.Status400BadRequest);
             }
 
             await _emailProvider.SendEmailAsync(user.Email, Shared.Constants.Messages.ResetPassword,
-            $"{Shared.Constants.Messages.CreateNewPassword} {createPassword}");
+            $"{Shared.Constants.Messages.CreateNewPassword} {newPassword}");
 
             return Shared.Constants.Messages.PasswordSent;
         }

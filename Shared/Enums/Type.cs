@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Store.DataAcess.Entities.Enums
+namespace Shared.Enums
 {
     public enum Type
     {

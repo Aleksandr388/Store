@@ -12,10 +12,10 @@ namespace Store.Presentation.Controllers
     public class ValuesController : ControllerBase
     {
 
-        [HttpGet("test")]
-        public async Task<IActionResult> Test()
-        {
-            return Ok("test work");
-        }
+        //[HttpGet("test")]
+        //public async Task<IActionResult> Test()
+        //{
+        //    return Ok("test work");
+        //}
     }
 }

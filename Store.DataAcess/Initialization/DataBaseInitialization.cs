@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Enums;
 using Store.DataAcess.Entities;
-using Store.DataAcess.Entities.Enums;
 using System;
 using System.Threading.Tasks;
 

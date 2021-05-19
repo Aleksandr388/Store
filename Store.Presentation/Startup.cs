@@ -44,6 +44,7 @@ namespace Store.Presentation
 
             services.InitializeAsync().Wait();
 
+            services.AddTransient<IJwtProvider, JwtProvider>();
             services.AddTransient<IPasswordGeneratorProvider, PasswordGeneratorProvider>();
             services.AddTransient<IEmailProvider, EmailProvider>();
             services.AddTransient<IAccountService, AccountService>();

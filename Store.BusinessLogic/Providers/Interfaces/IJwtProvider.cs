@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Store.DataAcess.Entities;
 
 namespace Store.BusinessLogic.Providers.Interfaces
 {
-    public interface  IJwtProvider
+    public interface IJwtProvider
     {
-
+        string CreateToken(StoreUser name, string role);
     }
 }
