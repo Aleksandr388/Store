@@ -11,6 +11,7 @@ namespace Store.DataAcess.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool IsBlocked { get; set; }
+        public string RefreshToken { get; set; }
         public DateTime CreationDate { get; set; }
 
         public StoreUser()

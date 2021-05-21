@@ -17,9 +17,9 @@ namespace Store.BusinessLogic.Services
         private readonly SignInManager<StoreUser> _signInManager;
         private readonly IEmailProvider _emailProvider;
         private readonly IPasswordGeneratorProvider _passwordGeneratorProvider;
-        private readonly IJwtProvider _jwtProvider;
+        private readonly ITokenProvider _jwtProvider;
 
-        public AccountService(UserManager<StoreUser> userManager, SignInManager<StoreUser> signInManager, IEmailProvider emailProvider, IPasswordGeneratorProvider passwordGeneratorProvider, IJwtProvider jwtProvider)
+        public AccountService(UserManager<StoreUser> userManager, SignInManager<StoreUser> signInManager, IEmailProvider emailProvider, IPasswordGeneratorProvider passwordGeneratorProvider, ITokenProvider jwtProvider)
         {
             _userManager = userManager;
             _emailProvider = emailProvider;
@@ -73,7 +73,7 @@ namespace Store.BusinessLogic.Services
 
             return Shared.Constants.Messages.RegistrationDone;
         }
-        public async Task<string> SignInAsync(UserSignInModel userSignInModel)
+        public async Task<TokenModel> SignInAsync(UserSignInModel userSignInModel)
         {
             var singInUser = await _userManager.FindByNameAsync(userSignInModel.Email);
 
@@ -89,16 +89,33 @@ namespace Store.BusinessLogic.Services
                 throw new CustomException(Shared.Constants.Errors.LoginFailedWrongPassword, StatusCodes.Status400BadRequest);
             }
 
+            var refreshToken = _jwtProvider.CreateRefreshToken(32);
+            singInUser.RefreshToken = refreshToken;
+            await _userManager.UpdateAsync(singInUser);
+
             var roles = await _userManager.GetRolesAsync(singInUser);
             if (roles.Contains(UserRole.Admin.ToString()))
             {
-                var jwtAdmin = _jwtProvider.CreateToken(singInUser, UserRole.Admin.ToString());
-                return jwtAdmin;
+                var jwtAdminToken = _jwtProvider.CreateToken(singInUser, UserRole.Admin.ToString());
+
+                var tokenAdminrModels = new TokenModel
+                {
+                    RefreshToken = refreshToken,
+                    JwtToken = jwtAdminToken
+                };
+
+                return tokenAdminrModels;
             }
 
-            var jwtUser = _jwtProvider.CreateToken(singInUser, UserRole.Client.ToString());
+            var jwtUserToken = _jwtProvider.CreateToken(singInUser, UserRole.Client.ToString());
+            
+            var tokenUserModels = new TokenModel
+            {
+                RefreshToken = refreshToken,
+                JwtToken = jwtUserToken
+            };
 
-            return jwtUser;
+            return tokenUserModels;
         }
 
         public async Task LogoutAsync()
