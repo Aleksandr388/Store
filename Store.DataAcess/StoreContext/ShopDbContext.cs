@@ -9,18 +9,16 @@ namespace Store.DataAcess.StoreContext
 {
     public class ShopDbContext : IdentityDbContext<StoreUser, IdentityRole<long>, long>
     {
-        public ShopDbContext(DbContextOptions<ShopDbContext> options)
-            :
-            base(options)
+        public ShopDbContext(DbContextOptions<ShopDbContext> options) : base(options)
         {
         }
+
         public DbSet<PrintingEdition> PrintingEditions { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<StoreUser> StoreUsers { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Payment> Payments { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,7 +50,7 @@ namespace Store.DataAcess.StoreContext
                     Price = 300,
                     Status = (Status)1,
                     Type = (Shared.Enums.Type)2,
-                    Curency = (Curency)1
+                    Curency = (Curency)1,
                 }
                 );
         }

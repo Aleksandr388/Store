@@ -10,8 +10,8 @@ using Store.DataAcess.StoreContext;
 namespace Store.DataAcess.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    [Migration("20210520074052_Create_Refresh_Token")]
-    partial class Create_Refresh_Token
+    [Migration("20210521084941_Initial_crate")]
+    partial class Initial_crate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -192,7 +192,7 @@ namespace Store.DataAcess.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationDate = new DateTime(2021, 5, 20, 10, 40, 51, 929, DateTimeKind.Local).AddTicks(5878),
+                            CreationDate = new DateTime(2021, 5, 21, 11, 49, 40, 666, DateTimeKind.Local).AddTicks(5286),
                             IsRemoved = false,
                             Name = "Leonardo Davinchi"
                         });
@@ -337,7 +337,7 @@ namespace Store.DataAcess.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationDate = new DateTime(2021, 5, 20, 10, 40, 51, 932, DateTimeKind.Local).AddTicks(8494),
+                            CreationDate = new DateTime(2021, 5, 21, 11, 49, 40, 669, DateTimeKind.Local).AddTicks(9098),
                             Curency = 1,
                             Description = "The Lester Codex is a notebook of scientific records made by Leonardo da Vinci in Milan in 1504-1510.",
                             IsRemoved = false,

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Store.DataAcess.Migrations
 {
-    public partial class Initial_Create : Migration
+    public partial class Initial_crate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,6 +31,7 @@ namespace Store.DataAcess.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsBlocked = table.Column<bool>(type: "bit", nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999)),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -296,12 +297,12 @@ namespace Store.DataAcess.Migrations
             migrationBuilder.InsertData(
                 table: "Authors",
                 columns: new[] { "Id", "CreationDate", "IsRemoved", "Name" },
-                values: new object[] { 1L, new DateTime(2021, 5, 19, 12, 13, 48, 233, DateTimeKind.Local).AddTicks(7249), false, "Leonardo Davinchi" });
+                values: new object[] { 1L, new DateTime(2021, 5, 21, 11, 49, 40, 666, DateTimeKind.Local).AddTicks(5286), false, "Leonardo Davinchi" });
 
             migrationBuilder.InsertData(
                 table: "PrintingEditions",
                 columns: new[] { "Id", "CreationDate", "Curency", "Description", "IsRemoved", "Price", "Status", "Title", "Type" },
-                values: new object[] { 1L, new DateTime(2021, 5, 19, 12, 13, 48, 237, DateTimeKind.Local).AddTicks(969), 1, "The Lester Codex is a notebook of scientific records made by Leonardo da Vinci in Milan in 1504-1510.", false, 300m, 1, "Lesters codex", 2 });
+                values: new object[] { 1L, new DateTime(2021, 5, 21, 11, 49, 40, 669, DateTimeKind.Local).AddTicks(9098), 1, "The Lester Codex is a notebook of scientific records made by Leonardo da Vinci in Milan in 1504-1510.", false, 300m, 1, "Lesters codex", 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

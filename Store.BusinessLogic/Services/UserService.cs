@@ -1,5 +1,8 @@
-﻿using Store.BusinessLogic.Models.Users;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Store.BusinessLogic.Models.Users;
 using Store.BusinessLogic.Services.Interfaces;
+using Store.DataAcess.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -9,6 +12,14 @@ namespace Store.BusinessLogic.Services
 {
     public class UserService : IUserService
     {
+        private readonly UserManager<StoreUser> _userManager;
+        private readonly IMapper _mapper;
+        public UserService(UserManager<StoreUser> userManager, IMapper mapper)
+        {
+            _userManager = userManager;
+            _mapper = mapper;
+        }
+
         public Task AddUserToRole(UserModel userModel)
         {
             throw new NotImplementedException();

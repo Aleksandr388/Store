@@ -1,16 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Store.BusinessLogic.Models.PrintingEditions;
+using Store.BusinessLogic.Services.Interfaces;
 using System.Threading.Tasks;
 
 namespace Store.Presentation.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class PrintingEditionController : Controller
     {
-        public IActionResult Index()
+        private readonly IPrintingEditionService _printingEditionService;
+        public PrintingEditionController(IPrintingEditionService printingEditionService)
         {
-            return View();
+            _printingEditionService = printingEditionService;
+        }
+
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create([FromBody]PrintingEditionModel model)
+        {
+            await _printingEditionService.CreateAsync(model);
+
+            return Ok();
         }
     }
 }

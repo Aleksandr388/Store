@@ -8,5 +8,6 @@
         public const string RegistrationFailedNoPasswordInModel = "Registration failed, password must be at least 8 characters";
         public const string InvalidLoginName = "Invalid login name";
         public const string InvalidLoginPassword = "Invalid login password";
+        public const string AuthtorWithThisNameCreated = "Authtor With This Name Created";
     }
 }

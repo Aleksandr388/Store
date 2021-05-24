@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "5cV4Xtv5nCPI9Y7bI/G6WQua2R6EKMLCZw8n4p9Br1dQU2QOSW1kjBYGuvRWBvDuiWVv3lveMKb4vHFYOFagGQ==",
+  "dgSpecHash": "XscQo5ZgrYT9fZ4xJlDQB1/75wo2rZzVCv7S4RNEYDVf6uBqJPPR6EGvTqYLvoEL7cSgjbUl/ekYCCdeX1Ehsg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Anuitex-20\\source\\repos\\Store.Presentation\\Store.BusinessLogic\\Store.BusinessLogic.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Anuitex-20\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
+    "C:\\Users\\Anuitex-20\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\mailkit\\2.12.0\\mailkit.2.12.0.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
@@ -101,7 +103,7 @@
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\system.private.datacontractserialization\\4.3.0\\system.private.datacontractserialization.4.3.0.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\system.private.uri\\4.3.2\\system.private.uri.4.3.2.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
-    "C:\\Users\\Anuitex-20\\.nuget\\packages\\system.reflection.emit\\4.3.0\\system.reflection.emit.4.3.0.nupkg.sha512",
+    "C:\\Users\\Anuitex-20\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.3.0\\system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\system.reflection.emit.lightweight\\4.3.0\\system.reflection.emit.lightweight.4.3.0.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\system.reflection.extensions\\4.3.0\\system.reflection.extensions.4.3.0.nupkg.sha512",

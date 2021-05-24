@@ -18,6 +18,10 @@ using Store.Presentation.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using AutoMapper;
+using Store.BusinessLogic.Mapping;
+using Store.DataAcess.Repositories.Interfaces;
+using Store.DataAcess.Repositories.EFRepositories;
 
 namespace Store.Presentation
 {
@@ -65,6 +69,21 @@ namespace Store.Presentation
             services.AddTransient<IPasswordGeneratorProvider, PasswordGeneratorProvider>();
             services.AddTransient<IEmailProvider, EmailProvider>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IAuthorService, AuthorService>();
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
+            services.AddTransient<IPrintingEditionService, PrintingEditionService>();
+            services.AddTransient<IPrintingEditionRepository, PrintingEditionRepository>();
+
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new UserMappingProfile());
+                cfg.AddProfile(new AuthorMappingProfile());
+                cfg.AddProfile(new PrintingEditionMappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddMvc();
         }
 

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Store.DataAcess.Entities;
+using System.Threading.Tasks;
 
 namespace Store.DataAcess.Repositories.Interfaces
 {
-    public interface IAuthorRepository
+    public interface IAuthorRepository : IBaseRepository<Author>
     {
+        public Task<Author> GetByName(string name);
     }
 }

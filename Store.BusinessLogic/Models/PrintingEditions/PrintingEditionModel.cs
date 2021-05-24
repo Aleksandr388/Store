@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Store.BusinessLogic.Models.Base;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Store.BusinessLogic.Models.PrintingEditions
 {
-    public class PrintingEditionModel
+    public class PrintingEditionModel : BaseModel
     {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+        public Shared.Enums.Status Status { get; set; }
+        public Shared.Enums.Curency Curency { get; set; }
+        public Shared.Enums.Type Type { get; set; }
     }
 }

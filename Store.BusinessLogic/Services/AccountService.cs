@@ -19,7 +19,8 @@ namespace Store.BusinessLogic.Services
         private readonly IPasswordGeneratorProvider _passwordGeneratorProvider;
         private readonly ITokenProvider _jwtProvider;
 
-        public AccountService(UserManager<StoreUser> userManager, SignInManager<StoreUser> signInManager, IEmailProvider emailProvider, IPasswordGeneratorProvider passwordGeneratorProvider, ITokenProvider jwtProvider)
+        public AccountService(UserManager<StoreUser> userManager, SignInManager<StoreUser> signInManager,
+            IEmailProvider emailProvider, IPasswordGeneratorProvider passwordGeneratorProvider, ITokenProvider jwtProvider)
         {
             _userManager = userManager;
             _emailProvider = emailProvider;
@@ -31,7 +32,7 @@ namespace Store.BusinessLogic.Services
         public async Task<string> SignUpAsync(UserSignUpModel userSignUpModel)
         {
             var findByEmail = await _userManager.FindByEmailAsync(userSignUpModel.Email);
-            
+
             if (findByEmail is not null)
             {
                 throw new CustomException(Shared.Constants.Errors.NoUsersWithThisEmail, StatusCodes.Status400BadRequest);
@@ -108,7 +109,7 @@ namespace Store.BusinessLogic.Services
             }
 
             var jwtUserToken = _jwtProvider.CreateToken(singInUser, UserRole.Client.ToString());
-            
+
             var tokenUserModels = new TokenModel
             {
                 RefreshToken = refreshToken,
@@ -145,7 +146,7 @@ namespace Store.BusinessLogic.Services
         public async Task<string> ForgotPasswordAsync(ForgotPasswordUser forgotPasswordUser)
         {
             var user = await _userManager.FindByEmailAsync(forgotPasswordUser.Email);
-            
+
             if (user is null)
             {
                 throw new CustomException(Shared.Constants.Errors.NoUsersWithThisEmail, StatusCodes.Status400BadRequest);

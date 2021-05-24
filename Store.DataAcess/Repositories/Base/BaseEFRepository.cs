@@ -11,12 +11,12 @@ namespace Store.DataAcess.Repositories.Base
     public class BaseEFRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly DbContext _ctx;
-        private readonly DbSet<TEntity> _dbSet;
+        protected readonly DbSet<TEntity> _dbSet;
 
         public BaseEFRepository(DbContext context)
         {
             _ctx = context;
-            _dbSet = context.Set<TEntity>();
+            _dbSet = _ctx.Set<TEntity>();
         }
 
         public async Task CreateAsync(TEntity model)
