@@ -10,7 +10,7 @@ namespace Store.BusinessLogic.Providers
     {
         public string RandomPasswordGenerator(int length)
         {
-            return GetRandomString(length,  Shared.Constants.Values.alphanumericCharacters);
+            return GetRandomString(length, Shared.Constants.DefaultValues.alphanumericCharacters);
         }
 
         public string GetRandomString(int length, IEnumerable<char> characterSet)

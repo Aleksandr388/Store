@@ -1,7 +1,5 @@
 ﻿using System;
-using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
-using System.Net;
 
 namespace Store.BusinessLogic
 {

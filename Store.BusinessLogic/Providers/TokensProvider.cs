@@ -22,7 +22,7 @@ namespace Store.BusinessLogic.Providers
 
         public TokensProvider(UserManager<StoreUser> userManager)
         {
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Shared.Constants.Values.JwtKeyToken));
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Shared.Constants.DefaultValues.JwtKeyToken));
             _userManager = userManager;
         }
 
@@ -53,7 +53,7 @@ namespace Store.BusinessLogic.Providers
         public string CreateRefreshToken(int length)
         {
             var random = new Random();
-            var chars = Shared.Constants.Values.alphanumericCharacters;
+            var chars = Shared.Constants.DefaultValues.alphanumericCharacters;
 
             return new string(Enumerable.Repeat(chars, length)
                 .Select(x => x[random.Next(x.Length)]).ToArray());

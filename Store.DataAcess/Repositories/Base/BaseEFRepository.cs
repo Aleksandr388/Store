@@ -19,7 +19,7 @@ namespace Store.DataAcess.Repositories.Base
             _dbSet = _ctx.Set<TEntity>();
         }
 
-        public async Task CreateAsync(TEntity model)
+        public virtual async Task CreateAsync(TEntity model)
         {
             await _dbSet.AddAsync(model);
 

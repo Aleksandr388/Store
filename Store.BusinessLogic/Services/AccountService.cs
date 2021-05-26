@@ -53,7 +53,7 @@ namespace Store.BusinessLogic.Services
                 throw new CustomException(Shared.Constants.Errors.RegistrationFailed, StatusCodes.Status400BadRequest);
             }
 
-            var addToRoleResult = await _userManager.AddToRoleAsync(user, UserRole.Client.ToString().ToLower());
+            var addToRoleResult = await _userManager.AddToRoleAsync(user, UserRole.Client.ToString());
 
             if (!addToRoleResult.Succeeded)
             {
@@ -90,33 +90,34 @@ namespace Store.BusinessLogic.Services
                 throw new CustomException(Shared.Constants.Errors.LoginFailedWrongPassword, StatusCodes.Status400BadRequest);
             }
 
+            var jwtAdminToken = _jwtProvider.CreateToken(singInUser, UserRole.Admin.ToString());
+            var jwtUserToken = _jwtProvider.CreateToken(singInUser, UserRole.Client.ToString());
+
             var refreshToken = _jwtProvider.CreateRefreshToken(32);
             singInUser.RefreshToken = refreshToken;
+
             await _userManager.UpdateAsync(singInUser);
 
             var roles = await _userManager.GetRolesAsync(singInUser);
+
+            var createJwtTokenForAdmin = new TokenModel
+            {
+                RefreshToken = refreshToken,
+                JwtToken = jwtAdminToken
+            };
+
             if (roles.Contains(UserRole.Admin.ToString()))
             {
-                var jwtAdminToken = _jwtProvider.CreateToken(singInUser, UserRole.Admin.ToString());
-
-                var tokenAdminrModels = new TokenModel
-                {
-                    RefreshToken = refreshToken,
-                    JwtToken = jwtAdminToken
-                };
-
-                return tokenAdminrModels;
+                return createJwtTokenForAdmin;
             }
 
-            var jwtUserToken = _jwtProvider.CreateToken(singInUser, UserRole.Client.ToString());
-
-            var tokenUserModels = new TokenModel
+            var tokenClientModels = new TokenModel
             {
                 RefreshToken = refreshToken,
                 JwtToken = jwtUserToken
             };
 
-            return tokenUserModels;
+            return tokenClientModels;
         }
 
         public async Task LogoutAsync()
@@ -153,7 +154,7 @@ namespace Store.BusinessLogic.Services
             }
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var newPassword = _passwordGeneratorProvider.RandomPasswordGenerator(Shared.Constants.Values.PasswordValue);
+            var newPassword = _passwordGeneratorProvider.RandomPasswordGenerator(Shared.Constants.DefaultValues.PasswordValue);
             var result = await _userManager.ResetPasswordAsync(user, code, newPassword);
 
             if (!result.Succeeded)

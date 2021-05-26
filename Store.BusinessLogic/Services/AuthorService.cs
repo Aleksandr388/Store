@@ -52,7 +52,7 @@ namespace Store.BusinessLogic.Services
         {
             var authorModel = await _authorRepository.GetByIdAsync(id);
 
-            return _mapper.Map<AuthorModel>(authorModel);  
+            return _mapper.Map<AuthorModel>(authorModel);
         }
 
         public async Task<IEnumerable<AuthorModel>> GetAllAsync()
@@ -62,6 +62,13 @@ namespace Store.BusinessLogic.Services
             var mappedModel = _mapper.Map<IEnumerable<AuthorModel>>(model);
 
             return mappedModel;
+        }
+
+        public async Task RemoveAsync(AuthorModel model)
+        {
+            var removeModel = _mapper.Map<Author>(model);
+
+            await _authorRepository.RemoveAsync(removeModel);
         }
     }
 }

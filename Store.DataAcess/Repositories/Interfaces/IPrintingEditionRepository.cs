@@ -1,11 +1,10 @@
 ﻿using Store.DataAcess.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Store.DataAcess.Repositories.Interfaces
 {
     public interface IPrintingEditionRepository : IBaseRepository<PrintingEdition>
     {
+        public Task<PrintingEdition> GetByTitleAsync(string title);
     }
 }

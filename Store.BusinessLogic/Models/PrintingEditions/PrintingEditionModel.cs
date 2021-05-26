@@ -1,4 +1,6 @@
-﻿using Store.BusinessLogic.Models.Base;
+﻿using Store.BusinessLogic.Models.Authors;
+using Store.BusinessLogic.Models.Base;
+using Store.DataAcess.Entities;
 using System.Collections.Generic;
 
 namespace Store.BusinessLogic.Models.PrintingEditions
@@ -11,5 +13,6 @@ namespace Store.BusinessLogic.Models.PrintingEditions
         public Shared.Enums.Status Status { get; set; }
         public Shared.Enums.Curency Curency { get; set; }
         public Shared.Enums.Type Type { get; set; }
+        public ICollection<AuthorModel> AuthorModels { get; set; }
     }
 }

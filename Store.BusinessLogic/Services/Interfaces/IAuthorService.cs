@@ -14,5 +14,6 @@ namespace Store.BusinessLogic.Services.Interfaces
         public Task DeleteAsync(AuthorModel model);
         public Task<AuthorModel> GetByIdAsync(long id);
         public Task<IEnumerable<AuthorModel>> GetAllAsync();
+        public Task RemoveAsync(AuthorModel model);
     }
 }

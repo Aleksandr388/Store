@@ -36,7 +36,7 @@ namespace Store.DataAcess.StoreContext
                 new Author
                 {
                     Id = 1,
-                    Name = Shared.Constants.DedaultValues.DefaultAuthorName
+                    Name = Shared.Constants.DefaultValues.DefaultAuthorName
 
                 });
 
@@ -45,8 +45,8 @@ namespace Store.DataAcess.StoreContext
                 new PrintingEdition
                 {
                     Id = 1,
-                    Title = Shared.Constants.DedaultValues.DefaultPrintingEditionTitle,
-                    Description = Shared.Constants.DedaultValues.DefaultPrintingEditionDescription,
+                    Title = Shared.Constants.DefaultValues.DefaultPrintingEditionTitle,
+                    Description = Shared.Constants.DefaultValues.DefaultPrintingEditionDescription,
                     Price = 300,
                     Status = (Status)1,
                     Type = (Shared.Enums.Type)2,

@@ -44,6 +44,14 @@ namespace Store.Presentation.Controllers
             return Ok(result);
         }
 
+        [HttpPost("Remove")]
+        public async Task<IActionResult> Remove([FromBody] AuthorModel model)
+        {
+            await _authorService.RemoveAsync(model);
+
+            return Ok("Remove is done");
+        }
+
     }
 }
 

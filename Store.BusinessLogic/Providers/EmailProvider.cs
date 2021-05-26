@@ -11,7 +11,7 @@ namespace Store.BusinessLogic.Helpers
         {
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress("admin", "nesheretnuysahsa@gmail.com"));
+            emailMessage.From.Add(new MailboxAddress(Shared.Constants.DefaultValues.AdminRole, Shared.Constants.DefaultValues.EmailForEmailProvider));
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -22,7 +22,7 @@ namespace Store.BusinessLogic.Helpers
             using (var client = new SmtpClient())
             {
                 await client.ConnectAsync("smtp.gmail.com");
-                await client.AuthenticateAsync("nesheretnuysahsa@gmail.com", "ujhlttdj77");
+                await client.AuthenticateAsync(Shared.Constants.DefaultValues.EmailForEmailProvider, Shared.Constants.DefaultValues.EmailForEmailProvider);
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
             }

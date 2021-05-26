@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Store.BusinessLogic.Helpers;
 using Store.BusinessLogic.Providers.Interfaces;
 using Store.BusinessLogic.Services;
@@ -37,7 +36,7 @@ namespace Store.Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ShopDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString(Shared.Constants.DefaultValues.DefaultConnection)));
 
             services.AddIdentity<StoreUser, IdentityRole<long>>(options =>
             {
@@ -47,7 +46,7 @@ namespace Store.Presentation
                 .AddEntityFrameworkStores<ShopDbContext>()
                 .AddDefaultTokenProviders();
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Shared.Constants.Values.JwtKeyToken));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Shared.Constants.DefaultValues.JwtKeyToken));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(
                     opt =>
