@@ -7,6 +7,7 @@ using Store.DataAcess.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Net;
 
 namespace Store.BusinessLogic.Services
 {
@@ -27,7 +28,7 @@ namespace Store.BusinessLogic.Services
         {
             if (model.AuthorModels is null)
             {
-                throw new CustomException(Shared.Constants.ErrorMessages.ImpossibleToCreateNewAuthor, StatusCodes.Status400BadRequest);
+                throw new CustomException(Shared.Constants.ErrorMessages.ImpossibleToCreateNewAuthor, HttpStatusCode.BadRequest);
             }
 
             var allAuthorsList = model.AuthorModels.Select(x => x);
@@ -35,21 +36,21 @@ namespace Store.BusinessLogic.Services
 
             if (!mappedAuthorsList.Any())
             {
-                throw new CustomException(Shared.Constants.ErrorMessages.TheCreatedListIsEmpty, StatusCodes.Status400BadRequest);
+                throw new CustomException(Shared.Constants.ErrorMessages.TheCreatedListIsEmpty, HttpStatusCode.BadRequest);
             }
 
             var chekListAuthors = _authorRepository.GetAllCreatedAuthors(mappedAuthorsList);
 
             if (!chekListAuthors)
             {
-                throw new CustomException(Shared.Constants.ErrorMessages.CanNotNonexistentAuhtor, StatusCodes.Status400BadRequest);
+                throw new CustomException(Shared.Constants.ErrorMessages.CanNotNonexistentAuhtor, HttpStatusCode.BadRequest);
             }
 
             var chekPrintingEdition = await _printingEditionRepository.GetByTitleAsync(model.Title);
 
             if (chekPrintingEdition is not null)
             {
-                throw new CustomException(Shared.Constants.ErrorMessages.EditionAlreadyExists, StatusCodes.Status400BadRequest);
+                throw new CustomException(Shared.Constants.ErrorMessages.EditionAlreadyExists, HttpStatusCode.BadRequest);
             }
 
             var printingEditionModel = _mapper.Map<PrintingEdition>(model);
@@ -57,9 +58,11 @@ namespace Store.BusinessLogic.Services
             await _printingEditionRepository.CreateAsync(printingEditionModel);
         }
 
-        public Task DeleteAsync(PrintingEditionModel model)
+        public async Task DeleteAsync(PrintingEditionModel model)
         {
-            throw new System.NotImplementedException();
+            var mappedModel = _mapper.Map<PrintingEdition>(model);
+
+            await _printingEditionRepository.DeleteAsync(mappedModel);
         }
 
         public Task<IEnumerable<PrintingEditionModel>> GetAllAsync()

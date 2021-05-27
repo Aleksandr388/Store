@@ -13,5 +13,7 @@
         public const string PasswordForEmailProvider = "ujhlttdj77";
         public const string StmpGmailCom = "smtp.gmail.com";
         public const string DefaultConnection = "DefaultConnection";
+        public const string Id = "id";
+        public const string Code = "code";
     }
 }

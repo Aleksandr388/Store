@@ -10,37 +10,37 @@ namespace Store.DataAcess.Repositories.Base
 {
     public class BaseEFRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
-        private readonly DbContext _ctx;
+        private readonly DbContext _context;
         protected readonly DbSet<TEntity> _dbSet;
 
         public BaseEFRepository(DbContext context)
         {
-            _ctx = context;
-            _dbSet = _ctx.Set<TEntity>();
+            _context = context;
+            _dbSet = _context.Set<TEntity>();
         }
 
         public virtual async Task CreateAsync(TEntity model)
         {
             await _dbSet.AddAsync(model);
 
-            await _ctx.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(TEntity model)
         {
             _dbSet.Remove(model);
 
-            await _ctx.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _dbSet.AsNoTracking().ToListAsync();
+            return await _dbSet.ToListAsync();
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _dbSet.AsNoTracking().Where(predicate).ToListAsync();
+            return await _dbSet.Where(predicate).ToListAsync();
         }
 
         public async Task<TEntity> GetByIdAsync(long id)
@@ -50,14 +50,14 @@ namespace Store.DataAcess.Repositories.Base
 
         public async Task UpdateAsync(TEntity model)
         {
-            _ctx.Entry(model).State = EntityState.Modified;
-            await _ctx.SaveChangesAsync();
+            _context.Entry(model).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
         }
 
         public async  Task SaveChagesAsync()
         {
-            await _ctx.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

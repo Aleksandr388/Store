@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.AspNetCore.Identity;
-using Store.DataAcess.Entities.Base;
 
 namespace Store.DataAcess.Entities
 {

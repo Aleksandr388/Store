@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Store.BusinessLogic.Models.Authors;
 using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
 using Store.DataAcess.Repositories.Interfaces;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Store.BusinessLogic.Services
@@ -26,7 +26,7 @@ namespace Store.BusinessLogic.Services
 
             if (chekModel is not null)
             {
-                throw new CustomException(Shared.Constants.ErrorMessages.AuthtorWithThisNameCreated, StatusCodes.Status400BadRequest);
+                throw new CustomException(Shared.Constants.ErrorMessages.AuthtorWithThisNameCreated, HttpStatusCode.BadRequest);
             }
 
             var authorModel = _mapper.Map<Author>(model);

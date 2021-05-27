@@ -29,7 +29,7 @@ namespace Store.Presentation.Middlewares
             catch (CustomException customExeption)
             {
                 string jsonString = JsonSerializer.Serialize(customExeption.Error);
-                context.Response.StatusCode = customExeption.StatusCode;
+                context.Response.StatusCode = customExeption.HResult;
                 await context.Response.WriteAsync(jsonString);
             }
             catch (Exception exeption)

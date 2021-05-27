@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Store.BusinessLogic
 {
@@ -7,15 +8,15 @@ namespace Store.BusinessLogic
     {
         
         public List<string> Error { get; set; }
-        public int StatusCode { get; set; }
+        public HttpStatusCode StatusCode { get; set; }
 
-        public CustomException(string error, int statusCode)
+        public CustomException(string error, HttpStatusCode statusCode)
         {
             Error = new List<string>() { error };
             StatusCode = statusCode;
         }
 
-        public CustomException(int statusCode, List<string> error)
+        public CustomException(HttpStatusCode statusCode, List<string> error)
         {
             Error = error;
             StatusCode = statusCode;

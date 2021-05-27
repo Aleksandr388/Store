@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,11 +71,11 @@ namespace Store.BusinessLogic.Providers
 
             if (user is null)
             {
-                throw new CustomException(Shared.Constants.Errors.NoUsersWithThisId, StatusCodes.Status400BadRequest);
+                throw new CustomException(Shared.Constants.Errors.NoUsersWithThisId, HttpStatusCode.BadRequest);
             }
             if (user.RefreshToken != tokenModel.RefreshToken)
             {
-                throw new CustomException(Shared.Constants.Errors.InvalidRefreshToken, StatusCodes.Status400BadRequest);
+                throw new CustomException(Shared.Constants.Errors.InvalidRefreshToken, HttpStatusCode.BadRequest);
             }
 
             var userRole = expiredJwtToken.Claims.First(claim => claim.Type == "role").Value;

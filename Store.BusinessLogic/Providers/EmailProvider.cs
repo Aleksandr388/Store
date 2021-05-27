@@ -22,7 +22,7 @@ namespace Store.BusinessLogic.Helpers
             using (var client = new SmtpClient())
             {
                 await client.ConnectAsync("smtp.gmail.com");
-                await client.AuthenticateAsync(Shared.Constants.DefaultValues.EmailForEmailProvider, Shared.Constants.DefaultValues.EmailForEmailProvider);
+                await client.AuthenticateAsync(Shared.Constants.DefaultValues.EmailForEmailProvider, Shared.Constants.DefaultValues.PasswordForEmailProvider);
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
             }

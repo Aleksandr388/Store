@@ -8,7 +8,11 @@ namespace Store.BusinessLogic.Mapping
     {
         public UserMappingProfile()
         {
-            CreateMap<StoreUser, UserModel>().ReverseMap();
+            CreateMap<UserSignUpModel, StoreUser>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email))
+                .ReverseMap();
+                //.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email))
+                
         }
     }
 }

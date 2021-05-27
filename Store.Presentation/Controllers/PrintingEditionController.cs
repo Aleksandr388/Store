@@ -22,5 +22,13 @@ namespace Store.Presentation.Controllers
 
             return Ok();
         }
+
+        [HttpPost("Delete")]
+        public async Task<IActionResult> Delete([FromBody] PrintingEditionModel model)
+        {
+            await _printingEditionService.DeleteAsync(model);
+
+            return Ok();
+        }
     }
 }
