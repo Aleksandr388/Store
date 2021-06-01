@@ -28,6 +28,7 @@ namespace Store.DataAcess.Repositories.Base
 
         public async Task DeleteAsync(TEntity model)
         {
+            _dbSet.Attach(model);
             _dbSet.Remove(model);
 
             await _context.SaveChangesAsync();
@@ -43,16 +44,16 @@ namespace Store.DataAcess.Repositories.Base
             return await _dbSet.Where(predicate).ToListAsync();
         }
 
-        public async Task<TEntity> GetByIdAsync(long id)
+        public virtual async Task<TEntity> GetByIdAsync(long id)
         {
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task UpdateAsync(TEntity model)
+        public virtual async Task UpdateAsync(TEntity model)
         {
             _context.Entry(model).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
 
+            await _context.SaveChangesAsync();
         }
 
         public async  Task SaveChagesAsync()

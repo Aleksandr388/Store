@@ -12,7 +12,7 @@ namespace Store.BusinessLogic.Services.Interfaces
         public Task CreateAsync(AuthorModel model);
         public Task UpdateAsync(AuthorModel model);
         public Task DeleteAsync(AuthorModel model);
-        public Task<AuthorModel> GetByIdAsync(long id);
+        public Task<AuthorModel> GetByIdAsync(AuthorModel Modelid);
         public Task<IEnumerable<AuthorModel>> GetAllAsync();
         public Task RemoveAsync(AuthorModel model);
     }

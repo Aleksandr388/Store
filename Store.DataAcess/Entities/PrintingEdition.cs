@@ -13,7 +13,7 @@ namespace Store.DataAcess.Entities
         public Curency Curency { get; set; }
         public Type Type { get; set; }
 
-        public ICollection<Author> Authors { get; set; }
+        public List<Author> Authors { get; set; } = new List<Author>();
         public ICollection<OrderItem> OrderItems { get; set; }
     }
 }

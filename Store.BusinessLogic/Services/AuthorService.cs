@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Shared.Constants;
 using Store.BusinessLogic.Models.Authors;
 using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
@@ -26,7 +27,7 @@ namespace Store.BusinessLogic.Services
 
             if (chekModel is not null)
             {
-                throw new CustomException(Shared.Constants.ErrorMessages.AuthtorWithThisNameCreated, HttpStatusCode.BadRequest);
+                throw new CustomException(ErrorMessages.AuthtorWithThisNameCreated, HttpStatusCode.BadRequest);
             }
 
             var authorModel = _mapper.Map<Author>(model);
@@ -48,9 +49,14 @@ namespace Store.BusinessLogic.Services
             await _authorRepository.DeleteAsync(deleteAuthorModel);
         }
 
-        public async Task<AuthorModel> GetByIdAsync(long id)
+        public async Task<AuthorModel> GetByIdAsync(AuthorModel modelId)
         {
-            var authorModel = await _authorRepository.GetByIdAsync(id);
+            if (modelId.Id == 0)
+            {
+                throw new CustomException(ErrorMessages.NoUserForSpecifiedId, HttpStatusCode.BadRequest);
+            }
+
+            var authorModel = await _authorRepository.GetByIdAsync(modelId.Id);
 
             return _mapper.Map<AuthorModel>(authorModel);
         }
@@ -66,9 +72,14 @@ namespace Store.BusinessLogic.Services
 
         public async Task RemoveAsync(AuthorModel model)
         {
+            if (model is null)
+            {
+                throw new CustomException(ErrorMessages.NoUserForSpecifiedId, HttpStatusCode.BadRequest);
+            }
+
             var removeModel = _mapper.Map<Author>(model);
 
-            await _authorRepository.RemoveAsync(removeModel);
+            await _authorRepository.RemoveAsync(removeModel.Id);
         }
     }
 }

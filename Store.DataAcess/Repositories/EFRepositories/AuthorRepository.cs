@@ -27,11 +27,40 @@ namespace Store.DataAcess.Repositories.EFRepositories
             return await _dbSet.FirstOrDefaultAsync(x => x.Name == name);
         }
 
-        public async Task RemoveAsync(Author model)
+        public async Task RemoveAsync(long id)
         {
-            var removeModel = await _dbSet.FindAsync(model);
+            var removeModel = await _dbSet.FindAsync(id);
 
             removeModel.IsRemoved = true;
+
+            await SaveChagesAsync();
+        }
+
+        public override async Task UpdateAsync(Author model)
+        {
+            var pEmodels = new List<PrintingEdition>(model.PrintingEditions);
+
+            model.PrintingEditions.Clear();
+
+            var authorForUpdate = await _dbSet
+                .Include(model => model.PrintingEditions)
+                .FirstOrDefaultAsync(x => x.Id == model.Id);
+
+            if (authorForUpdate is not null)
+            {
+                authorForUpdate.PrintingEditions
+                    .RemoveAll(x => !pEmodels
+                    .Exists(y => y.Id == x.Id));
+            }
+
+            var result = pEmodels
+                .Where(x => !authorForUpdate.PrintingEditions
+                .Exists(y => y.Id == x.Id))
+                .ToList();
+
+            authorForUpdate.PrintingEditions.AddRange(result);
+
+            _dbSet.Update(authorForUpdate);
 
             await SaveChagesAsync();
         }

@@ -13,6 +13,7 @@
         public const string TheCreatedListIsEmpty = "The created list is empty";
         public const string CanNotNonexistentAuhtor = "Can't add a non-existent author";
         public const string EditionAlreadyExists = "Edition already exists";
-
+        public const string CantСhangeAuthor = "Can't change author";
+        public const string NoUserForSpecifiedId = "No user for the specified id";
     }
 }

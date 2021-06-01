@@ -22,17 +22,17 @@ namespace Store.Presentation.Controllers
             return Ok();
         }
 
-        [HttpPost("Upadate")]
-        public async Task<IActionResult> Upadate([FromBody] AuthorModel model)
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update([FromBody] AuthorModel model)
         {
             await _authorService.UpdateAsync(model);
-            return Ok();
+            return Ok("Update is done");
         }
 
         [HttpPost("GetById")]
-        public async Task<IActionResult> GetById([FromBody] long id)
+        public async Task<IActionResult> GetById([FromBody] AuthorModel modelId)
         {
-            var result = await _authorService.GetByIdAsync(id);
+            var result = await _authorService.GetByIdAsync(modelId);
             return Ok(result);
         }
 
