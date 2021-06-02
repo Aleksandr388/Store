@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "IaI+afMj2wrCE1kCn1BBPYVQERQWxL40341oMsrukKB3GkEi06D+VAPnrsEsV132WZb5s87vl2lP0ZymLaGm2A==",
+  "dgSpecHash": "0aYhE0Au+QURQSLXlC9/mtE7YywgTY5RD5hi+FA1FeA9xiKxpQewM3thkGhRaBDr69ETKWM/VjfMz8PZ+0u1qQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Anuitex-20\\source\\repos\\Store.Presentation\\Store.Presentation\\Store.Presentation.csproj",
   "expectedPackageFiles": [
@@ -25,6 +25,8 @@
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\microsoft.aspnetcore.identity\\2.2.0\\microsoft.aspnetcore.identity.2.2.0.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\5.0.6\\microsoft.aspnetcore.identity.entityframeworkcore.5.0.6.nupkg.sha512",
+    "C:\\Users\\Anuitex-20\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\5.0.6\\microsoft.aspnetcore.jsonpatch.5.0.6.nupkg.sha512",
+    "C:\\Users\\Anuitex-20\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\5.0.6\\microsoft.aspnetcore.mvc.newtonsoftjson.5.0.6.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",
@@ -70,6 +72,8 @@
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\mimekit\\2.12.0\\mimekit.2.12.0.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\netcore.mailkit\\2.0.3\\netcore.mailkit.2.0.3.nupkg.sha512",
+    "C:\\Users\\Anuitex-20\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\Anuitex-20\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\portable.bouncycastle\\1.8.10\\portable.bouncycastle.1.8.10.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
     "C:\\Users\\Anuitex-20\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",

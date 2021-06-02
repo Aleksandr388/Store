@@ -21,6 +21,7 @@ using AutoMapper;
 using Store.BusinessLogic.Mapping;
 using Store.DataAcess.Repositories.Interfaces;
 using Store.DataAcess.Repositories.EFRepositories;
+using Newtonsoft.Json;
 
 namespace Store.Presentation
 {
@@ -61,6 +62,8 @@ namespace Store.Presentation
                     });
 
             services.AddControllersWithViews();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services.InitializeAsync().Wait();
 
@@ -72,6 +75,7 @@ namespace Store.Presentation
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IPrintingEditionService, PrintingEditionService>();
             services.AddTransient<IPrintingEditionRepository, PrintingEditionRepository>();
+
 
             var mapperConfig = new MapperConfiguration(cfg =>
             {

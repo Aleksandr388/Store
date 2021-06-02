@@ -39,7 +39,7 @@ namespace Store.BusinessLogic.Services
 
             if (findByEmail is not null)
             {
-                throw new CustomException(Errors.NoUsersWithThisEmail, HttpStatusCode.BadRequest);
+                throw new CustomException(ErrorMessages.NoUsersWithThisEmail, HttpStatusCode.BadRequest);
             }
 
             var user = _mapper.Map<StoreUser>(userSignUpModel);
@@ -48,14 +48,14 @@ namespace Store.BusinessLogic.Services
 
             if (!result.Succeeded)
             {
-                throw new CustomException(Errors.RegistrationFailed, HttpStatusCode.BadRequest);
+                throw new CustomException(ErrorMessages.RegistrationFailed, HttpStatusCode.BadRequest);
             }
 
             var addToRoleResult = await _userManager.AddToRoleAsync(user, UserRole.Client.ToString());
 
             if (!addToRoleResult.Succeeded)
             {
-                throw new CustomException(Errors.ErrorAddingRole, HttpStatusCode.BadRequest);
+                throw new CustomException(ErrorMessages.ErrorAddingRole, HttpStatusCode.BadRequest);
             }
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -78,14 +78,14 @@ namespace Store.BusinessLogic.Services
 
             if (singInUser is null)
             {
-                throw new CustomException(Errors.UserWithThisEmialNotRegiste, HttpStatusCode.BadRequest);
+                throw new CustomException(ErrorMessages.UserWithThisEmialNotRegiste, HttpStatusCode.BadRequest);
             }
 
             var result = await _signInManager.PasswordSignInAsync(userSignInModel.Email, userSignInModel.Password, false, false);
 
             if (!result.Succeeded)
             {
-                throw new CustomException(Errors.LoginFailedWrongPassword, HttpStatusCode.BadRequest);
+                throw new CustomException(ErrorMessages.LoginFailedWrongPassword, HttpStatusCode.BadRequest);
             }
 
             var jwtUserToken = _jwtProvider.CreateToken(singInUser, UserRole.Client.ToString());
@@ -129,14 +129,14 @@ namespace Store.BusinessLogic.Services
 
             if (user is null)
             {
-                throw new Exception(Errors.NoUsersWithThisId);
+                throw new Exception(ErrorMessages.NoUsersWithThisId);
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, code);
 
             if (!result.Succeeded)
             {
-                throw new Exception(Errors.NoUsersWithThisEmail);
+                throw new Exception(ErrorMessages.NoUsersWithThisEmail);
             }
 
             return Messages.EmailConfirmedSuccessfully;
@@ -148,7 +148,7 @@ namespace Store.BusinessLogic.Services
 
             if (user is null)
             {
-                throw new CustomException(Errors.NoUsersWithThisEmail, HttpStatusCode.BadRequest);
+                throw new CustomException(ErrorMessages.NoUsersWithThisEmail, HttpStatusCode.BadRequest);
             }
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -157,7 +157,7 @@ namespace Store.BusinessLogic.Services
 
             if (!result.Succeeded)
             {
-                throw new CustomException(Errors.NoUsersWithThisEmail, HttpStatusCode.BadRequest);
+                throw new CustomException(ErrorMessages.NoUsersWithThisEmail, HttpStatusCode.BadRequest);
             }
 
             await _emailProvider.SendEmailAsync(user.Email, Messages.ResetPassword,

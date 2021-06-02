@@ -16,6 +16,14 @@ namespace Store.DataAcess.Repositories.EFRepositories
         public PrintingEditionRepository(ShopDbContext contex) : base(contex)
         {
         }
+
+        public async override Task<PrintingEdition> GetByIdAsync(long id)
+        {
+            var result = await _dbSet.Include(x => x.Authors).FirstOrDefaultAsync();
+
+            return result;
+        }
+
         public async Task<PrintingEdition> GetByTitleAsync(string title)
         {
             var result = await _dbSet.FirstOrDefaultAsync(x => x.Title == title);
@@ -33,6 +41,13 @@ namespace Store.DataAcess.Repositories.EFRepositories
             model.Authors = authors;
 
             await SaveChagesAsync();
+        }
+
+        public override async Task<IEnumerable<PrintingEdition>> GetAllAsync()
+        {
+            var result = await _dbSet.Include(x => x.Authors).AsNoTracking().ToListAsync();
+
+            return result;
         }
 
         public override async Task UpdateAsync(PrintingEdition model)

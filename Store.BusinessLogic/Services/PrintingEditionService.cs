@@ -54,7 +54,17 @@ namespace Store.BusinessLogic.Services
 
         public async Task DeleteAsync(PrintingEditionModel model)
         {
+            if (model is null)
+            {
+                throw new CustomException(ErrorMessages.RemoveIsFailed, HttpStatusCode.BadRequest);
+            }
+
             var mappedModel = _mapper.Map<PrintingEdition>(model);
+
+            if (mappedModel.IsRemoved is not false)
+            {
+                throw new CustomException(ErrorMessages.ModelAlredyBeenDeleted, HttpStatusCode.BadRequest);
+            }
 
             await _printingEditionRepository.DeleteAsync(mappedModel);
         }
@@ -62,6 +72,11 @@ namespace Store.BusinessLogic.Services
         public async Task<IEnumerable<PrintingEditionModel>> GetAllAsync()
         {
             var printingEditionsModels = await _printingEditionRepository.GetAllAsync();
+
+            if (printingEditionsModels is null)
+            {
+                throw new CustomException(ErrorMessages.TheListIsEmpty, HttpStatusCode.BadRequest);
+            }
 
             var mappedModels = _mapper.Map<IEnumerable<PrintingEditionModel>>(printingEditionsModels);
 
@@ -72,6 +87,10 @@ namespace Store.BusinessLogic.Services
         {
             var getByIdModel = await _printingEditionRepository.GetByIdAsync(printingEditionModel.Id);
 
+            if (getByIdModel is null)
+            {
+                throw new CustomException(ErrorMessages.NoUserForSpecifiedId, HttpStatusCode.BadRequest);
+            }
             var mappedPrintingEditionModel = _mapper.Map<PrintingEditionModel>(getByIdModel);
 
             return mappedPrintingEditionModel;
@@ -79,6 +98,11 @@ namespace Store.BusinessLogic.Services
 
         public async Task UpdateAsync(PrintingEditionModel model)
         {
+            if (model is null)
+            {
+                throw new CustomException(ErrorMessages.UpdatedModelIsNull, HttpStatusCode.BadRequest);
+            }
+
             var mappedModel = _mapper.Map<PrintingEdition>(model);
 
             await _printingEditionRepository.UpdateAsync(mappedModel);

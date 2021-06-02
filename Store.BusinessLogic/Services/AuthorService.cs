@@ -37,21 +37,38 @@ namespace Store.BusinessLogic.Services
 
         public async Task UpdateAsync(AuthorModel model)
         {
+            if (model is null)
+            {
+                throw new CustomException(ErrorMessages.UpdatedModelIsNull, HttpStatusCode.BadRequest);
+            }
+
             var authorModel = _mapper.Map<Author>(model);
+
+            
 
             await _authorRepository.UpdateAsync(authorModel);
         }
 
         public async Task DeleteAsync(AuthorModel model)
         {
+            if (model is null)
+            {
+                throw new CustomException(ErrorMessages.RemoveIsFailed, HttpStatusCode.BadRequest);
+            }
+
             var deleteAuthorModel = _mapper.Map<Author>(model);
+
+            if (deleteAuthorModel.IsRemoved is not false)
+            {
+                throw new CustomException(ErrorMessages.ModelAlredyBeenDeleted, HttpStatusCode.BadRequest);
+            }
 
             await _authorRepository.DeleteAsync(deleteAuthorModel);
         }
 
         public async Task<AuthorModel> GetByIdAsync(AuthorModel modelId)
         {
-            if (modelId.Id == 0)
+            if (modelId is null)
             {
                 throw new CustomException(ErrorMessages.NoUserForSpecifiedId, HttpStatusCode.BadRequest);
             }
@@ -63,9 +80,14 @@ namespace Store.BusinessLogic.Services
 
         public async Task<IEnumerable<AuthorModel>> GetAllAsync()
         {
-            IEnumerable<Author> model = await _authorRepository.GetAllAsync();
+            IEnumerable<Author> models = await _authorRepository.GetAllAsync();
 
-            var mappedModel = _mapper.Map<IEnumerable<AuthorModel>>(model);
+            if (models is null)
+            {
+                throw new CustomException(ErrorMessages.TheListIsEmpty, HttpStatusCode.BadRequest);
+            }
+
+            var mappedModel = _mapper.Map<IEnumerable<AuthorModel>>(models);
 
             return mappedModel;
         }

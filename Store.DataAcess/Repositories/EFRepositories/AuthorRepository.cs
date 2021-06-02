@@ -3,8 +3,10 @@ using Store.DataAcess.Entities;
 using Store.DataAcess.Repositories.Base;
 using Store.DataAcess.Repositories.Interfaces;
 using Store.DataAcess.StoreContext;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Store.DataAcess.Repositories.EFRepositories
@@ -13,6 +15,22 @@ namespace Store.DataAcess.Repositories.EFRepositories
     {
         public AuthorRepository(ShopDbContext context) : base(context)
         {
+        }
+
+        public async override Task<Author> GetByIdAsync(long id)
+        {
+            //return await _dbSet.FindAsync(id);
+
+            var result = await _dbSet.Include(x => x.PrintingEditions).FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
+
+        public override async Task<IEnumerable<Author>> GetAllAsync()
+        {
+            var result = await _dbSet.Include(x => x.PrintingEditions).AsNoTracking().ToListAsync();
+
+            return result;
         }
 
         public bool GetAllCreatedAuthors(IEnumerable<Author> models)

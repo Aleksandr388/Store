@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Shared.Constants;
 using Store.BusinessLogic.Models.Users;
 using Store.BusinessLogic.Providers.Interfaces;
 using Store.DataAcess.Entities;
@@ -71,11 +72,11 @@ namespace Store.BusinessLogic.Providers
 
             if (user is null)
             {
-                throw new CustomException(Shared.Constants.Errors.NoUsersWithThisId, HttpStatusCode.BadRequest);
+                throw new CustomException(ErrorMessages.NoUsersWithThisId, HttpStatusCode.BadRequest);
             }
             if (user.RefreshToken != tokenModel.RefreshToken)
             {
-                throw new CustomException(Shared.Constants.Errors.InvalidRefreshToken, HttpStatusCode.BadRequest);
+                throw new CustomException(ErrorMessages.InvalidRefreshToken, HttpStatusCode.BadRequest);
             }
 
             var userRole = expiredJwtToken.Claims.First(claim => claim.Type == "role").Value;
