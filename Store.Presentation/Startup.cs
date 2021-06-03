@@ -82,6 +82,7 @@ namespace Store.Presentation
                 cfg.AddProfile(new UserMappingProfile());
                 cfg.AddProfile(new AuthorMappingProfile());
                 cfg.AddProfile(new PrintingEditionMappingProfile());
+                cfg.AddProfile(new PageMappingProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

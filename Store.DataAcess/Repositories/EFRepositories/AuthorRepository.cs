@@ -19,8 +19,6 @@ namespace Store.DataAcess.Repositories.EFRepositories
 
         public async override Task<Author> GetByIdAsync(long id)
         {
-            //return await _dbSet.FindAsync(id);
-
             var result = await _dbSet.Include(x => x.PrintingEditions).FirstOrDefaultAsync(x => x.Id == id);
 
             return result;

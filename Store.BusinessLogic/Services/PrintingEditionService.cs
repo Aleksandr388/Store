@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Net;
 using Shared.Constants;
+using Store.BusinessLogic.Models.PaginationModels;
+using Store.DataAcess.Models;
 
 namespace Store.BusinessLogic.Services
 {
@@ -82,6 +84,17 @@ namespace Store.BusinessLogic.Services
 
             return mappedModels;
         }
+
+        public async Task<IEnumerable<PrintingEditionModel>> Get(PageModel pageModel)
+        {
+            var mappedPageModel = _mapper.Map<Page>(pageModel);
+            var allmodels = await _printingEditionRepository.Get(mappedPageModel);
+
+            var result = _mapper.Map<IEnumerable<PrintingEditionModel>>(allmodels);
+
+            return result;
+        }
+
 
         public async Task<PrintingEditionModel> GetByIdAsync(PrintingEditionModel printingEditionModel)
         {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Store.DataAcess.Entities;
+using Store.DataAcess.Models;
 using Store.DataAcess.Repositories.Base;
 using Store.DataAcess.Repositories.Interfaces;
 using Store.DataAcess.StoreContext;
@@ -49,6 +50,17 @@ namespace Store.DataAcess.Repositories.EFRepositories
 
             return result;
         }
+
+        public async Task<IEnumerable<PrintingEdition>> Get(Page page)
+        {
+            var result = await _dbSet.Include(x => x.Authors).AsNoTracking()
+                .Skip((page.PageNumber - 1) * page.PageSize)
+                .Take(page.PageSize)
+                .ToListAsync();
+
+            return result;
+        }
+
 
         public override async Task UpdateAsync(PrintingEdition model)
         {
