@@ -20,7 +20,9 @@ namespace Store.DataAcess.Repositories.EFRepositories
 
         public async override Task<PrintingEdition> GetByIdAsync(long id)
         {
-            var result = await _dbSet.Include(x => x.Authors).FirstOrDefaultAsync();
+            var result = await _dbSet
+                .Include(x => x.Authors)
+                .FirstOrDefaultAsync();
 
             return result;
         }
@@ -46,19 +48,30 @@ namespace Store.DataAcess.Repositories.EFRepositories
 
         public override async Task<IEnumerable<PrintingEdition>> GetAllAsync()
         {
-            var result = await _dbSet.Include(x => x.Authors).AsNoTracking().ToListAsync();
+            var result = await _dbSet
+                .Include(x => x.Authors)
+                .AsNoTracking()
+                .ToListAsync();
 
             return result;
         }
 
-        public async Task<IEnumerable<PrintingEdition>> Get(Page page)
+        public async Task<IEnumerable<PrintingEdition>> Get(PrintingEditionPaginationFiltrationSort PFSModel)
         {
-            var result = await _dbSet.Include(x => x.Authors).AsNoTracking()
-                .Skip((page.PageNumber - 1) * page.PageSize)
-                .Take(page.PageSize)
+            var printingEditions = await _dbSet
+                .Include(x => x.Authors)
+                .AsNoTracking()
+                .Where(x => PFSModel.Description == null || x.Description.Contains(PFSModel.Description))
+                .Where(x => PFSModel.Title == null || x.Title.Contains(PFSModel.Title))
+                .Where(x => PFSModel.NameAuthor == null || x.Authors.Any(y => y.Name.Contains(PFSModel.NameAuthor)))
+                .Where(x => PFSModel.MaxPrice == 0 || x.Price >= PFSModel.MinPrice && x.Price <= PFSModel.MaxPrice)
+                .Where(x => PFSModel.Type == null || PFSModel.Type.Contains(x.Type))
+                .Skip((PFSModel.PageNumber - 1) * PFSModel.PageSize)
+                .Take(PFSModel.PageSize)
                 .ToListAsync();
+                
 
-            return result;
+            return printingEditions;
         }
 
 

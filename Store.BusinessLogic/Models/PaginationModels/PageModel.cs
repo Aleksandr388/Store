@@ -1,17 +1,18 @@
-﻿using System;
+﻿using Shared.Constants;
 
 namespace Store.BusinessLogic.Models.PaginationModels
 {
     public class PageModel
     {
-        public int MaxPageSize { get; private set; } = 50;
+        public int MaxPageSize { get; private set; } = DefaultValues.MaxPageValue;
 
-        private int _pageSize = 10;
-        public int PageNumber { get; private set; } = 1;
+        private int _pageSize = DefaultValues.DefaultPageSIzeValue;
+        public int PageNumber { get; private set; }
 
-        public PageModel(int pageNumber)
+        public PageModel(int pageNumber, int pageSize)
         {
             PageNumber = pageNumber;
+            _pageSize = pageSize;
         }
 
         public int PageSize

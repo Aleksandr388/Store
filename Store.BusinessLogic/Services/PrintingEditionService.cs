@@ -11,6 +11,7 @@ using System.Net;
 using Shared.Constants;
 using Store.BusinessLogic.Models.PaginationModels;
 using Store.DataAcess.Models;
+using Store.BusinessLogic.Models.Base;
 
 namespace Store.BusinessLogic.Services
 {
@@ -85,14 +86,23 @@ namespace Store.BusinessLogic.Services
             return mappedModels;
         }
 
-        public async Task<IEnumerable<PrintingEditionModel>> Get(PageModel pageModel)
+        public async Task<ResponseModel<PrintingEditionModel>> Get(PrintingEditionPaginationFiltrationSortModel baseModel)
         {
-            var mappedPageModel = _mapper.Map<Page>(pageModel);
+            var mappedPageModel = _mapper.Map<PrintingEditionPaginationFiltrationSort>(baseModel);
+
             var allmodels = await _printingEditionRepository.Get(mappedPageModel);
 
-            var result = _mapper.Map<IEnumerable<PrintingEditionModel>>(allmodels);
+            var printingEditions = _mapper.Map<IEnumerable<PrintingEditionModel>>(allmodels);
 
-            return result;
+            var paginationInfo = new PageModel(mappedPageModel.PageNumber, mappedPageModel.PageSize);
+
+            var responseModel = new ResponseModel<PrintingEditionModel>()
+            {
+                PageModel = paginationInfo,
+                NavigationModels = printingEditions
+            };
+
+            return responseModel;
         }
 
 

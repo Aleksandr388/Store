@@ -9,7 +9,7 @@ namespace Store.BusinessLogic.Mapping
     {
         public PageMappingProfile()
         {
-            CreateMap<Page, PageModel>().ReverseMap();
+            CreateMap<PrintingEditionPaginationFiltrationSort, PrintingEditionPaginationFiltrationSortModel>().ReverseMap();
         }
     }
 }

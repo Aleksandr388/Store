@@ -2,9 +2,10 @@
 
 namespace Store.BusinessLogic.Models.PaginationModels
 {
-    public class IndexModel<T>
+    public class ResponseModel<T>
     {
-        public IEnumerable<T> NavigationModels { get; set; }
         public PageModel PageModel { get; set; }
+        public IEnumerable<T> NavigationModels { get; set; }
+
     }
 }

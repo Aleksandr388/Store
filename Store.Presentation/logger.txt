@@ -425,3 +425,27 @@ System.Object -> Store.DataAcess.Models.Page,    at lambda_method221(Closure , O
    at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
    at Store.Presentation.Middlewares.LoggingErrorsMiddleware.InvokeAsync(HttpContext context) in C:\Users\Anuitex-20\source\repos\Store.Presentation\Store.Presentation\Middlwares\LoggingErrorsMiddleware.cs:line 27
+08/06/2021 11:50:28, Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Object -> PrintingEditionPaginationFiltrationSort
+System.Object -> Store.DataAcess.Models.PrintingEditionPaginationFiltrationSort,    at lambda_method222(Closure , Object , PrintingEditionPaginationFiltrationSort , ResolutionContext )
+   at Store.BusinessLogic.Services.PrintingEditionService.Get(PrintingEditionPaginationFiltrationSortModel baseModel) in C:\Users\Anuitex-20\source\repos\Store.Presentation\Store.BusinessLogic\Services\PrintingEditionService.cs:line 91
+   at Store.Presentation.Controllers.PrintingEditionController.Get(PrintingEditionPaginationFiltrationSortModel pEModel) in C:\Users\Anuitex-20\source\repos\Store.Presentation\Store.Presentation\Controllers\PrintingEditionController.cs:line 47
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|24_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Store.Presentation.Middlewares.LoggingErrorsMiddleware.InvokeAsync(HttpContext context) in C:\Users\Anuitex-20\source\repos\Store.Presentation\Store.Presentation\Middlwares\LoggingErrorsMiddleware.cs:line 27

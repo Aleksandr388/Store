@@ -15,5 +15,7 @@
         public const string DefaultConnection = "DefaultConnection";
         public const string Id = "id";
         public const string Code = "code";
+        public const int MaxPageValue = 50;
+        public const int DefaultPageSIzeValue = 10;
     }
 }

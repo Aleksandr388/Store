@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Store.BusinessLogic.Models.Base;
 using Store.BusinessLogic.Models.PaginationModels;
 using Store.BusinessLogic.Models.PrintingEditions;
 using Store.BusinessLogic.Services.Interfaces;
@@ -41,9 +42,9 @@ namespace Store.Presentation.Controllers
         }
 
         [HttpGet("Get")]
-        public async Task<IActionResult> Get(PageModel pageModel)
+        public async Task<IActionResult> Get(PrintingEditionPaginationFiltrationSortModel pEModel)
         {
-            var result = await _printingEditionService.Get(pageModel);
+            var result = await _printingEditionService.Get(pEModel);
 
             return Ok(result);
         }
