@@ -8,6 +8,6 @@ namespace Store.DataAcess.Repositories.Interfaces
     public interface IPrintingEditionRepository : IBaseRepository<PrintingEdition>
     {
         public Task<PrintingEdition> GetByTitleAsync(string title);
-        public Task<IEnumerable<PrintingEdition>> Get(PrintingEditionPaginationFiltrationSort pageModel);
+        public Task<IEnumerable<PrintingEdition>> GetAllPrintingEditionsAsync(PrintingEditionFiltration pageModel);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Store.BusinessLogic.Models.Authors;
+using Store.BusinessLogic.Models.PaginationModels;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -15,5 +16,6 @@ namespace Store.BusinessLogic.Services.Interfaces
         public Task<AuthorModel> GetByIdAsync(AuthorModel Modelid);
         public Task<IEnumerable<AuthorModel>> GetAllAsync();
         public Task RemoveAsync(AuthorModel model);
+        public Task<ResponseModel<AuthorModel>> GetAllAuthorsAsync(AuthorFiltrationModel authorModel);
     }
 }

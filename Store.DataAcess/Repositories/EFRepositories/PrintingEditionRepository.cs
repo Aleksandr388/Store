@@ -4,10 +4,10 @@ using Store.DataAcess.Models;
 using Store.DataAcess.Repositories.Base;
 using Store.DataAcess.Repositories.Interfaces;
 using Store.DataAcess.StoreContext;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Store.DataAcess.Extensions;
 
 namespace Store.DataAcess.Repositories.EFRepositories
 {
@@ -56,7 +56,7 @@ namespace Store.DataAcess.Repositories.EFRepositories
             return result;
         }
 
-        public async Task<IEnumerable<PrintingEdition>> Get(PrintingEditionPaginationFiltrationSort PFSModel)
+        public async Task<IEnumerable<PrintingEdition>> GetAllPrintingEditionsAsync(PrintingEditionFiltration PFSModel)
         {
             var printingEditions = await _dbSet
                 .Include(x => x.Authors)
@@ -65,15 +65,14 @@ namespace Store.DataAcess.Repositories.EFRepositories
                 .Where(x => PFSModel.Title == null || x.Title.Contains(PFSModel.Title))
                 .Where(x => PFSModel.NameAuthor == null || x.Authors.Any(y => y.Name.Contains(PFSModel.NameAuthor)))
                 .Where(x => PFSModel.MaxPrice == 0 || x.Price >= PFSModel.MinPrice && x.Price <= PFSModel.MaxPrice)
-                .Where(x => PFSModel.Type == null || PFSModel.Type.Contains(x.Type))
+                .Where(x => !PFSModel.Type.Any() || PFSModel.Type.Contains(x.Type))
+                .OrderByField(PFSModel.SortIndex, PFSModel.IsAccesing)
                 .Skip((PFSModel.PageNumber - 1) * PFSModel.PageSize)
                 .Take(PFSModel.PageSize)
                 .ToListAsync();
-                
 
             return printingEditions;
         }
-
 
         public override async Task UpdateAsync(PrintingEdition model)
         {

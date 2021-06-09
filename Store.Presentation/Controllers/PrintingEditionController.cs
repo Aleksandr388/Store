@@ -42,9 +42,9 @@ namespace Store.Presentation.Controllers
         }
 
         [HttpGet("Get")]
-        public async Task<IActionResult> Get(PrintingEditionPaginationFiltrationSortModel pEModel)
+        public async Task<IActionResult> GetAllPrintingEditions(PrintingEditionFiltrationModel pEModel)
         {
-            var result = await _printingEditionService.Get(pEModel);
+            var result = await _printingEditionService.GetAllPrintingEditionsAsync(pEModel);
 
             return Ok(result);
         }

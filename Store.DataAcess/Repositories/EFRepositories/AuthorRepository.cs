@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Store.DataAcess.Entities;
+using Store.DataAcess.Extensions;
+using Store.DataAcess.Models;
 using Store.DataAcess.Repositories.Base;
 using Store.DataAcess.Repositories.Interfaces;
 using Store.DataAcess.StoreContext;
@@ -31,6 +33,20 @@ namespace Store.DataAcess.Repositories.EFRepositories
             return result;
         }
 
+        public async Task<IEnumerable<Author>> GetAllAuthorsAsync(AuthorFiltration author)
+        {
+            var authors = await _dbSet
+                .Include(x => x.PrintingEditions)
+                .AsNoTracking()
+                .Where(x => author.Name == null || x.Name.Contains(author.Name))
+                .Where(x => author.PrintingEditionTitle == null || x.PrintingEditions.Any(y => y.Title.Contains(author.PrintingEditionTitle)))               
+                .OrderByField(author.SortIndex, author.IsAccesing)
+                .Skip((author.PageNumber - 1) * author.PageSize)
+                .Take(author.PageSize)
+                .ToListAsync();
+
+            return authors;
+        }
         public bool GetAllCreatedAuthors(IEnumerable<Author> models)
         {
             var result = models.All(x => _dbSet.Select(y => y).Contains(x));

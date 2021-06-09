@@ -36,6 +36,14 @@ namespace Store.Presentation.Controllers
             return Ok(result);
         }
 
+        [HttpGet("Get")]
+        public async Task<IActionResult> GetAllAuthors(AuthorFiltrationModel authorModel)
+        {
+            var result = await _authorService.GetAllAuthorsAsync(authorModel);
+
+            return Ok(result);
+        }
+
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {

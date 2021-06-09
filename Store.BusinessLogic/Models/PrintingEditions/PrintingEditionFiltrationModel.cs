@@ -1,9 +1,10 @@
 ﻿using Shared.Enums;
+using Store.BusinessLogic.Models.Base;
 using System.Collections.Generic;
 
-namespace Store.DataAcess.Models
+namespace Store.BusinessLogic.Models.PrintingEditions
 {
-    public class PrintingEditionPaginationFiltrationSort : BasePaginationFiltrarionSortDAL
+    public class PrintingEditionFiltrationModel : BasePageSortModel
     {
         public string Title { get; set; }
         public string Description { get; set; }
@@ -11,6 +12,5 @@ namespace Store.DataAcess.Models
         public decimal MinPrice { get; set; }
         public List<Type> Type { get; set; }
         public string NameAuthor { get; set; }
-
     }
 }

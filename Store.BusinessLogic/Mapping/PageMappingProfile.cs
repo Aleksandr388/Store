@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Store.BusinessLogic.Models.Authors;
 using Store.BusinessLogic.Models.PaginationModels;
 using Store.BusinessLogic.Models.PrintingEditions;
 using Store.DataAcess.Models;
@@ -9,7 +10,8 @@ namespace Store.BusinessLogic.Mapping
     {
         public PageMappingProfile()
         {
-            CreateMap<PrintingEditionPaginationFiltrationSort, PrintingEditionPaginationFiltrationSortModel>().ReverseMap();
+            CreateMap<PrintingEditionFiltration, PrintingEditionFiltrationModel>().ReverseMap();
+            CreateMap<AuthorFiltration, AuthorFiltrationModel>().ReverseMap();
         }
     }
 }

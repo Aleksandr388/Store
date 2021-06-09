@@ -17,5 +17,7 @@
         public const string Code = "code";
         public const int MaxPageValue = 50;
         public const int DefaultPageSIzeValue = 10;
+        public const string OrderBy = "OrderBy";
+        public const string OrderByDescending = "OrderByDescending";
     }
 }

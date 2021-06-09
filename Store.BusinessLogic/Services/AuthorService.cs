@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Shared.Constants;
 using Store.BusinessLogic.Models.Authors;
+using Store.BusinessLogic.Models.PaginationModels;
 using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
+using Store.DataAcess.Models;
 using Store.DataAcess.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Net;
@@ -90,6 +92,25 @@ namespace Store.BusinessLogic.Services
             var mappedModel = _mapper.Map<IEnumerable<AuthorModel>>(models);
 
             return mappedModel;
+        }
+
+        public async Task<ResponseModel<AuthorModel>> GetAllAuthorsAsync(AuthorFiltrationModel authorModel)
+        {
+            var mappedPageModel = _mapper.Map<AuthorFiltration>(authorModel);
+
+            var allmodels = await _authorRepository.GetAllAuthorsAsync(mappedPageModel);
+
+            var printingEditions = _mapper.Map<IEnumerable<AuthorModel>>(allmodels);
+
+            var paginationInfo = new PageModel(mappedPageModel.PageNumber, mappedPageModel.PageSize);
+
+            var responseModel = new ResponseModel<AuthorModel>()
+            {
+                PageModel = paginationInfo,
+                NavigationModels = printingEditions
+            };
+
+            return responseModel;
         }
 
         public async Task RemoveAsync(AuthorModel model)

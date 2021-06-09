@@ -13,6 +13,6 @@ namespace Store.BusinessLogic.Services.Interfaces
         public Task DeleteAsync(PrintingEditionModel model);
         public Task<PrintingEditionModel> GetByIdAsync(PrintingEditionModel model);
         public Task<IEnumerable<PrintingEditionModel>> GetAllAsync();
-        public Task<ResponseModel<PrintingEditionModel>> Get(PrintingEditionPaginationFiltrationSortModel pageModel);
+        public Task<ResponseModel<PrintingEditionModel>> GetAllPrintingEditionsAsync(PrintingEditionFiltrationModel pageModel);
     }
 }

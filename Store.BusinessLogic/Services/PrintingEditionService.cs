@@ -86,11 +86,11 @@ namespace Store.BusinessLogic.Services
             return mappedModels;
         }
 
-        public async Task<ResponseModel<PrintingEditionModel>> Get(PrintingEditionPaginationFiltrationSortModel baseModel)
+        public async Task<ResponseModel<PrintingEditionModel>> GetAllPrintingEditionsAsync(PrintingEditionFiltrationModel pEModel)
         {
-            var mappedPageModel = _mapper.Map<PrintingEditionPaginationFiltrationSort>(baseModel);
+            var mappedPageModel = _mapper.Map<PrintingEditionFiltration>(pEModel);
 
-            var allmodels = await _printingEditionRepository.Get(mappedPageModel);
+            var allmodels = await _printingEditionRepository.GetAllPrintingEditionsAsync(mappedPageModel);
 
             var printingEditions = _mapper.Map<IEnumerable<PrintingEditionModel>>(allmodels);
 
@@ -104,7 +104,6 @@ namespace Store.BusinessLogic.Services
 
             return responseModel;
         }
-
 
         public async Task<PrintingEditionModel> GetByIdAsync(PrintingEditionModel printingEditionModel)
         {
