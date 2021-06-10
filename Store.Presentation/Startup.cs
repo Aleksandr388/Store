@@ -75,14 +75,17 @@ namespace Store.Presentation
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IPrintingEditionService, PrintingEditionService>();
             services.AddTransient<IPrintingEditionRepository, PrintingEditionRepository>();
+            services.AddTransient<IOrderRepository, OrderRepositiry>();
+            services.AddTransient<IOrderService, OrderService>();
 
 
-            var mapperConfig = new MapperConfiguration(cfg =>
+          var mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new UserMappingProfile());
                 cfg.AddProfile(new AuthorMappingProfile());
                 cfg.AddProfile(new PrintingEditionMappingProfile());
                 cfg.AddProfile(new PageMappingProfile());
+                cfg.AddProfile(new OrderMappingProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

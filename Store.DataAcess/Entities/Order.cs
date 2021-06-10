@@ -5,9 +5,9 @@ namespace Store.DataAcess.Entities
 {
     public class Order : BaseEntity
     {
-        public string Desription { get; set; }
+        public string Description { get; set; }
 
-        public ICollection<OrderItem> OrderItems { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
         public long UserId { get; set; }
         public StoreUser StoreUser { get; set; }

@@ -6,7 +6,7 @@ namespace Store.DataAcess.Entities
 {
     public class OrderItem : BaseEntity
     {
-        public int Amounnt { get; set; }
+        public int Amount { get; set; }
         public int Count { get; set; }
         public Curency Curency { get; set; }
 

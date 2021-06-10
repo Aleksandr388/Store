@@ -14,6 +14,5 @@ namespace Store.DataAcess.Entities
         public Type Type { get; set; }
 
         public List<Author> Authors { get; set; } = new List<Author>();
-        public ICollection<OrderItem> OrderItems { get; set; }
     }
 }

@@ -5,9 +5,9 @@ using Store.DataAcess.StoreContext;
 
 namespace Store.DataAcess.Repositories.EFRepositories
 {
-    public class OrderRepositiry : BaseEFRepository<Order>, IOrderRepository
+    public class PaymentRepository : BaseEFRepository<Payment>, IPaymentRepository
     {
-        public OrderRepositiry(ShopDbContext context) : base(context)
+        public PaymentRepository(ShopDbContext context) : base(context)
         {
         }
     }

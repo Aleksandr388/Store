@@ -2,7 +2,7 @@
 
 namespace Store.DataAcess.Repositories.Interfaces
 {
-    public interface IOrderRepository : IBaseRepository<Order>
+    public interface IPaymentRepository : IBaseRepository<Payment>
     {
     }
 }

@@ -34,7 +34,7 @@ namespace Store.Presentation.Controllers
 
             return Ok(result);
         }
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Client")]
+        [Authorize/*(AuthenticationSchemes = "Bearer", Roles = "Client")*/]
         [HttpPost("ForgotPassword")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordUser forgotPasswordUser)
         {

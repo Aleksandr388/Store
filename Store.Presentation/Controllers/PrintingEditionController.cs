@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Store.BusinessLogic.Models.Base;
-using Store.BusinessLogic.Models.PaginationModels;
 using Store.BusinessLogic.Models.PrintingEditions;
 using Store.BusinessLogic.Services.Interfaces;
 using System.Threading.Tasks;
