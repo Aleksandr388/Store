@@ -27,5 +27,7 @@
         public const string LoginFailedWrongPassword = "Login was failed, wrong password";
         public const string ErrorAddingRole = "Error adding role";
         public const string InvalidRefreshToken = "Invalid refresh token";
+        public const string OrderEmpty = "Order is empry";
+
     }
 }

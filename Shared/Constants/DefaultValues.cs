@@ -19,5 +19,8 @@
         public const int DefaultPageSIzeValue = 10;
         public const string OrderBy = "OrderBy";
         public const string OrderByDescending = "OrderByDescending";
+        public const int DefaultAmountValue = 100;
+        public const string TestEmailForPay = "TestShop@gmail.com";
+        public const string TestCustomerEmail = "VisaUser@gmail.com";
     }
 }

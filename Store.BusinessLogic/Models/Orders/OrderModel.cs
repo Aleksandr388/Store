@@ -10,7 +10,7 @@ namespace Store.BusinessLogic.Models.Orders
     {
         public string Description { get; set; }
 
-        public ICollection<OrderItemModel> OrderItems { get; set; }
+        public ICollection<OrderItemModel> OrderItemsModel { get; set; }
 
         public long UserId { get; set; }
         public UserModel StoreUser { get; set; }

@@ -2,6 +2,7 @@
 using Store.DataAcess.Repositories.Base;
 using Store.DataAcess.Repositories.Interfaces;
 using Store.DataAcess.StoreContext;
+using System.Linq;
 
 namespace Store.DataAcess.Repositories.EFRepositories
 {

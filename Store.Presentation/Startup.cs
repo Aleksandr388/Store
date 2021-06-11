@@ -22,6 +22,7 @@ using Store.BusinessLogic.Mapping;
 using Store.DataAcess.Repositories.Interfaces;
 using Store.DataAcess.Repositories.EFRepositories;
 using Newtonsoft.Json;
+using Store.BusinessLogic.Common;
 
 namespace Store.Presentation
 {
@@ -77,26 +78,30 @@ namespace Store.Presentation
             services.AddTransient<IPrintingEditionRepository, PrintingEditionRepository>();
             services.AddTransient<IOrderRepository, OrderRepositiry>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
+            services.AddTransient<IPaymentService, PaymetService>();
 
 
-          var mapperConfig = new MapperConfiguration(cfg =>
+
+            var mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new UserMappingProfile());
                 cfg.AddProfile(new AuthorMappingProfile());
                 cfg.AddProfile(new PrintingEditionMappingProfile());
                 cfg.AddProfile(new PageMappingProfile());
                 cfg.AddProfile(new OrderMappingProfile());
+                cfg.AddProfile(new PaymentMappingProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
             services.AddMvc();
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
