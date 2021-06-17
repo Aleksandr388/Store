@@ -6,7 +6,7 @@ namespace Shared.Enums
 {
     public enum Status
     {
-        Paid = 1,
-        Unpaid = 2
+        Available = 1,
+        Unavaliable = 2
     }
 }

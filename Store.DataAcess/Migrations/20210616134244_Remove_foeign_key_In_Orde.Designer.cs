@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Store.DataAcess.StoreContext;
 
 namespace Store.DataAcess.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    partial class ShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210616134244_Remove_foeign_key_In_Orde")]
+    partial class Remove_foeign_key_In_Orde
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,7 +192,7 @@ namespace Store.DataAcess.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationDate = new DateTime(2021, 6, 17, 16, 43, 59, 926, DateTimeKind.Local).AddTicks(7690),
+                            CreationDate = new DateTime(2021, 6, 16, 16, 42, 43, 211, DateTimeKind.Local).AddTicks(6222),
                             IsRemoved = false,
                             Name = "Leonardo Davinchi"
                         });
@@ -237,8 +239,8 @@ namespace Store.DataAcess.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
                     b.Property<int>("Count")
                         .HasColumnType("int");
@@ -284,8 +286,8 @@ namespace Store.DataAcess.Migrations
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
-                    b.Property<string>("TransactionId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("TransactionId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -333,7 +335,7 @@ namespace Store.DataAcess.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationDate = new DateTime(2021, 6, 17, 16, 43, 59, 930, DateTimeKind.Local).AddTicks(1364),
+                            CreationDate = new DateTime(2021, 6, 16, 16, 42, 43, 214, DateTimeKind.Local).AddTicks(8113),
                             Curency = 1,
                             Description = "The Lester Codex is a notebook of scientific records made by Leonardo da Vinci in Milan in 1504-1510.",
                             IsRemoved = false,

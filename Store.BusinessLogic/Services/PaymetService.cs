@@ -7,11 +7,14 @@ using Store.BusinessLogic.Models.Orders;
 using Store.BusinessLogic.Models.Payments;
 using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
+using Store.DataAcess.Models;
 using Store.DataAcess.Repositories.Interfaces;
 using Stripe;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Store.BusinessLogic.Services
@@ -22,9 +25,11 @@ namespace Store.BusinessLogic.Services
         private readonly IPaymentRepository _paymentRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly StripeSettings _stripeSettings;
+        private readonly IPrintingEditionRepository _printingEditionRepository;
 
-        public PaymetService( IMapper mapper, IOptions<StripeSettings> options, IPaymentRepository paymentRepository, IOrderRepository orderRepository)
+        public PaymetService(IMapper mapper, IOptions<StripeSettings> options, IPaymentRepository paymentRepository, IOrderRepository orderRepository, IPrintingEditionRepository printingEditionRepository)
         {
+            _printingEditionRepository = printingEditionRepository;
             _stripeSettings = options.Value;
             _mapper = mapper;
             _paymentRepository = paymentRepository;
@@ -38,16 +43,43 @@ namespace Store.BusinessLogic.Services
             await _orderRepository.CreateAsync(orderModel);
         }
 
-        public async Task CreatePaymentAsync(PaymentModel model)
+        public async Task CreateOrderItemAsync(List<OrderItemModel> orderItems)
         {
-            //var orders = await _orderRepository.GetByIdAsync(model.OrderId);
+            var order = await _orderRepository.GetByIdAsync(orderItems.First().OrderId);
 
-            //if (orders is null)
-            //{
-            //    throw new CustomException(ErrorMessages.OrderEmpty, HttpStatusCode.BadRequest);
-            //}
+            if (order is null || order.IsRemoved || order.OrderStatus.Equals(OrderStatus.Paid))
+            {
+                throw new Exception();
+            }
 
-            //var orderPrice = _orderRepository.GetOrderPrice(orders);
+            var itemsId = orderItems.Select(x => x.PrintingEditionId).ToList();
+            var printingEditions = (await _printingEditionRepository.GetEditionRangeAsync(itemsId)).Select(x => x.Id);
+
+            if (!printingEditions.Any())
+            {
+                throw new Exception();
+            }
+
+            orderItems.RemoveAll(x => !printingEditions.Contains(x.PrintingEditionId));
+
+            var newOrderItems = _mapper.Map<List<DataAcess.Entities.OrderItem>>(orderItems);
+
+            var prices = await _printingEditionRepository.GetPrices(newOrderItems);
+
+            foreach (var item in newOrderItems)
+            {
+                item.Amount = prices.Where(x => x.Id == item.PrintingEditionId).FirstOrDefault().Price;
+            }
+
+            order.OrderItems.AddRange(newOrderItems);
+
+            await _orderRepository.SaveChagesAsync();
+        }
+
+        public async Task CreatePaymentAsync(PayModel model)
+        {
+            var order = await _orderRepository.GetByIdAsync(model.OrderId);
+            var orderPrice = _orderRepository.GetOrderPrice(order);
 
             StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
 
@@ -60,36 +92,47 @@ namespace Store.BusinessLogic.Services
                 Cvc = model.Cvc,
             };
 
-            var tokenOptions = new TokenCreateOptions();
-
-            tokenOptions.Card = tokenCard;
+            var tokenOptions = new TokenCreateOptions
+            {
+                Card = tokenCard
+            };
 
             var tokenService = new TokenService();
-
-            Token token = tokenService.Create(tokenOptions);
-
-            CustomerCreateOptions customer = new CustomerCreateOptions
+            var token = tokenService.Create(tokenOptions);
+            var customer = new CustomerCreateOptions
             {
                 Email = model.Email,
                 Source = token.Id
             };
 
             var custSercise = new CustomerService();
-
-            Customer stpCustomer = custSercise.Create(customer);
-
+            var stpCustomer = custSercise.Create(customer);
             var options = new ChargeCreateOptions
             {
                 Currency = Curency.USD.ToString(),
                 ReceiptEmail = DefaultValues.TestEmailForPay,
-                Description = "Test 4 pay with UAH",
+                Description = model.Description,
                 Customer = stpCustomer.Id,
-                Amount = 25 * DefaultValues.DefaultAmountValue
+                Amount = (long)orderPrice * DefaultValues.DefaultAmountValue
             };
 
             var service = new ChargeService();
+            var charge = service.Create(options);
+            var payment = new PaymentModel
+            {
+                TransactionId = charge.Id
+            };
 
-            service.Create(options);
+            var newPayment = _mapper.Map<Payment>(payment);
+
+            await _paymentRepository.CreateAsync(newPayment);
+
+            var paymentId = await _paymentRepository.GetByIdAsync(newPayment.Id);
+
+            order.OrderStatus = OrderStatus.Paid;
+            order.PaymentId = paymentId.Id;
+
+            await _orderRepository.UpdateAsync(order);
         }
 
         public Task DeleteAsync(PaymentModel model)

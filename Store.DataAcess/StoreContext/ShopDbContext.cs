@@ -48,7 +48,7 @@ namespace Store.DataAcess.StoreContext
                     Title = Shared.Constants.DefaultValues.DefaultPrintingEditionTitle,
                     Description = Shared.Constants.DefaultValues.DefaultPrintingEditionDescription,
                     Price = 300,
-                    Status = Status.Unpaid,
+                    Status = Status.Available,
                     Type = Shared.Enums.Type.Journal,
                     Curency = Curency.USD,
                 }

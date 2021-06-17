@@ -51,6 +51,10 @@
             "Stripe.net": {
               "target": "Package",
               "version": "[39.53.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.1.4, )"
             }
           },
           "imports": [
@@ -160,6 +164,10 @@
             "Stripe.net": {
               "target": "Package",
               "version": "[39.53.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.1.4, )"
             }
           },
           "imports": [
@@ -258,6 +266,10 @@
             "Stripe.net": {
               "target": "Package",
               "version": "[39.53.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.1.4, )"
             }
           },
           "imports": [
@@ -360,6 +372,10 @@
             "Stripe.net": {
               "target": "Package",
               "version": "[39.53.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.1.4, )"
             }
           },
           "imports": [

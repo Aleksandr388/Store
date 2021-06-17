@@ -5,7 +5,7 @@ namespace Store.BusinessLogic.Models.Orders
 {
     public class OrderItemModel
     {
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
         public int Count { get; set; }
         public Curency Curency { get; set; }
 

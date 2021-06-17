@@ -104,9 +104,40 @@ namespace Store.DataAcess.Repositories.EFRepositories
 
             await SaveChagesAsync();
         }
+
+        public async Task<long> GetAllPrice(List<PriceDal> models)
+        {
+            //var ids = models.Select(x => x.PrintingEdtitionId).ToList();
+
+            //var result = await _dbSet
+            //  .Where(x => ids.Contains(x.Id)).ToListAsync();
+
+            //var price = models.Select(x => x.Count).ToList();
+
+            return 2;
+              //.SumAsync(x => x.Price * models.Select(c => c.Count).FirstOrDefault());
+
+        }
+
+        public async Task<List<PrintingEdition>> GetEditionRangeAsync(List<long> pEditionsId)
+        {
+            var editionList = _dbSet.Where(ed => pEditionsId.Contains(ed.Id));
+
+            var result = await editionList.ToListAsync();
+
+            return result;
+        }
+
+        public async Task<IEnumerable<PrintingEdition>> GetPrices(List<OrderItem> orderItems)
+        {
+            var printingEditions = await _dbSet.ToListAsync();
+
+            var result = printingEditions.Where(x => orderItems.Any(y => y.PrintingEditionId == x.Id));
+
+            return result;
+        }
     }
 }
-
 
 
 

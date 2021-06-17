@@ -66,6 +66,8 @@ namespace Store.Presentation
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
+            services.AddSwaggerGen();
+
             services.InitializeAsync().Wait();
 
             services.AddTransient<ITokenProvider, TokensProvider>();
@@ -81,8 +83,6 @@ namespace Store.Presentation
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IPaymentService, PaymetService>();
 
-
-
             var mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new UserMappingProfile());
@@ -91,6 +91,8 @@ namespace Store.Presentation
                 cfg.AddProfile(new PageMappingProfile());
                 cfg.AddProfile(new OrderMappingProfile());
                 cfg.AddProfile(new PaymentMappingProfile());
+                cfg.AddProfile(new PriceMappingProfile());
+                cfg.AddProfile(new OrderItemMappingProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
@@ -102,6 +104,12 @@ namespace Store.Presentation
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Employee API V1");
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

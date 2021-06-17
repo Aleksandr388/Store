@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Store.DataAcess.StoreContext;
 
 namespace Store.DataAcess.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    partial class ShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210616104644_Updt-Order")]
+    partial class UpdtOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,7 +192,7 @@ namespace Store.DataAcess.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationDate = new DateTime(2021, 6, 17, 16, 43, 59, 926, DateTimeKind.Local).AddTicks(7690),
+                            CreationDate = new DateTime(2021, 6, 16, 13, 46, 42, 965, DateTimeKind.Local).AddTicks(3538),
                             IsRemoved = false,
                             Name = "Leonardo Davinchi"
                         });
@@ -214,10 +216,10 @@ namespace Store.DataAcess.Migrations
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
-                    b.Property<int>("OrderStatus")
-                        .HasColumnType("int");
-
                     b.Property<long>("PaymentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("StoreUserId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("UserId")
@@ -225,7 +227,9 @@ namespace Store.DataAcess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("PaymentId");
+
+                    b.HasIndex("StoreUserId");
 
                     b.ToTable("Orders");
                 });
@@ -237,8 +241,8 @@ namespace Store.DataAcess.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
                     b.Property<int>("Count")
                         .HasColumnType("int");
@@ -284,8 +288,8 @@ namespace Store.DataAcess.Migrations
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
-                    b.Property<string>("TransactionId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("TransactionId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -333,7 +337,7 @@ namespace Store.DataAcess.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationDate = new DateTime(2021, 6, 17, 16, 43, 59, 930, DateTimeKind.Local).AddTicks(1364),
+                            CreationDate = new DateTime(2021, 6, 16, 13, 46, 42, 968, DateTimeKind.Local).AddTicks(6683),
                             Curency = 1,
                             Description = "The Lester Codex is a notebook of scientific records made by Leonardo da Vinci in Milan in 1504-1510.",
                             IsRemoved = false,
@@ -496,13 +500,19 @@ namespace Store.DataAcess.Migrations
 
             modelBuilder.Entity("Store.DataAcess.Entities.Order", b =>
                 {
-                    b.HasOne("Store.DataAcess.Entities.StoreUser", "User")
+                    b.HasOne("Store.DataAcess.Entities.Payment", "Payment")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("Store.DataAcess.Entities.StoreUser", "StoreUser")
+                        .WithMany()
+                        .HasForeignKey("StoreUserId");
+
+                    b.Navigation("Payment");
+
+                    b.Navigation("StoreUser");
                 });
 
             modelBuilder.Entity("Store.DataAcess.Entities.OrderItem", b =>

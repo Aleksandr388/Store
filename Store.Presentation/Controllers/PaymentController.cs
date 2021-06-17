@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Store.BusinessLogic.Models.Orders;
 using Store.BusinessLogic.Models.Payments;
 using Store.BusinessLogic.Services.Interfaces;
-using Stripe;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Store.Presentation.Controllers
@@ -23,19 +21,31 @@ namespace Store.Presentation.Controllers
         }
 
         [HttpPost("CreatePayment")]
-        public async Task<IActionResult> Create(PaymentModel payment)
-        {
+        public async Task<IActionResult> CreatePayment(PayModel payment)
+        { 
             await _paymentService.CreatePaymentAsync(payment);
 
             return Ok("Order is created");
         }
 
-        [HttpPost("Create")]
-        public async Task<IActionResult> Create(OrderModel orderModel)
+        [HttpPost("CreateOrder")]
+        public async Task<IActionResult> CreateOrder(OrderModel orderModel)
         {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            orderModel.UserId = Convert.ToInt64(userId);
+
             await _paymentService.CreateOrderAsync(orderModel);
 
             return Ok("Order is created");
+        }
+
+        [HttpPost("CreateOrderItem")]
+        public async Task<IActionResult> CreateOrderItem(List<OrderItemModel> orderItemModel)
+        {
+            await _paymentService.CreateOrderItemAsync(orderItemModel);
+
+            return Ok();
         }
     }
 }
