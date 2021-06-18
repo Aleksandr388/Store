@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Store.BusinessLogic.Models.Orders;
+using Store.BusinessLogic.Models.PaginationModels;
 using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
+using Store.DataAcess.Models;
 using Store.DataAcess.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -33,6 +35,24 @@ namespace Store.BusinessLogic.Services
 
             return result;
         }
-        
+
+        public async Task<ResponseModel<OrderModel>> GetAllOrdersAsync(OrderFiltrationModel model)
+        {
+            var mappedPageModel = _mapper.Map<OrderFiltration>(model);
+
+            var allModels = await _orderRepository.GetAllOrdersAsync(mappedPageModel);
+
+            var orders = _mapper.Map<IEnumerable<OrderModel>>(allModels);
+
+            var pageInfo = new PageModel(mappedPageModel.PageNumber, mappedPageModel.PageSize);
+
+            var responseModel = new ResponseModel<OrderModel>()
+            {
+                PageModel = pageInfo,
+                NavigationModels = orders
+            };
+
+            return responseModel;
+        }
     }
 }

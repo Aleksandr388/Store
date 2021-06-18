@@ -22,5 +22,13 @@ namespace Store.Presentation.Controllers
 
             return Ok();
         }
+
+        [HttpGet("GetAllOrders")]
+        public async Task<IActionResult> GetAllOrders([FromBody] OrderFiltrationModel orderModel)
+        {
+            var result = await _orderService.GetAllOrdersAsync(orderModel);
+
+            return Ok(result);
+        }
     }
 }

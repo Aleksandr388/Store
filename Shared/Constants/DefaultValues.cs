@@ -22,5 +22,7 @@
         public const int DefaultAmountValue = 100;
         public const string TestEmailForPay = "TestShop@gmail.com";
         public const string TestCustomerEmail = "VisaUser@gmail.com";
+        public const string BaseConnectGmail = "smtp.gmail.com";
+        public const string CreationDate = "CreationDate";
     }
 }

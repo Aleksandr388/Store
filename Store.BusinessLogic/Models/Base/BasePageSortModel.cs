@@ -1,4 +1,6 @@
-﻿namespace Store.BusinessLogic.Models.Base
+﻿using Shared.Constants;
+
+namespace Store.BusinessLogic.Models.Base
 {
     public class BasePageSortModel
     {
@@ -10,8 +12,8 @@
         public BasePageSortModel()
         {
             PageNumber = 1;
-            PageSize = Shared.Constants.DefaultValues.DefaultPageSIzeValue;
-            SortIndex = "CreationDate";
+            PageSize = DefaultValues.DefaultPageSIzeValue;
+            SortIndex = DefaultValues.CreationDate;
             IsAccesing = true;
         }
     }

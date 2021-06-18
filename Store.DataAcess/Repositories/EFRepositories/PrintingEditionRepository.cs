@@ -105,20 +105,6 @@ namespace Store.DataAcess.Repositories.EFRepositories
             await SaveChagesAsync();
         }
 
-        public async Task<long> GetAllPrice(List<PriceDal> models)
-        {
-            //var ids = models.Select(x => x.PrintingEdtitionId).ToList();
-
-            //var result = await _dbSet
-            //  .Where(x => ids.Contains(x.Id)).ToListAsync();
-
-            //var price = models.Select(x => x.Count).ToList();
-
-            return 2;
-              //.SumAsync(x => x.Price * models.Select(c => c.Count).FirstOrDefault());
-
-        }
-
         public async Task<List<PrintingEdition>> GetEditionRangeAsync(List<long> pEditionsId)
         {
             var editionList = _dbSet.Where(ed => pEditionsId.Contains(ed.Id));

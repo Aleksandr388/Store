@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Shared.Enums;
 using Store.DataAcess.Entities;
+using Store.DataAcess.Extensions;
+using Store.DataAcess.Models;
 using Store.DataAcess.Repositories.Base;
 using Store.DataAcess.Repositories.Interfaces;
 using Store.DataAcess.StoreContext;
@@ -31,6 +34,22 @@ namespace Store.DataAcess.Repositories.EFRepositories
                 .FirstOrDefaultAsync();
 
             return result;
+        }
+
+        public async Task<IEnumerable<Order>> GetAllOrdersAsync(OrderFiltration filtration)
+        {
+            var orders = await _dbSet
+                .Include(x => x.OrderItems)
+                .AsNoTracking()
+                .Where(x => filtration.Description == null || x.Description.Contains(filtration.Description))
+                .Where(x => filtration.OrderStatus == 0 || x.OrderStatus.Equals(filtration.OrderStatus))
+                .Where(x => filtration.User == null || x.UserId.ToString().Contains(filtration.User))
+                .OrderByField(filtration.SortIndex, filtration.IsAccesing)
+                .Skip((filtration.PageNumber - 1) * filtration.PageSize)
+                .Take(filtration.PageSize)
+                .ToListAsync();
+
+            return orders;
         }
     }
 }
