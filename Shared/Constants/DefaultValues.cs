@@ -24,5 +24,7 @@
         public const string TestCustomerEmail = "VisaUser@gmail.com";
         public const string BaseConnectGmail = "smtp.gmail.com";
         public const string CreationDate = "CreationDate";
+        public const string ClaimNameId = "nameid";
+        public const string TypeRole = "role";
     }
 }

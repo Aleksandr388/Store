@@ -134,30 +134,5 @@ namespace Store.BusinessLogic.Services
 
             await _orderRepository.UpdateAsync(order);
         }
-
-        public Task DeleteAsync(PaymentModel model)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IEnumerable<PaymentModel>> GetAllAsync()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<PaymentModel> GetByIdAsync(PaymentModel Modelid)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task RemoveAsync(PaymentModel model)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task UpdateAsync(PaymentModel model)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

@@ -66,7 +66,7 @@ namespace Store.BusinessLogic.Providers
             var handler = new JwtSecurityTokenHandler();
 
             var expiredJwtToken = handler.ReadToken(tokenModel.JwtToken) as JwtSecurityToken;
-            var userEmail = expiredJwtToken.Claims.First(claim =>  claim.Type == "nameid").Value;
+            var userEmail = expiredJwtToken.Claims.First(claim =>  claim.Type == DefaultValues.ClaimNameId).Value;
 
             var user = await _userManager.FindByEmailAsync(userEmail);
 
@@ -79,7 +79,7 @@ namespace Store.BusinessLogic.Providers
                 throw new CustomException(ErrorMessages.InvalidRefreshToken, HttpStatusCode.BadRequest);
             }
 
-            var userRole = expiredJwtToken.Claims.First(claim => claim.Type == "role").Value;
+            var userRole = expiredJwtToken.Claims.First(claim => claim.Type == DefaultValues.TypeRole).Value;
 
             var newJwtToken = CreateToken(user, userRole);
             var newRefreshToken = CreateRefreshToken(32);

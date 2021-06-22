@@ -1,6 +1,5 @@
 ﻿using Store.BusinessLogic.Models.Authors;
 using Store.BusinessLogic.Models.Base;
-using Store.DataAcess.Entities;
 using System.Collections.Generic;
 
 namespace Store.BusinessLogic.Models.PrintingEditions

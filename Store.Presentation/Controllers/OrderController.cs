@@ -15,14 +15,6 @@ namespace Store.Presentation.Controllers
             _orderService = orderService;
         }
 
-        [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody] OrderModel orderModel)
-        {
-            await _orderService.CreateAsync(orderModel);
-
-            return Ok();
-        }
-
         [HttpGet("GetAllOrders")]
         public async Task<IActionResult> GetAllOrders([FromBody] OrderFiltrationModel orderModel)
         {

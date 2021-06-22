@@ -1,9 +1,6 @@
 ﻿using Store.BusinessLogic.Models.Authors;
 using Store.BusinessLogic.Models.PaginationModels;
-using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Store.BusinessLogic.Services.Interfaces

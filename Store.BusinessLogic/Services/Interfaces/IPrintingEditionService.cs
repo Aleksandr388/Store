@@ -1,5 +1,4 @@
-﻿using Store.BusinessLogic.Models.Base;
-using Store.BusinessLogic.Models.PaginationModels;
+﻿using Store.BusinessLogic.Models.PaginationModels;
 using Store.BusinessLogic.Models.PrintingEditions;
 using System.Collections.Generic;
 using System.Threading.Tasks;

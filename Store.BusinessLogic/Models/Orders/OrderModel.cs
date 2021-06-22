@@ -1,9 +1,6 @@
 ﻿using Shared.Enums;
-using Store.BusinessLogic.Models.Payments;
 using Store.BusinessLogic.Models.Users;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Store.BusinessLogic.Models.Orders
 {
