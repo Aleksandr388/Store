@@ -51,7 +51,7 @@ namespace Store.BusinessLogic.Services
                 throw new CustomException(ErrorMessages.RegistrationFailed, HttpStatusCode.BadRequest);
             }
 
-            var addToRoleResult = await _userManager.AddToRoleAsync(user, UserRole.Client.ToString());
+            var addToRoleResult = await _userManager.AddToRoleAsync(user, UserRoleType.Client.ToString());
 
             if (!addToRoleResult.Succeeded)
             {
@@ -60,7 +60,7 @@ namespace Store.BusinessLogic.Services
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            var callbackUrl = new UriBuilder(Shared.Constants.URLS.UrlConfirmEmail);
+            var callbackUrl = new UriBuilder(URLS.UrlConfirmEmail);
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters[DefaultValues.Id] = user.Id.ToString();
             parameters[DefaultValues.Code] = code;
@@ -88,18 +88,29 @@ namespace Store.BusinessLogic.Services
                 throw new CustomException(ErrorMessages.LoginFailedWrongPassword, HttpStatusCode.BadRequest);
             }
 
-            var jwtUserToken = _jwtProvider.CreateToken(singInUser, UserRole.Client.ToString());
+            var jwtUserToken = _jwtProvider.CreateToken(singInUser, UserRoleType.Client.ToString());
+
+            if (jwtUserToken is null)
+            {
+                throw new CustomException(ErrorMessages.TokenIsEmpty, HttpStatusCode.BadRequest);
+            }
 
             var refreshToken = _jwtProvider.CreateRefreshToken(32);
+
+            if (refreshToken is null)
+            {
+                throw new CustomException(ErrorMessages.TokenIsEmpty, HttpStatusCode.BadRequest);
+            }
+
             singInUser.RefreshToken = refreshToken;
 
             await _userManager.UpdateAsync(singInUser);
 
             var roles = await _userManager.GetRolesAsync(singInUser);
 
-            if (roles.Contains(UserRole.Admin.ToString()))
+            if (roles.Contains(UserRoleType.Admin.ToString()))
             {
-                var jwtAdminToken = _jwtProvider.CreateToken(singInUser, UserRole.Admin.ToString());
+                var jwtAdminToken = _jwtProvider.CreateToken(singInUser, UserRoleType.Admin.ToString());
                 var createJwtTokenForAdmin = new TokenModel
                 {
                     RefreshToken = refreshToken,

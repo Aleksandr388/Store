@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Store.BusinessLogic.Models.PrintingEditions;
 using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
@@ -11,7 +10,6 @@ using System.Net;
 using Shared.Constants;
 using Store.BusinessLogic.Models.PaginationModels;
 using Store.DataAcess.Models;
-using Store.BusinessLogic.Models.Base;
 
 namespace Store.BusinessLogic.Services
 {
@@ -43,7 +41,7 @@ namespace Store.BusinessLogic.Services
                 throw new CustomException(ErrorMessages.TheCreatedListIsEmpty, HttpStatusCode.BadRequest);
             }
 
-            var chekListAuthors = _authorRepository.GetAllCreatedAuthors(mappedAuthorsList);
+            var chekListAuthors = _authorRepository.IsAuthorExist(mappedAuthorsList);
 
             if (!chekListAuthors)
             {

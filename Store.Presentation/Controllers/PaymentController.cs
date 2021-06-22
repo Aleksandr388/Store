@@ -21,31 +21,15 @@ namespace Store.Presentation.Controllers
         }
 
         [HttpPost("CreatePayment")]
-        public async Task<IActionResult> CreatePayment(PayModel payment)
-        { 
-            await _paymentService.CreatePaymentAsync(payment);
+        public async Task<IActionResult> CreatePayment(PayModel payment, long userId)
+        {
+            var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            userId = Convert.ToInt64(id);
+
+            await _paymentService.CreatePaymentAsync(payment, userId);
 
             return Ok("Order is created");
-        }
-
-        [HttpPost("CreateOrder")]
-        public async Task<IActionResult> CreateOrder(OrderModel orderModel)
-        {
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            orderModel.UserId = Convert.ToInt64(userId);
-
-            await _paymentService.CreateOrderAsync(orderModel);
-
-            return Ok("Order is created");
-        }
-
-        [HttpPost("CreateOrderItem")]
-        public async Task<IActionResult> CreateOrderItem(List<OrderItemModel> orderItemModel)
-        {
-            await _paymentService.CreateOrderItemAsync(orderItemModel);
-
-            return Ok();
         }
     }
 }

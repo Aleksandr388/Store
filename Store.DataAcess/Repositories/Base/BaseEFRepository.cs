@@ -36,7 +36,6 @@ namespace Store.DataAcess.Repositories.Base
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-
             var result = await _dbSet.ToListAsync();
 
             return result;

@@ -9,7 +9,7 @@ namespace Store.DataAcess.Repositories.Interfaces
     {
         public Task<Author> GetByName(string name);
         public Task RemoveAsync(long model);
-        public bool GetAllCreatedAuthors(IEnumerable<Author> models);
+        public bool IsAuthorExist(IEnumerable<Author> models);
         public Task<IEnumerable<Author>> GetAllAuthorsAsync(AuthorFiltration author);
     }
 }

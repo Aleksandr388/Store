@@ -20,9 +20,6 @@ namespace Store.DataAcess.StoreContext
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Payment> Payments { get; set; }
 
-        
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -51,9 +48,9 @@ namespace Store.DataAcess.StoreContext
                     Title = Shared.Constants.DefaultValues.DefaultPrintingEditionTitle,
                     Description = Shared.Constants.DefaultValues.DefaultPrintingEditionDescription,
                     Price = 300,
-                    Status = Status.Available,
-                    Type = Shared.Enums.Type.Journal,
-                    Curency = Curency.USD,
+                    Status = StatusType.Available,
+                    Type = Shared.Enums.EditionType.Journal,
+                    Curency = CurencyType.USD,
                 }
                 );
         }

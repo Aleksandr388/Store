@@ -10,6 +10,5 @@
         public const string ForConfirmedEmailGoToLink = "For confirmed Email go to link:";
         public const string RegistrationReference = "Registration reference";
         public const string ConfirmEmail = "Confirm Email";
-
     }
 }

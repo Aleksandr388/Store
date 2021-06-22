@@ -28,6 +28,10 @@
         public const string ErrorAddingRole = "Error adding role";
         public const string InvalidRefreshToken = "Invalid refresh token";
         public const string OrderEmpty = "Order is empry";
-
+        public const string PayModelEmpty = "Payment model is empty";
+        public const string PriceIsEmpty = "Price is empty";
+        public const string OrderItemIsEmpty = "Order Item model is emty";
+        public const string TokenIsEmpty = "Jwt tokent or refresh tokent is empty";
+        public const string AuthorNoExists = "No such author exists";
     }
 }

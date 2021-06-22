@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Constants;
 using Store.BusinessLogic.Models.Users;
@@ -24,7 +22,7 @@ namespace Store.BusinessLogic.Providers
 
         public TokensProvider(UserManager<StoreUser> userManager)
         {
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Shared.Constants.DefaultValues.JwtKeyToken));
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(DefaultValues.JwtKeyToken));
             _userManager = userManager;
         }
 
@@ -49,7 +47,6 @@ namespace Store.BusinessLogic.Providers
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
-
         }
 
         public string CreateRefreshToken(int length)
@@ -82,7 +79,7 @@ namespace Store.BusinessLogic.Providers
             var userRole = expiredJwtToken.Claims.First(claim => claim.Type == DefaultValues.TypeRole).Value;
 
             var newJwtToken = CreateToken(user, userRole);
-            var newRefreshToken = CreateRefreshToken(32);
+            var newRefreshToken = CreateRefreshToken(DefaultValues.RefreshTokentLength);
 
             user.RefreshToken = newRefreshToken;
             await _userManager.UpdateAsync(user);

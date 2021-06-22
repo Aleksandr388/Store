@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Shared.Constants;
 using Store.BusinessLogic.Models.Orders;
 using Store.BusinessLogic.Models.PaginationModels;
 using Store.BusinessLogic.Services.Interfaces;
@@ -6,6 +7,7 @@ using Store.DataAcess.Entities;
 using Store.DataAcess.Models;
 using Store.DataAcess.Repositories.Interfaces;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Store.BusinessLogic.Services
@@ -22,22 +24,23 @@ namespace Store.BusinessLogic.Services
 
         public async Task CreateAsync(OrderModel orderModel)
         {
+            if (orderModel is null)
+            {
+                throw new CustomException(ErrorMessages.OrderEmpty, HttpStatusCode.BadRequest);
+            }
+
             var mappedModel = _mapper.Map<Order>(orderModel);
 
             await _orderRepository.CreateAsync(mappedModel);
         }
 
-        public async Task<IEnumerable<OrderModel>> GetAllAsync()
-        {
-            var models = await _orderRepository.GetAllAsync();
-
-            var result = _mapper.Map<IEnumerable<OrderModel>>(models);
-
-            return result;
-        }
-
         public async Task<ResponseModel<OrderModel>> GetAllOrdersAsync(OrderFiltrationModel model)
         {
+            if (model is null)
+            {
+                throw new CustomException(ErrorMessages.OrderEmpty, HttpStatusCode.BadRequest);
+            }
+
             var mappedPageModel = _mapper.Map<OrderFiltration>(model);
 
             var allModels = await _orderRepository.GetAllOrdersAsync(mappedPageModel);

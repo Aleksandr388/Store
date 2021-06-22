@@ -6,6 +6,6 @@ namespace Store.DataAcess.Models
     {
         public string Description { get; set; }
         public OrderStatus OrderStatus { get; set; }
-        public string User { get; set; }
+        public string UserName { get; set; }
     }
 }

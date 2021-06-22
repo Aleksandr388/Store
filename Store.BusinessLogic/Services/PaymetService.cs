@@ -7,14 +7,12 @@ using Store.BusinessLogic.Models.Orders;
 using Store.BusinessLogic.Models.Payments;
 using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
-using Store.DataAcess.Models;
 using Store.DataAcess.Repositories.Interfaces;
 using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Store.BusinessLogic.Services
@@ -36,23 +34,24 @@ namespace Store.BusinessLogic.Services
             _orderRepository = orderRepository;
         }
 
-        public async Task CreateOrderAsync(OrderModel model)
+        public async Task CreatePaymentAsync(PayModel model, long userId)
         {
-            var orderModel = _mapper.Map<DataAcess.Entities.Order>(model);
-
-            await _orderRepository.CreateAsync(orderModel);
-        }
-
-        public async Task CreateOrderItemAsync(List<OrderItemModel> orderItems)
-        {
-            var order = await _orderRepository.GetByIdAsync(orderItems.First().OrderId);
-
-            if (order is null || order.IsRemoved || order.OrderStatus.Equals(OrderStatus.Paid))
+            OrderModel order = new OrderModel()
             {
-                throw new Exception();
+                UserId = userId,
+                Description = model.Description,
+            };
+
+            var mappedOrder = _mapper.Map<DataAcess.Entities.Order>(order);
+
+            await _orderRepository.CreateAsync(mappedOrder);
+
+            if (model.OrderItems is null)
+            {
+                throw new CustomException(ErrorMessages.OrderItemIsEmpty, HttpStatusCode.BadRequest);
             }
 
-            var itemsId = orderItems.Select(x => x.PrintingEditionId).ToList();
+            var itemsId = model.OrderItems.Select(x => x.PrintingEditionId).ToList();
             var printingEditions = (await _printingEditionRepository.GetEditionRangeAsync(itemsId)).Select(x => x.Id);
 
             if (!printingEditions.Any())
@@ -60,26 +59,27 @@ namespace Store.BusinessLogic.Services
                 throw new Exception();
             }
 
-            orderItems.RemoveAll(x => !printingEditions.Contains(x.PrintingEditionId));
+            model.OrderItems.RemoveAll(x => !printingEditions.Contains(x.PrintingEditionId));
 
-            var newOrderItems = _mapper.Map<List<DataAcess.Entities.OrderItem>>(orderItems);
+            var newOrderItems = _mapper.Map<List<DataAcess.Entities.OrderItem>>(model.OrderItems);
 
-            var prices = await _printingEditionRepository.GetPrices(newOrderItems);
+            var prices = await _printingEditionRepository.GetEditionsPrices(newOrderItems);
 
             foreach (var item in newOrderItems)
             {
-                item.Amount = prices.Where(x => x.Id == item.PrintingEditionId).FirstOrDefault().Price;
+                item.Price = prices.Where(x => x.Id == item.PrintingEditionId).FirstOrDefault().Price;
             }
 
-            order.OrderItems.AddRange(newOrderItems);
+            mappedOrder.OrderItems.AddRange(newOrderItems);
 
             await _orderRepository.SaveChagesAsync();
-        }
 
-        public async Task CreatePaymentAsync(PayModel model)
-        {
-            var order = await _orderRepository.GetByIdAsync(model.OrderId);
-            var orderPrice = _orderRepository.GetOrderPrice(order);
+            var orderPrice = _orderRepository.GetOrderPrice(mappedOrder);
+
+            if (orderPrice is 0)
+            {
+                throw new CustomException(ErrorMessages.PriceIsEmpty, HttpStatusCode.BadRequest);
+            }
 
             StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
 
@@ -109,7 +109,7 @@ namespace Store.BusinessLogic.Services
             var stpCustomer = custSercise.Create(customer);
             var options = new ChargeCreateOptions
             {
-                Currency = Curency.USD.ToString(),
+                Currency = CurencyType.USD.ToString(),
                 ReceiptEmail = DefaultValues.TestEmailForPay,
                 Description = model.Description,
                 Customer = stpCustomer.Id,
@@ -129,10 +129,10 @@ namespace Store.BusinessLogic.Services
 
             var paymentId = await _paymentRepository.GetByIdAsync(newPayment.Id);
 
-            order.OrderStatus = OrderStatus.Paid;
-            order.PaymentId = paymentId.Id;
+            mappedOrder.OrderStatus = OrderStatus.Paid;
+            mappedOrder.PaymentId = paymentId.Id;
 
-            await _orderRepository.UpdateAsync(order);
+            await _orderRepository.UpdateAsync(mappedOrder);
         }
     }
 }

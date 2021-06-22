@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Store.DataAcess.Entities;
+using System.Collections.Generic;
 
 namespace Store.DataAcess.Models
 {
@@ -12,6 +13,6 @@ namespace Store.DataAcess.Models
         public long ExpMonth { get; set; }
         public long ExpYear { get; set; }
         public long TransactionId { get; set; }
-        public IEnumerable<PriceDal> PriceModels { get; set; }
+        public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
 }

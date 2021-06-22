@@ -25,9 +25,9 @@ namespace Store.BusinessLogic.Services
 
         public async Task CreateAsync(AuthorModel model)
         {
-            var chekModel = await _authorRepository.GetByName(model.Name);
+            var checkModel = await _authorRepository.GetByName(model.Name);
 
-            if (chekModel is not null)
+            if (checkModel is not null)
             {
                 throw new CustomException(ErrorMessages.AuthtorWithThisNameCreated, HttpStatusCode.BadRequest);
             }
@@ -44,10 +44,15 @@ namespace Store.BusinessLogic.Services
                 throw new CustomException(ErrorMessages.UpdatedModelIsNull, HttpStatusCode.BadRequest);
             }
 
+            var checkModel = await _authorRepository.GetByName(model.Name);
+
+            if (checkModel is null)
+            {
+                throw new CustomException(ErrorMessages.AuthorNoExists, HttpStatusCode.BadRequest);
+            }
+
             var authorModel = _mapper.Map<Author>(model);
-
             
-
             await _authorRepository.UpdateAsync(authorModel);
         }
 
@@ -56,6 +61,14 @@ namespace Store.BusinessLogic.Services
             if (model is null)
             {
                 throw new CustomException(ErrorMessages.RemoveIsFailed, HttpStatusCode.BadRequest);
+            }
+
+            var checkModel = await _authorRepository.GetByName(model.Name);
+
+            if (checkModel is null)
+            {
+                throw new CustomException(ErrorMessages.AuthorNoExists, HttpStatusCode.BadRequest);
+
             }
 
             var deleteAuthorModel = _mapper.Map<Author>(model);
@@ -73,6 +86,13 @@ namespace Store.BusinessLogic.Services
             if (modelId is null)
             {
                 throw new CustomException(ErrorMessages.NoUserForSpecifiedId, HttpStatusCode.BadRequest);
+            }
+
+            var checkModel = _authorRepository.GetByIdAsync(modelId.Id);
+
+            if (checkModel is null)
+            {
+                throw new CustomException(ErrorMessages.AuthorNoExists, HttpStatusCode.BadRequest);
             }
 
             var authorModel = await _authorRepository.GetByIdAsync(modelId.Id);
@@ -100,14 +120,14 @@ namespace Store.BusinessLogic.Services
 
             var allmodels = await _authorRepository.GetAllAuthorsAsync(mappedPageModel);
 
-            var printingEditions = _mapper.Map<IEnumerable<AuthorModel>>(allmodels);
+            var authors = _mapper.Map<IEnumerable<AuthorModel>>(allmodels);
 
             var paginationInfo = new PageModel(mappedPageModel.PageNumber, mappedPageModel.PageSize);
 
             var responseModel = new ResponseModel<AuthorModel>()
             {
                 PageModel = paginationInfo,
-                NavigationModels = printingEditions
+                NavigationModels = authors
             };
 
             return responseModel;

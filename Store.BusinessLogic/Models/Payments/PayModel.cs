@@ -1,4 +1,4 @@
-﻿using Store.BusinessLogic.Models.PrintingEditions;
+﻿using Store.BusinessLogic.Models.Orders;
 using System.Collections.Generic;
 
 namespace Store.BusinessLogic.Models.Payments
@@ -14,6 +14,6 @@ namespace Store.BusinessLogic.Models.Payments
         public long ExpMonth { get; set; }
         public long ExpYear { get; set; }
         public long TransactionId { get; set; }
-        public IEnumerable<PriceModel> PriceModels { get; set; }
+        public List<OrderItemModel> OrderItems { get; set; } = new List<OrderItemModel>();
     }
 }

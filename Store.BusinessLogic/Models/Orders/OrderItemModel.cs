@@ -5,9 +5,9 @@ namespace Store.BusinessLogic.Models.Orders
 {
     public class OrderItemModel
     {
-        public decimal Amount { get; set; }
+        public decimal Price { get; set; }
         public int Count { get; set; }
-        public Curency Curency { get; set; }
+        public CurencyType Curency { get; set; }
 
         public long PrintingEditionId { get; set; }
         public PrintingEditionModel PrintingEdition { get; set; }

@@ -26,5 +26,10 @@
         public const string CreationDate = "CreationDate";
         public const string ClaimNameId = "nameid";
         public const string TypeRole = "role";
+        public const string SortValue = "p";
+        public const int PageStep = 1;
+        public const string RememberPassword = "Remember?";
+        public const int PasswordCount = 8;
+        public const int RefreshTokentLength = 32;
     }
 }

@@ -26,16 +26,10 @@ namespace Store.DataAcess.Repositories.EFRepositories
 
             return result;
         }
-
-        public async Task<PrintingEdition> GetByTitleAsync(string title)
-        {
-            var result = await _dbSet.FirstOrDefaultAsync(x => x.Title == title);
-
-            return result;
-        }
+        
         public override async Task CreateAsync(PrintingEdition model)
         {
-            List<Author> authors = new(model.Authors);
+            List<Author> authors = new List<Author>(model.Authors);
 
             model.Authors.Clear();
 
@@ -56,19 +50,19 @@ namespace Store.DataAcess.Repositories.EFRepositories
             return result;
         }
 
-        public async Task<IEnumerable<PrintingEdition>> GetAllPrintingEditionsAsync(PrintingEditionFiltration PFSModel)
+        public async Task<IEnumerable<PrintingEdition>> GetAllPrintingEditionsAsync(PrintingEditionFiltration editioModel)
         {
             var printingEditions = await _dbSet
                 .Include(x => x.Authors)
                 .AsNoTracking()
-                .Where(x => PFSModel.Description == null || x.Description.Contains(PFSModel.Description))
-                .Where(x => PFSModel.Title == null || x.Title.Contains(PFSModel.Title))
-                .Where(x => PFSModel.NameAuthor == null || x.Authors.Any(y => y.Name.Contains(PFSModel.NameAuthor)))
-                .Where(x => PFSModel.MaxPrice == 0 || x.Price >= PFSModel.MinPrice && x.Price <= PFSModel.MaxPrice)
-                .Where(x => !PFSModel.Type.Any() || PFSModel.Type.Contains(x.Type))
-                .OrderByField(PFSModel.SortIndex, PFSModel.IsAccesing)
-                .Skip((PFSModel.PageNumber - 1) * PFSModel.PageSize)
-                .Take(PFSModel.PageSize)
+                .Where(x => editioModel.Description == null || x.Description.Contains(editioModel.Description))
+                .Where(x => editioModel.Title == null || x.Title.Contains(editioModel.Title))
+                .Where(x => editioModel.NameAuthor == null || x.Authors.Any(y => y.Name.Contains(editioModel.NameAuthor)))
+                .Where(x => editioModel.MaxPrice == 0 || x.Price >= editioModel.MinPrice && x.Price <= editioModel.MaxPrice)
+                .Where(x => !editioModel.Type.Any() || editioModel.Type.Contains(x.Type))
+                .OrderByField(editioModel.SortOrder, editioModel.IsAccesing)
+                .Skip((editioModel.PageNumber - 1) * editioModel.PageSize)
+                .Take(editioModel.PageSize)
                 .ToListAsync();
 
             return printingEditions;
@@ -105,16 +99,16 @@ namespace Store.DataAcess.Repositories.EFRepositories
             await SaveChagesAsync();
         }
 
-        public async Task<List<PrintingEdition>> GetEditionRangeAsync(List<long> pEditionsId)
+        public async Task<List<PrintingEdition>> GetEditionRangeAsync(List<long> editionId)
         {
-            var editionList = _dbSet.Where(ed => pEditionsId.Contains(ed.Id));
+            var editionList = _dbSet.Where(ed => editionId.Contains(ed.Id));
 
             var result = await editionList.ToListAsync();
 
             return result;
         }
 
-        public async Task<IEnumerable<PrintingEdition>> GetPrices(List<OrderItem> orderItems)
+        public async Task<IEnumerable<PrintingEdition>> GetEditionsPrices(List<OrderItem> orderItems)
         {
             var printingEditions = await _dbSet.ToListAsync();
 

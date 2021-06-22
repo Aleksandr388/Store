@@ -9,7 +9,7 @@ namespace Store.DataAcess.Models
         public string Description { get; set; }
         public decimal MaxPrice { get; set; }
         public decimal MinPrice { get; set; }
-        public List<Type> Type { get; set; }
+        public List<EditionType> Type { get; set; }
         public string NameAuthor { get; set; }
     }
 }

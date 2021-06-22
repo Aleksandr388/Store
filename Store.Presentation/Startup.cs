@@ -42,8 +42,6 @@ namespace Store.Presentation
                 .UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString(Shared.Constants.DefaultValues.DefaultConnection)));
 
-            
-
             services.AddIdentity<StoreUser, IdentityRole<long>>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -95,7 +93,6 @@ namespace Store.Presentation
                 cfg.AddProfile(new PageMappingProfile());
                 cfg.AddProfile(new OrderMappingProfile());
                 cfg.AddProfile(new PaymentMappingProfile());
-                cfg.AddProfile(new PriceMappingProfile());
                 cfg.AddProfile(new OrderItemMappingProfile());
             });
 

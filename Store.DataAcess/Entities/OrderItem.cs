@@ -6,9 +6,9 @@ namespace Store.DataAcess.Entities
 {
     public class OrderItem : BaseEntity
     {
-        public decimal Amount { get; set; }
+        public decimal Price { get; set; }
         public int Count { get; set; }
-        public Curency Curency { get; set; }
+        public CurencyType Curency { get; set; }
 
         public long PrintingEditionId { get; set; }
         public virtual PrintingEdition PrintingEdition { get; set; }

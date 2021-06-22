@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Shared.Constants;
 using Store.DataAcess.Entities;
 using Store.DataAcess.Extensions;
 using Store.DataAcess.Models;
@@ -40,14 +41,14 @@ namespace Store.DataAcess.Repositories.EFRepositories
                 .AsNoTracking()
                 .Where(x => author.Name == null || x.Name.Contains(author.Name))
                 .Where(x => author.PrintingEditionTitle == null || x.PrintingEditions.Any(y => y.Title.Contains(author.PrintingEditionTitle)))               
-                .OrderByField(author.SortIndex, author.IsAccesing)
-                .Skip((author.PageNumber - 1) * author.PageSize)
+                .OrderByField(author.SortOrder, author.IsAccesing)
+                .Skip((author.PageNumber - DefaultValues.PageStep) * author.PageSize)
                 .Take(author.PageSize)
                 .ToListAsync();
 
             return authors;
         }
-        public bool GetAllCreatedAuthors(IEnumerable<Author> models)
+        public bool IsAuthorExist(IEnumerable<Author> models)
         {
             var result = models.All(x => _dbSet.Select(y => y).Contains(x));
 

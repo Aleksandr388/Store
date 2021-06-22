@@ -13,7 +13,7 @@ namespace Store.BusinessLogic.Helpers
             var emailMessage = new MimeMessage();
 
             emailMessage.From.Add(new MailboxAddress(DefaultValues.AdminRole, DefaultValues.EmailForEmailProvider));
-            emailMessage.To.Add(new MailboxAddress("", email));
+            emailMessage.To.Add(new MailboxAddress(string.Empty, email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
@@ -27,7 +27,6 @@ namespace Store.BusinessLogic.Helpers
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
             }
-
         }
     }
 }

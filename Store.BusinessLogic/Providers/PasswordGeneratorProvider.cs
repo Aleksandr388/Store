@@ -1,4 +1,5 @@
-﻿using Store.BusinessLogic.Providers.Interfaces;
+﻿using Shared.Constants;
+using Store.BusinessLogic.Providers.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +11,19 @@ namespace Store.BusinessLogic.Providers
     {
         public string RandomPasswordGenerator(int length)
         {
-            return GetRandomString(length, Shared.Constants.DefaultValues.alphanumericCharacters);
+            return GetRandomString(length, DefaultValues.alphanumericCharacters);
         }
 
         public static string GetRandomString(int length, IEnumerable<char> characterSet)
         {
             var characterArray = characterSet.Distinct().ToArray();
 
-            var bytes = new byte[length * 8];
+            var bytes = new byte[length * DefaultValues.PasswordCount];
             new RNGCryptoServiceProvider().GetBytes(bytes);
             var result = new char[length];
-            for (int i = 0; i < length; i++)
+            for (int i = default; i < length; i++)
             {
-                ulong value = BitConverter.ToUInt64(bytes, i * 8);
+                ulong value = BitConverter.ToUInt64(bytes, i * DefaultValues.PasswordCount);
                 result[i] = characterArray[value % (uint)characterArray.Length];
             }
             return new string(result);

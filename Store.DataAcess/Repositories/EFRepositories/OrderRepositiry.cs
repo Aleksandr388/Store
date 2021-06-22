@@ -21,7 +21,7 @@ namespace Store.DataAcess.Repositories.EFRepositories
 
         public decimal GetOrderPrice(Order model)
         {
-            var amount = model.OrderItems.Sum(x => x.Amount * x.Count);
+            var amount = model.OrderItems.Sum(x => x.Price * x.Count);
 
             return amount;
         }
@@ -42,9 +42,9 @@ namespace Store.DataAcess.Repositories.EFRepositories
                 .Include(x => x.OrderItems)
                 .AsNoTracking()
                 .Where(x => filtration.Description == null || x.Description.Contains(filtration.Description))
-                .Where(x => filtration.OrderStatus == 0 || x.OrderStatus.Equals(filtration.OrderStatus))
-                .Where(x => filtration.User == null || x.UserId.ToString().Contains(filtration.User))
-                .OrderByField(filtration.SortIndex, filtration.IsAccesing)
+                .Where(x => filtration.OrderStatus == default || x.OrderStatus.Equals(filtration.OrderStatus))
+                .Where(x => filtration.UserName == null || x.UserId.ToString().Contains(filtration.UserName))
+                .OrderByField(filtration.SortOrder, filtration.IsAccesing)
                 .Skip((filtration.PageNumber - 1) * filtration.PageSize)
                 .Take(filtration.PageSize)
                 .ToListAsync();
