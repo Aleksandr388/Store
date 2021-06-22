@@ -35,7 +35,7 @@ namespace Store.DataAcess.Repositories.EFRepositories
         }
         public override async Task CreateAsync(PrintingEdition model)
         {
-            List<Author> authors = new List<Author>(model.Authors);
+            List<Author> authors = new(model.Authors);
 
             model.Authors.Clear();
 

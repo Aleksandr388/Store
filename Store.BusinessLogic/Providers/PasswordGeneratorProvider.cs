@@ -13,7 +13,7 @@ namespace Store.BusinessLogic.Providers
             return GetRandomString(length, Shared.Constants.DefaultValues.alphanumericCharacters);
         }
 
-        public string GetRandomString(int length, IEnumerable<char> characterSet)
+        public static string GetRandomString(int length, IEnumerable<char> characterSet)
         {
             var characterArray = characterSet.Distinct().ToArray();
 

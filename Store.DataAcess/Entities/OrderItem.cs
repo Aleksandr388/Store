@@ -11,9 +11,9 @@ namespace Store.DataAcess.Entities
         public Curency Curency { get; set; }
 
         public long PrintingEditionId { get; set; }
-        public PrintingEdition PrintingEdition { get; set; }
+        public virtual PrintingEdition PrintingEdition { get; set; }
 
         public long OrderId { get; set; }
-        public Order Order { get; set; }
+        public virtual Order Order { get; set; }
     }
 }

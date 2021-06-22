@@ -6,6 +6,6 @@ namespace Store.DataAcess.Entities
     public class Author : BaseEntity
     {
         public string Name { get; set; }
-        public List<PrintingEdition> PrintingEditions { get; set; } = new List<PrintingEdition>();
+        public virtual List<PrintingEdition> PrintingEditions { get; set; } = new List<PrintingEdition>();
     }
 }

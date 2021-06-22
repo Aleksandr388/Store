@@ -38,7 +38,11 @@ namespace Store.Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ShopDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString(Shared.Constants.DefaultValues.DefaultConnection)));
+                options
+                .UseLazyLoadingProxies()
+                .UseSqlServer(Configuration.GetConnectionString(Shared.Constants.DefaultValues.DefaultConnection)));
+
+            
 
             services.AddIdentity<StoreUser, IdentityRole<long>>(options =>
             {

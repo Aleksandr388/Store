@@ -7,12 +7,12 @@ namespace Store.DataAcess.Entities
     public class Order : BaseEntity
     {
         public string Description { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public virtual OrderStatus OrderStatus { get; set; }
         public long PaymentId { get; set; }
 
-        public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+        public virtual List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
         public long UserId { get; set; }
-        public StoreUser User { get; set; }
+        public virtual StoreUser User { get; set; }
     }
 }
