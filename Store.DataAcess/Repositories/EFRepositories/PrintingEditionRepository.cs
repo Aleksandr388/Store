@@ -99,15 +99,6 @@ namespace Store.DataAcess.Repositories.EFRepositories
             await SaveChagesAsync();
         }
 
-        public async Task<List<PrintingEdition>> GetEditionRangeAsync(List<long> editionId)
-        {
-            var editionList = _dbSet.Where(ed => editionId.Contains(ed.Id));
-
-            var result = await editionList.ToListAsync();
-
-            return result;
-        }
-
         public async Task<IEnumerable<PrintingEdition>> GetEditionsPrices(List<OrderItem> orderItems)
         {
             var printingEditions = await _dbSet.ToListAsync();

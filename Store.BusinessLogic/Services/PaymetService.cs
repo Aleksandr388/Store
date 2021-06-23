@@ -51,23 +51,13 @@ namespace Store.BusinessLogic.Services
                 throw new CustomException(ErrorMessages.OrderItemIsEmpty, HttpStatusCode.BadRequest);
             }
 
-            var itemsId = model.OrderItems.Select(x => x.PrintingEditionId).ToList();
-            var printingEditions = (await _printingEditionRepository.GetEditionRangeAsync(itemsId)).Select(x => x.Id);
-
-            if (!printingEditions.Any())
-            {
-                throw new Exception();
-            }
-
-            model.OrderItems.RemoveAll(x => !printingEditions.Contains(x.PrintingEditionId));
-
             var newOrderItems = _mapper.Map<List<DataAcess.Entities.OrderItem>>(model.OrderItems);
 
-            var prices = await _printingEditionRepository.GetEditionsPrices(newOrderItems);
+            var editionPrices = await _printingEditionRepository.GetEditionsPrices(newOrderItems);
 
             foreach (var item in newOrderItems)
             {
-                item.Price = prices.Where(x => x.Id == item.PrintingEditionId).FirstOrDefault().Price;
+                item.Price = editionPrices.Where(x => x.Id == item.PrintingEditionId).FirstOrDefault().Price;
             }
 
             mappedOrder.OrderItems.AddRange(newOrderItems);
