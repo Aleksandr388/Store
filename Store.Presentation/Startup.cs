@@ -68,6 +68,8 @@ namespace Store.Presentation
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
+            services.AddCors();
+
             services.AddSwaggerGen();
 
             services.InitializeAsync().Wait();
@@ -127,6 +129,12 @@ namespace Store.Presentation
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200/")
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .AllowAnyOrigin());
+
 
             app.UseEndpoints(endpoints =>
             {

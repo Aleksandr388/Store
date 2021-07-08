@@ -15,11 +15,9 @@ namespace Store.Presentation.Controllers
             _accountService = accountService;
         }
         [HttpPost("SignUp")]
-        public async Task<IActionResult> SignUp([FromBody]UserSignUpModel userSignUpModel)
+        public async Task SignUp([FromBody]UserSignUpModel userSignUpModel)
         {
-            var result = await _accountService.SignUpAsync(userSignUpModel);
-
-            return Ok(result);
+             await _accountService.SignUpAsync(userSignUpModel);
         }
         [HttpPost("SignIn")]
         public async Task<IActionResult> SignIn([FromBody]UserSignInModel userSignInModel)
@@ -34,7 +32,6 @@ namespace Store.Presentation.Controllers
 
             return Ok(result);
         }
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Client")]
         [HttpPost("ForgotPassword")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordUser forgotPasswordUser)
         {
@@ -42,9 +39,5 @@ namespace Store.Presentation.Controllers
 
             return Ok(result);
         }
-        //public async Task<IActionResult> Logout()
-        //{
-        //   return Ok(await _accountService.LogoutAsync());
-        //}
     }
 }
