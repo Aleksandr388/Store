@@ -51,7 +51,11 @@ namespace Store.Presentation
                 .AddDefaultTokenProviders();
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Shared.Constants.DefaultValues.JwtKeyToken));
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
             .AddJwtBearer(
                     opt =>
                     {
@@ -86,6 +90,7 @@ namespace Store.Presentation
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IPaymentService, PaymetService>();
+            services.AddTransient<IUserService, UserService>();
 
             var mapperConfig = new MapperConfiguration(cfg =>
             {

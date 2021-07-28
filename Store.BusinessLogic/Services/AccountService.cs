@@ -114,7 +114,7 @@ namespace Store.BusinessLogic.Services
                 var createJwtTokenForAdmin = new TokenModel
                 {
                     RefreshToken = refreshToken,
-                    JwtToken = jwtAdminToken
+                    AccesToken = jwtAdminToken
                 };
 
                 return createJwtTokenForAdmin;
@@ -123,7 +123,7 @@ namespace Store.BusinessLogic.Services
             var tokenClientModels = new TokenModel
             {
                 RefreshToken = refreshToken,
-                JwtToken = jwtUserToken
+                AccesToken = jwtUserToken
             };
 
             return tokenClientModels;

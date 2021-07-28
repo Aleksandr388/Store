@@ -2,7 +2,7 @@
 {
     public class TokenModel
     {
-        public string JwtToken { get; set; }
+        public string AccesToken { get; set; }
         public string RefreshToken { get; set; }
     }
 }

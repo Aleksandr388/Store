@@ -2,7 +2,7 @@
 {
     public partial class Messages
     {
-        public const string EmailConfirmedSuccessfully = "Email confirmed successfully";
+        public const string EmailConfirmedSuccessfully = "Email confirmed successfully, thank for your registration.";
         public const string ResetPassword = "Reset password";
         public const string CreateNewPassword = "We crate a new password for you: ";
         public const string PasswordSent = "Password sent";

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Store.BusinessLogic.Models.Orders;
 using Store.BusinessLogic.Models.Payments;
 using Store.BusinessLogic.Services.Interfaces;
@@ -20,6 +21,7 @@ namespace Store.Presentation.Controllers
             _paymentService = paymentService;
         }
 
+        [Authorize]
         [HttpPost("CreatePayment")]
         public async Task<IActionResult> CreatePayment(PayModel payment, long userId)
         {

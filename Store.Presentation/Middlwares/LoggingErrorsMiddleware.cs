@@ -33,7 +33,7 @@ namespace Store.Presentation.Middlewares
                 await context.Response.WriteAsync(jsonString);
             }
             catch (Exception exeption)
-            {
+            {  
                 _loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logger.txt"));
                 var logger = _loggerFactory.CreateLogger("logger.txt");
                 logger.LogError($"{DateTime.Now}, {exeption.Message}, {exeption.StackTrace}");

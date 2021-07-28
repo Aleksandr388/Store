@@ -4,8 +4,8 @@ using Store.BusinessLogic.Models.Users;
 using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Store.BusinessLogic.Services
@@ -20,34 +20,22 @@ namespace Store.BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public Task AddUserToRole(UserModel userModel)
+        public async Task<UserModel> GetByIdUserAsync(string token)
         {
-            throw new NotImplementedException();
-        }
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var userToken = tokenHandler.ReadJwtToken(token);
+            var userId = userToken.Claims.First(claim => claim.Type == "nameid").Value;
 
-        public Task CreateUserAsync(UserModel model)
-        {
-            throw new NotImplementedException();
-        }
+            if (userId is null)
+            {
+                throw new Exception();
+            }
 
-        public Task DeleteUserAsync(UserModel model)
-        {
-            throw new NotImplementedException();
-        }
+            var user = await _userManager.FindByIdAsync(userId);
 
-        public Task<IEnumerable<UserModel>> GetAllUserAsync()
-        {
-            throw new NotImplementedException();
-        }
+            var userModel = _mapper.Map<UserModel>(user);
 
-        public Task<IEnumerable<UserModel>> GetAllUserAsync(Expression<Func<UserModel, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<UserModel> GetByIdUserAsync(long id)
-        {
-            throw new NotImplementedException();
+            return userModel;
         }
 
         public Task SaveChagesAsync()
@@ -55,9 +43,32 @@ namespace Store.BusinessLogic.Services
             throw new NotImplementedException();
         }
 
-        public Task UpdateUserAsync(UserModel model)
+        public async Task UpdateUserAsync(UpdateUserModel model)
         {
-            throw new NotImplementedException();
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var userToken = tokenHandler.ReadJwtToken(model.Jwt);
+            var userId = userToken.Claims.First(claim => claim.Type == "nameid").Value;
+
+            var checkUser = await _userManager.FindByIdAsync(userId);
+
+            if (checkUser is null)
+            {
+                throw new Exception();
+            }
+            checkUser.FirstName = model.FirstName;
+            checkUser.LastName = model.LastName;
+
+
+            await  _userManager.SetUserNameAsync(checkUser, model.Email);
+            await _userManager.SetEmailAsync(checkUser, model.Email);
+
+            if (model.CurrentPassword is not null || model.NewPassword is not null)
+            {
+                await _userManager.ChangePasswordAsync(checkUser, model.CurrentPassword, model.NewPassword);
+
+            }
+
+            await _userManager.UpdateAsync(checkUser);
         }
     }
 }

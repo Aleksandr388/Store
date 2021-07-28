@@ -30,8 +30,9 @@ namespace Store.BusinessLogic.Providers
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, user.UserName),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, role)
+                new Claim(JwtRegisteredClaimNames.Email, user.UserName),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, role),
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString())
             };
 
             var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
@@ -39,7 +40,7 @@ namespace Store.BusinessLogic.Providers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddSeconds(300),
+                Expires = DateTime.Now.AddMinutes(10),
                 SigningCredentials = credentials
             };
 
@@ -62,7 +63,7 @@ namespace Store.BusinessLogic.Providers
         {
             var handler = new JwtSecurityTokenHandler();
 
-            var expiredJwtToken = handler.ReadToken(tokenModel.JwtToken) as JwtSecurityToken;
+            var expiredJwtToken = handler.ReadToken(tokenModel.AccesToken) as JwtSecurityToken;
             var userEmail = expiredJwtToken.Claims.First(claim =>  claim.Type == DefaultValues.ClaimNameId).Value;
 
             var user = await _userManager.FindByEmailAsync(userEmail);
@@ -86,7 +87,7 @@ namespace Store.BusinessLogic.Providers
 
             return new TokenModel
             {
-                JwtToken = newJwtToken,
+                AccesToken = newJwtToken,
                 RefreshToken = newRefreshToken
             };
         }
