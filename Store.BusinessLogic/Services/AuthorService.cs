@@ -118,11 +118,11 @@ namespace Store.BusinessLogic.Services
         {
             var mappedPageModel = _mapper.Map<AuthorFiltration>(authorModel);
 
-            var allmodels = await _authorRepository.GetAllAuthorsAsync(mappedPageModel);
+            (IEnumerable<Author> authors, int count) authorCount = await _authorRepository.GetAllAuthorsAsync(mappedPageModel);
 
-            var authors = _mapper.Map<IEnumerable<AuthorModel>>(allmodels);
+            var authors = _mapper.Map<IEnumerable<AuthorModel>>(authorCount.authors);
 
-            var paginationInfo = new PageModel(mappedPageModel.PageNumber, mappedPageModel.PageSize);
+            var paginationInfo = new PageModel(mappedPageModel.PageNumber, mappedPageModel.PageSize, authorCount.count);
 
             var responseModel = new ResponseModel<AuthorModel>()
             {

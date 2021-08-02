@@ -43,11 +43,11 @@ namespace Store.BusinessLogic.Services
 
             var mappedPageModel = _mapper.Map<OrderFiltration>(model);
 
-            var allModels = await _orderRepository.GetAllOrdersAsync(mappedPageModel);
+            (IEnumerable<Order> orders, int count) orderCount = await _orderRepository.GetAllOrdersAsync(mappedPageModel);
 
-            var orders = _mapper.Map<IEnumerable<OrderModel>>(allModels);
+            var orders = _mapper.Map<IEnumerable<OrderModel>>(orderCount.orders);
 
-            var pageInfo = new PageModel(mappedPageModel.PageNumber, mappedPageModel.PageSize);
+            var pageInfo = new PageModel(mappedPageModel.PageNumber, mappedPageModel.PageSize, orderCount.count);
 
             var responseModel = new ResponseModel<OrderModel>()
             {

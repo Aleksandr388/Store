@@ -8,6 +8,6 @@ namespace Store.DataAcess.Repositories.Interfaces
     public interface IOrderRepository : IBaseRepository<Order>
     {
         public decimal GetOrderPrice(Order model);
-        public  Task<IEnumerable<Order>> GetAllOrdersAsync(OrderFiltration filtration);
+        public Task<(IEnumerable<Order>, int)> GetAllOrdersAsync(OrderFiltration filtration);
     }
 }

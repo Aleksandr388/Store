@@ -50,9 +50,9 @@ namespace Store.DataAcess.Repositories.EFRepositories
             return result;
         }
 
-        public async Task<IEnumerable<PrintingEdition>> GetAllPrintingEditionsAsync(PrintingEditionFiltration editioModel)
+        public async Task<(IEnumerable<PrintingEdition>, int)> GetAllPrintingEditionsAsync(PrintingEditionFiltration editioModel)
         {
-            var printingEditions = await _dbSet
+            var printingEditionsList = await _dbSet
                 .Include(x => x.Authors)
                 .AsNoTracking()
                 .Where(x => editioModel.Description == null || x.Description.Contains(editioModel.Description))
@@ -65,7 +65,19 @@ namespace Store.DataAcess.Repositories.EFRepositories
                 .Take(editioModel.PageSize)
                 .ToListAsync();
 
-            return printingEditions;
+            var printingEditionsCount = await _dbSet
+                .Include(x => x.Authors)
+                .AsNoTracking()
+                .Where(x => editioModel.Description == null || x.Description.Contains(editioModel.Description))
+                .Where(x => editioModel.Title == null || x.Title.Contains(editioModel.Title))
+                .Where(x => editioModel.NameAuthor == null || x.Authors.Any(y => y.Name.Contains(editioModel.NameAuthor)))
+                .Where(x => editioModel.MaxPrice == 0 || x.Price >= editioModel.MinPrice && x.Price <= editioModel.MaxPrice)
+                .Where(x => !editioModel.Type.Any() || editioModel.Type.Contains(x.Type))
+                .CountAsync();
+
+            var editionsWithTotalAmount = (printingEditionsList: printingEditionsList, count: printingEditionsCount);
+
+            return editionsWithTotalAmount;
         }
 
         public override async Task UpdateAsync(PrintingEdition model)

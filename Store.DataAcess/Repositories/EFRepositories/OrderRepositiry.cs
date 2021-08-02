@@ -36,11 +36,10 @@ namespace Store.DataAcess.Repositories.EFRepositories
             return result;
         }
 
-        public async Task<IEnumerable<Order>> GetAllOrdersAsync(OrderFiltration filtration)
+        public async Task<(IEnumerable<Order>, int)> GetAllOrdersAsync(OrderFiltration filtration)
         {
             var orders = await _dbSet
                 .Include(x => x.OrderItems)
-                .AsNoTracking()
                 .Where(x => filtration.Description == null || x.Description.Contains(filtration.Description))
                 .Where(x => filtration.OrderStatus == default || x.OrderStatus.Equals(filtration.OrderStatus))
                 .Where(x => filtration.UserName == null || x.UserId.ToString().Contains(filtration.UserName))
@@ -49,7 +48,20 @@ namespace Store.DataAcess.Repositories.EFRepositories
                 .Take(filtration.PageSize)
                 .ToListAsync();
 
-            return orders;
+            var ordersCount = await _dbSet
+               .Include(x => x.OrderItems)
+               .AsNoTracking()
+               .Where(x => filtration.Description == null || x.Description.Contains(filtration.Description))
+               .Where(x => filtration.OrderStatus == default || x.OrderStatus.Equals(filtration.OrderStatus))
+               .Where(x => filtration.UserName == null || x.UserId.ToString().Contains(filtration.UserName))
+               .OrderByField(filtration.SortOrder, filtration.IsAccesing)
+               .Skip((filtration.PageNumber - 1) * filtration.PageSize)
+               .Take(filtration.PageSize)
+               .CountAsync();
+
+            var orderWithTotalAmount = (orders: orders, count: ordersCount);
+
+            return orderWithTotalAmount;
         }
     }
 }

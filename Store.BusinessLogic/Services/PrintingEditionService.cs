@@ -88,11 +88,11 @@ namespace Store.BusinessLogic.Services
         {
             var mappedPageModel = _mapper.Map<PrintingEditionFiltration>(pEModel);
 
-            var allmodels = await _printingEditionRepository.GetAllPrintingEditionsAsync(mappedPageModel);
+            (IEnumerable<PrintingEdition> editions, int count) editionsCount = await _printingEditionRepository.GetAllPrintingEditionsAsync(mappedPageModel);
 
-            var printingEditions = _mapper.Map<IEnumerable<PrintingEditionModel>>(allmodels);
+            var printingEditions = _mapper.Map<IEnumerable<PrintingEditionModel>>(editionsCount.editions);
 
-            var paginationInfo = new PageModel(mappedPageModel.PageNumber, mappedPageModel.PageSize);
+            var paginationInfo = new PageModel(mappedPageModel.PageNumber, mappedPageModel.PageSize, editionsCount.count);
 
             var responseModel = new ResponseModel<PrintingEditionModel>()
             {

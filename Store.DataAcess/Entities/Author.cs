@@ -7,6 +7,5 @@ namespace Store.DataAcess.Entities
     {
         public string Name { get; set; }
         public virtual List<PrintingEdition> PrintingEditions { get; set; } = new List<PrintingEdition>();
-        public string MigrationTestField { get; set; }
     }
 }

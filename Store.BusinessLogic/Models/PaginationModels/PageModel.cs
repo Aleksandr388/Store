@@ -8,9 +8,11 @@ namespace Store.BusinessLogic.Models.PaginationModels
 
         private int _pageSize = DefaultValues.DefaultPageSIzeValue;
         public int PageNumber { get; private set; }
+        public int Сount { get; set; }
 
-        public PageModel(int pageNumber, int pageSize)
+        public PageModel( int pageNumber, int pageSize, int count)
         {
+            Сount = count;
             PageNumber = pageNumber;
             _pageSize = pageSize;
         }

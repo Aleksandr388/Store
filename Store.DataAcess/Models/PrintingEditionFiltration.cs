@@ -11,5 +11,6 @@ namespace Store.DataAcess.Models
         public decimal MinPrice { get; set; }
         public List<EditionType> Type { get; set; }
         public string NameAuthor { get; set; }
+        public string TotalAmount { get; set; }
     }
 }

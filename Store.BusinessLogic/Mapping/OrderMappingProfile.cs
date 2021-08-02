@@ -8,7 +8,8 @@ namespace Store.BusinessLogic.Mapping
     {
         public OrderMappingProfile()
         {
-            CreateMap<Order, OrderModel>().ReverseMap();
+            CreateMap<OrderModel, Order>().ForMember(x => x.CreationDate, opt => opt.Ignore());
+            CreateMap<Order, OrderModel>();
         }
     }
 }
