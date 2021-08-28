@@ -52,6 +52,10 @@
               "target": "Package",
               "version": "[5.0.0, )"
             },
+            "Scrutor": {
+              "target": "Package",
+              "version": "[3.3.0, )"
+            },
             "Stripe.net": {
               "target": "Package",
               "version": "[39.53.0, )"
@@ -169,6 +173,10 @@
               "target": "Package",
               "version": "[2.0.3, )"
             },
+            "Scrutor": {
+              "target": "Package",
+              "version": "[3.3.0, )"
+            },
             "Stripe.net": {
               "target": "Package",
               "version": "[39.53.0, )"
@@ -241,6 +249,10 @@
               "target": "Package",
               "version": "[8.1.1, )"
             },
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.4, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[2.12.0, )"
@@ -274,6 +286,10 @@
             "NETCore.MailKit": {
               "target": "Package",
               "version": "[2.0.3, )"
+            },
+            "Scrutor": {
+              "target": "Package",
+              "version": "[3.3.0, )"
             },
             "Stripe.net": {
               "target": "Package",
@@ -384,6 +400,10 @@
             "NETCore.MailKit": {
               "target": "Package",
               "version": "[2.0.3, )"
+            },
+            "Scrutor": {
+              "target": "Package",
+              "version": "[3.3.0, )"
             },
             "Stripe.net": {
               "target": "Package",

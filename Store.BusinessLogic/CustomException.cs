@@ -6,7 +6,10 @@ namespace Store.BusinessLogic
 {
     public class CustomException : Exception
     {
-        
+        public CustomException()
+        {
+        }
+
         public List<string> Error { get; set; }
         public HttpStatusCode StatusCode { get; set; }
 

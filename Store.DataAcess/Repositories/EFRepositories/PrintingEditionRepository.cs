@@ -26,7 +26,7 @@ namespace Store.DataAcess.Repositories.EFRepositories
 
             return result;
         }
-        
+
         public override async Task CreateAsync(PrintingEdition model)
         {
             List<Author> authors = new List<Author>(model.Authors);
@@ -92,12 +92,9 @@ namespace Store.DataAcess.Repositories.EFRepositories
                .Include(model => model.Authors)
                .FirstOrDefaultAsync(x => x.Id == model.Id);
 
-            if (pEForUpdate.Authors is not null)
-            {
-                pEForUpdate.Authors
-                 .RemoveAll(x => !authorsModels
-                 .Exists(y => y.Id == x.Id));
-            }
+            pEForUpdate.Authors
+             .RemoveAll(x => !authorsModels
+             .Exists(y => y.Id == x.Id));
 
             var result = authorsModels
                 .Where(x => !pEForUpdate.Authors

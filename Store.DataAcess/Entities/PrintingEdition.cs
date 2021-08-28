@@ -1,5 +1,6 @@
 ﻿using Shared.Enums;
 using Store.DataAcess.Entities.Base;
+using System;
 using System.Collections.Generic;
 
 namespace Store.DataAcess.Entities

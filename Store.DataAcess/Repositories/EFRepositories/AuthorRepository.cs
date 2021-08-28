@@ -8,8 +8,11 @@ using Store.DataAcess.Repositories.Interfaces;
 using Store.DataAcess.StoreContext;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Store.DataAcess.Repositories.EFRepositories
@@ -36,11 +39,12 @@ namespace Store.DataAcess.Repositories.EFRepositories
 
         public async Task<(IEnumerable<Author>, int)> GetAllAuthorsAsync(AuthorFiltration author)
         {
+
             var authors = await _dbSet
                 .Include(x => x.PrintingEditions)
                 .AsNoTracking()
                 .Where(x => author.Name == null || x.Name.Contains(author.Name))
-                .Where(x => author.PrintingEditionTitle == null || x.PrintingEditions.Any(y => y.Title.Contains(author.PrintingEditionTitle)))               
+                .Where(x => author.PrintingEditionTitle == null || x.PrintingEditions.Any(y => y.Title.Contains(author.PrintingEditionTitle)))
                 .OrderByField(author.SortOrder, author.IsAccesing)
                 .Skip((author.PageNumber - DefaultValues.PageStep) * author.PageSize)
                 .Take(author.PageSize)

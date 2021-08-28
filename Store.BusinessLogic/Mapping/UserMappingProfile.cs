@@ -11,7 +11,11 @@ namespace Store.BusinessLogic.Mapping
             CreateMap<UserSignUpModel, StoreUser>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email))
                 .ReverseMap();
-            CreateMap<UserModel, StoreUser>().ReverseMap();
+            //CreateMap<StoreUser, UserModel>()
+            //    .ForMember(destination => destination.FullName, options => options.MapFrom(sourse => sourse.FirstName + " " + sourse.LastName))
+            //    .ReverseMap();
+            CreateMap<StoreUser, UserModel>()
+                .ReverseMap();
         }
     }
 }

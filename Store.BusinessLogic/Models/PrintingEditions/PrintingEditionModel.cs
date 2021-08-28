@@ -1,5 +1,7 @@
 ﻿using Store.BusinessLogic.Models.Authors;
 using Store.BusinessLogic.Models.Base;
+using Store.DataAcess.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Store.BusinessLogic.Models.PrintingEditions
@@ -13,5 +15,6 @@ namespace Store.BusinessLogic.Models.PrintingEditions
         public Shared.Enums.CurencyType Curency { get; set; }
         public Shared.Enums.EditionType Type { get; set; }
         public ICollection<AuthorModel> AuthorModels { get; set; }
+        public List<Author> AuthorsModel { get; set; }
     }
 }

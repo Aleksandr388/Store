@@ -53,7 +53,7 @@ namespace Store.BusinessLogic.Providers
         public string CreateRefreshToken(int length)
         {
             var random = new Random();
-            var chars = Shared.Constants.DefaultValues.alphanumericCharacters;
+            var chars = DefaultValues.alphanumericCharacters;
 
             return new string(Enumerable.Repeat(chars, length)
                 .Select(x => x[random.Next(x.Length)]).ToArray());

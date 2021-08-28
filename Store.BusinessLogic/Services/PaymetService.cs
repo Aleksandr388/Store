@@ -57,7 +57,7 @@ namespace Store.BusinessLogic.Services
 
             foreach (var item in newOrderItems)
             {
-                item.Price = editionPrices.Where(x => x.Id == item.PrintingEditionId).FirstOrDefault().Price;
+                item.Price = editionPrices.FirstOrDefault(x => x.Id == item.PrintingEditionId).Price;
             }
 
             mappedOrder.OrderItems.AddRange(newOrderItems);
@@ -66,7 +66,7 @@ namespace Store.BusinessLogic.Services
 
             var orderPrice = _orderRepository.GetOrderPrice(mappedOrder);
 
-            if (orderPrice is 0)
+            if (orderPrice is default(int))
             {
                 throw new CustomException(ErrorMessages.PriceIsEmpty, HttpStatusCode.BadRequest);
             }

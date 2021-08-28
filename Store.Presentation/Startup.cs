@@ -23,6 +23,10 @@ using Store.DataAcess.Repositories.Interfaces;
 using Store.DataAcess.Repositories.EFRepositories;
 using Newtonsoft.Json;
 using Store.BusinessLogic.Common;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Linq;
+using Scrutor;
 
 namespace Store.Presentation
 {
@@ -78,33 +82,26 @@ namespace Store.Presentation
 
             services.InitializeAsync().Wait();
 
-            services.AddTransient<ITokenProvider, TokensProvider>();
-            services.AddTransient<IPasswordGeneratorProvider, PasswordGeneratorProvider>();
-            services.AddTransient<IEmailProvider, EmailProvider>();
-            services.AddTransient<IAccountService, AccountService>();
-            services.AddTransient<IAuthorService, AuthorService>();
-            services.AddTransient<IAuthorRepository, AuthorRepository>();
-            services.AddTransient<IPrintingEditionService, PrintingEditionService>();
-            services.AddTransient<IPrintingEditionRepository, PrintingEditionRepository>();
-            services.AddTransient<IOrderRepository, OrderRepositiry>();
-            services.AddTransient<IOrderService, OrderService>();
-            services.AddTransient<IPaymentRepository, PaymentRepository>();
-            services.AddTransient<IPaymentService, PaymetService>();
-            services.AddTransient<IUserService, UserService>();
+            services.Scan(scan => scan
+            .FromAssemblyOf<IAuthorService>()
+            .AddClasses()
+            .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+            .AsMatchingInterface()
+            .AsImplementedInterfaces()
+            .WithTransientLifetime()
 
-            var mapperConfig = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new UserMappingProfile());
-                cfg.AddProfile(new AuthorMappingProfile());
-                cfg.AddProfile(new PrintingEditionMappingProfile());
-                cfg.AddProfile(new PageMappingProfile());
-                cfg.AddProfile(new OrderMappingProfile());
-                cfg.AddProfile(new PaymentMappingProfile());
-                cfg.AddProfile(new OrderItemMappingProfile());
-            });
+            .FromAssemblyOf<IAuthorRepository>()
+            .AddClasses()
+            .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+            .AsMatchingInterface()
+            .AsImplementedInterfaces()
+            .WithTransientLifetime()
+            );
 
-            IMapper mapper = mapperConfig.CreateMapper();
-            services.AddSingleton(mapper);
+            services.AddAutoMapper(typeof(AuthorService), typeof(AuthorRepository));
+
+            //services.AddAutoMapper(typeof(AuthorMappingProfile), typeof(OrderItemMappingProfile),
+            //    typeof(OrderMappingProfile), typeof(PageMappingProfile), typeof(PaymentMappingProfile), typeof(UserMappingProfile), typeof(PrintingEditionMappingProfile));
 
             services.AddMvc();
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
