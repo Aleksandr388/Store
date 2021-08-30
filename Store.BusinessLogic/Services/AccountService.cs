@@ -151,6 +151,8 @@ namespace Store.BusinessLogic.Services
             }
 
             return Messages.EmailConfirmedSuccessfully;
+
+
         }
 
         public async Task<string> ForgotPasswordAsync(ForgotPasswordUser forgotPasswordUser)
