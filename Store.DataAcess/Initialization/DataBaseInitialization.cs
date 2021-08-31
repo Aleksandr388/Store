@@ -18,6 +18,7 @@ namespace Store.DataAcess.Initialization
             string password = "_Aa123456";
             string firstName = "Aleksandr";
             string lastName = "Nesheretnuy";
+            string fullName = "Aleksandr Nesheretnuy";
 
             try
             {
@@ -38,7 +39,7 @@ namespace Store.DataAcess.Initialization
             }
             if (await userManager.FindByEmailAsync(adminEmail) is null)
             {
-                StoreUser admin = new StoreUser { Email = adminEmail, UserName = adminEmail, FirstName = firstName, LastName = lastName };
+                StoreUser admin = new StoreUser { Email = adminEmail, UserName = adminEmail, FirstName = firstName, LastName = lastName, FullName = fullName };
                 IdentityResult result = await userManager.CreateAsync(admin, password);
                 if (result.Succeeded)
                 {

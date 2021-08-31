@@ -100,9 +100,6 @@ namespace Store.Presentation
 
             services.AddAutoMapper(typeof(AuthorService), typeof(AuthorRepository));
 
-            //services.AddAutoMapper(typeof(AuthorMappingProfile), typeof(OrderItemMappingProfile),
-            //    typeof(OrderMappingProfile), typeof(PageMappingProfile), typeof(PaymentMappingProfile), typeof(UserMappingProfile), typeof(PrintingEditionMappingProfile));
-
             services.AddMvc();
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
         }

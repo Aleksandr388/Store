@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Store.DataAcess.StoreContext;
 
 namespace Store.DataAcess.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    partial class ShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210830160806_Remove_fullname")]
+    partial class Remove_fullname
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,7 +192,7 @@ namespace Store.DataAcess.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationDate = new DateTime(2021, 8, 31, 11, 40, 52, 205, DateTimeKind.Local).AddTicks(6028),
+                            CreationDate = new DateTime(2021, 8, 30, 19, 8, 4, 825, DateTimeKind.Local).AddTicks(9979),
                             IsRemoved = false,
                             Name = "Leonardo Davinchi"
                         });
@@ -333,7 +335,7 @@ namespace Store.DataAcess.Migrations
                         new
                         {
                             Id = 1L,
-                            CreationDate = new DateTime(2021, 8, 31, 11, 40, 52, 208, DateTimeKind.Local).AddTicks(8391),
+                            CreationDate = new DateTime(2021, 8, 30, 19, 8, 4, 829, DateTimeKind.Local).AddTicks(3575),
                             Curency = 1,
                             Description = "The Lester Codex is a notebook of scientific records made by Leonardo da Vinci in Milan in 1504-1510.",
                             IsRemoved = false,
@@ -372,12 +374,6 @@ namespace Store.DataAcess.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("Empty");
 
                     b.Property<bool>("IsBlocked")
                         .HasColumnType("bit");
