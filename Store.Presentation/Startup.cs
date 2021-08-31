@@ -5,28 +5,20 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Store.BusinessLogic.Helpers;
-using Store.BusinessLogic.Providers.Interfaces;
 using Store.BusinessLogic.Services;
 using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
 using Store.DataAcess.Initialization;
 using Store.DataAcess.StoreContext;
-using Store.BusinessLogic.Providers;
 using Store.Presentation.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using AutoMapper;
-using Store.BusinessLogic.Mapping;
 using Store.DataAcess.Repositories.Interfaces;
 using Store.DataAcess.Repositories.EFRepositories;
 using Newtonsoft.Json;
-using Store.BusinessLogic.Common;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Linq;
 using Scrutor;
+using Store.BusinessLogic.Options;
 
 namespace Store.Presentation
 {
@@ -41,6 +33,9 @@ namespace Store.Presentation
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<StripeOptions>(Configuration.GetSection("Stripe"));
+            services.Configure<ApiRoutes>(Configuration.GetSection("ApiRoutes"));
+
             services.AddDbContext<ShopDbContext>(options =>
                 options
                 .UseLazyLoadingProxies()
@@ -101,7 +96,6 @@ namespace Store.Presentation
             services.AddAutoMapper(typeof(AuthorService), typeof(AuthorRepository));
 
             services.AddMvc();
-            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
