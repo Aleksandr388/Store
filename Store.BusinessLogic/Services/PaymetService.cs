@@ -2,14 +2,13 @@
 using Microsoft.Extensions.Options;
 using Shared.Constants;
 using Shared.Enums;
-using Store.BusinessLogic.Common;
 using Store.BusinessLogic.Models.Orders;
 using Store.BusinessLogic.Models.Payments;
+using Store.BusinessLogic.Options;
 using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
 using Store.DataAcess.Repositories.Interfaces;
 using Stripe;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -22,13 +21,13 @@ namespace Store.BusinessLogic.Services
         private readonly IMapper _mapper;
         private readonly IPaymentRepository _paymentRepository;
         private readonly IOrderRepository _orderRepository;
-        private readonly StripeSettings _stripeSettings;
+        private readonly StripeOptions _stripeOptions;
         private readonly IPrintingEditionRepository _printingEditionRepository;
 
-        public PaymetService(IMapper mapper, IOptions<StripeSettings> options, IPaymentRepository paymentRepository, IOrderRepository orderRepository, IPrintingEditionRepository printingEditionRepository)
+        public PaymetService(IMapper mapper, IOptions<StripeOptions> options, IPaymentRepository paymentRepository, IOrderRepository orderRepository, IPrintingEditionRepository printingEditionRepository)
         {
             _printingEditionRepository = printingEditionRepository;
-            _stripeSettings = options.Value;
+            _stripeOptions = options.Value;
             _mapper = mapper;
             _paymentRepository = paymentRepository;
             _orderRepository = orderRepository;
@@ -71,7 +70,7 @@ namespace Store.BusinessLogic.Services
                 throw new CustomException(ErrorMessages.PriceIsEmpty, HttpStatusCode.BadRequest);
             }
 
-            StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
+            StripeConfiguration.ApiKey = _stripeOptions.SecretKey;
 
             TokenCardOptions tokenCard = new TokenCardOptions
             {
