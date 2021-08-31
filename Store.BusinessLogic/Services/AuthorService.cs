@@ -6,6 +6,7 @@ using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
 using Store.DataAcess.Models;
 using Store.DataAcess.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -29,7 +30,8 @@ namespace Store.BusinessLogic.Services
 
             if (checkModel is not null)
             {
-                throw new CustomException(ErrorMessages.AuthtorWithThisNameCreated, HttpStatusCode.BadRequest);
+                throw new Exception();
+
             }
 
             var authorModel = _mapper.Map<Author>(model);
@@ -52,7 +54,7 @@ namespace Store.BusinessLogic.Services
             }
 
             var authorModel = _mapper.Map<Author>(model);
-            
+
             await _authorRepository.UpdateAsync(authorModel);
         }
 
