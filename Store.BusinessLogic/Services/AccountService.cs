@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Shared.Constants;
 using Shared.Enums;
 using Store.BusinessLogic.Models.Users;
+using Store.BusinessLogic.Options;
 using Store.BusinessLogic.Providers.Interfaces;
 using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
@@ -22,12 +24,12 @@ namespace Store.BusinessLogic.Services
         private readonly IPasswordGeneratorProvider _passwordGeneratorProvider;
         private readonly ITokenProvider _jwtProvider;
         private readonly IMapper _mapper;
-        private readonly IConfiguration _configuration;
+        private readonly ApiRoutes _apiRoutes;
 
         public AccountService(UserManager<StoreUser> userManager, SignInManager<StoreUser> signInManager,
-            IEmailProvider emailProvider, IPasswordGeneratorProvider passwordGeneratorProvider, ITokenProvider jwtProvider, IMapper mapper, IConfiguration configuration)
+            IEmailProvider emailProvider, IPasswordGeneratorProvider passwordGeneratorProvider, ITokenProvider jwtProvider, IMapper mapper, IOptions<ApiRoutes> options)
         {
-            _configuration = configuration;
+            _apiRoutes = options.Value;
             _mapper = mapper;
             _userManager = userManager;
             _emailProvider = emailProvider;
@@ -63,7 +65,7 @@ namespace Store.BusinessLogic.Services
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            var callbackUrl = new UriBuilder(_configuration[URLSAppSerrings.UrlConfirmEmail]);
+            var callbackUrl = new UriBuilder(_apiRoutes.UrlConfirmEmail);
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters[DefaultValues.Id] = user.Id.ToString();
             parameters[DefaultValues.Code] = code;
