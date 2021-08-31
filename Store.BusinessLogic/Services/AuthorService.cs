@@ -30,7 +30,7 @@ namespace Store.BusinessLogic.Services
 
             if (checkModel is not null)
             {
-                throw new Exception(ErrorMessages.AuthtorWithThisNameCreated, HttpStatusCode.NotFound);
+                throw new CustomException(ErrorMessages.AuthtorWithThisNameCreated, HttpStatusCode.BadRequest);
             }
 
             var authorModel = _mapper.Map<Author>(model);
