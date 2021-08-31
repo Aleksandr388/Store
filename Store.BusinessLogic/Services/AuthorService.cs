@@ -27,9 +27,11 @@ namespace Store.BusinessLogic.Services
         {
             var checkModel = await _authorRepository.GetByName(model.Name);
 
+            var test = string.Empty;
+
             if (checkModel is not null)
             {
-                throw new CustomException(ErrorMessages.AuthtorWithThisNameCreated, HttpStatusCode.BadRequest);
+                throw new CustomException(ErrorMessages.AuthtorWithThisNameCreated, HttpStatusCode.NotFound);
             }
 
             var authorModel = _mapper.Map<Author>(model);
