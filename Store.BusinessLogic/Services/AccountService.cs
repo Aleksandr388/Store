@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Shared.Constants;
 using Shared.Enums;
 using Store.BusinessLogic.Models.Users;
@@ -21,10 +22,12 @@ namespace Store.BusinessLogic.Services
         private readonly IPasswordGeneratorProvider _passwordGeneratorProvider;
         private readonly ITokenProvider _jwtProvider;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
         public AccountService(UserManager<StoreUser> userManager, SignInManager<StoreUser> signInManager,
-            IEmailProvider emailProvider, IPasswordGeneratorProvider passwordGeneratorProvider, ITokenProvider jwtProvider, IMapper mapper)
+            IEmailProvider emailProvider, IPasswordGeneratorProvider passwordGeneratorProvider, ITokenProvider jwtProvider, IMapper mapper, IConfiguration configuration)
         {
+            _configuration = configuration;
             _mapper = mapper;
             _userManager = userManager;
             _emailProvider = emailProvider;
@@ -60,7 +63,7 @@ namespace Store.BusinessLogic.Services
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            var callbackUrl = new UriBuilder(URLS.UrlConfirmEmail);
+            var callbackUrl = new UriBuilder(_configuration[URLSAppSerrings.UrlConfirmEmail]);
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters[DefaultValues.Id] = user.Id.ToString();
             parameters[DefaultValues.Code] = code;

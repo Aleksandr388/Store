@@ -9,11 +9,9 @@ namespace Store.BusinessLogic.Mapping
         public UserMappingProfile()
         {
             CreateMap<UserSignUpModel, StoreUser>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(sourse => sourse.FirstName + " " + sourse.LastName))
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email))
                 .ReverseMap();
-            //CreateMap<StoreUser, UserModel>()
-            //    .ForMember(destination => destination.FullName, options => options.MapFrom(sourse => sourse.FirstName + " " + sourse.LastName))
-            //    .ReverseMap();
             CreateMap<StoreUser, UserModel>()
                 .ReverseMap();
         }

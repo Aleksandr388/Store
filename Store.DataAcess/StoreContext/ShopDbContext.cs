@@ -53,6 +53,11 @@ namespace Store.DataAcess.StoreContext
                     Curency = CurencyType.USD,
                 }
                 );
+
+            modelBuilder.Entity<StoreUser>()
+                .Property(x => x.FullName)
+                .IsRequired()
+                .HasDefaultValue("Empty");
         }
     }
 }
