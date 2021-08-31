@@ -6,6 +6,7 @@ using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
 using Store.DataAcess.Models;
 using Store.DataAcess.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -26,8 +27,6 @@ namespace Store.BusinessLogic.Services
         public async Task CreateAsync(AuthorModel model)
         {
             var checkModel = await _authorRepository.GetByName(model.Name);
-
-            var test = string.Empty;
 
             if (checkModel is not null)
             {
@@ -54,7 +53,7 @@ namespace Store.BusinessLogic.Services
             }
 
             var authorModel = _mapper.Map<Author>(model);
-            
+
             await _authorRepository.UpdateAsync(authorModel);
         }
 
