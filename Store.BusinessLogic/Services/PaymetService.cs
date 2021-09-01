@@ -41,6 +41,7 @@ namespace Store.BusinessLogic.Services
                 Description = model.Description,
             };
 
+            throw new System.Exception("try find me");
             var mappedOrder = _mapper.Map<DataAcess.Entities.Order>(order);
 
             await _orderRepository.CreateAsync(mappedOrder);
