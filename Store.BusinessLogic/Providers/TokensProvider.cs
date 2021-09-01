@@ -47,7 +47,7 @@ namespace Store.BusinessLogic.Providers
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return tokenHandler.WriteToken(token);
+            return null;
         }
 
         public string CreateRefreshToken(int length)
@@ -64,7 +64,7 @@ namespace Store.BusinessLogic.Providers
             var handler = new JwtSecurityTokenHandler();
 
             var expiredJwtToken = handler.ReadToken(tokenModel.AccesToken) as JwtSecurityToken;
-            var userEmail = expiredJwtToken.Claims.First(claim =>  claim.Type == DefaultValues.ClaimNameId).Value;
+            var userEmail = expiredJwtToken.Claims.First(claim => claim.Type == DefaultValues.ClaimNameId).Value;
 
             var user = await _userManager.FindByEmailAsync(userEmail);
 

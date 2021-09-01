@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Shared.Constants;
 using Shared.Enums;
@@ -119,7 +118,7 @@ namespace Store.BusinessLogic.Services
                 var createJwtTokenForAdmin = new TokenModel
                 {
                     RefreshToken = refreshToken,
-                    AccesToken = jwtAdminToken
+                    AccesToken = string.Empty,
                 };
 
                 return createJwtTokenForAdmin;
@@ -128,7 +127,7 @@ namespace Store.BusinessLogic.Services
             var tokenClientModels = new TokenModel
             {
                 RefreshToken = refreshToken,
-                AccesToken = jwtUserToken
+                AccesToken = string.Empty,
             };
 
             return tokenClientModels;
