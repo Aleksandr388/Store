@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Store.BusinessLogic.DapperServices.Interfaces;
 using Store.BusinessLogic.Models.Authors;
 using Store.BusinessLogic.Services.Interfaces;
 using System.Threading.Tasks;
@@ -10,29 +11,31 @@ namespace Store.Presentation.Controllers
     public class AuthorController : Controller
     {
         private readonly IAuthorService _authorService;
+        private readonly IAuthorDapperService _authorDapperService;
 
-        public AuthorController(IAuthorService authorService)
+        public AuthorController(IAuthorService authorService, IAuthorDapperService authorDapperService)
         {
+            _authorDapperService = authorDapperService;
             _authorService = authorService;
         }
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] AuthorModel model)
         {
-            await _authorService.CreateAsync(model);
+            await _authorDapperService.CreateAsync(model);
             return Ok();
         }
 
         [HttpPost("Update")]
         public async Task<IActionResult> Update([FromBody] AuthorModel model)
         {
-            await _authorService.UpdateAsync(model);
+            await _authorDapperService.UpdateAsync(model);
             return Ok("Update is done");
         }
 
         [HttpPost("GetById")]
         public async Task<IActionResult> GetById([FromBody] AuthorModel modelId)
         {
-            var result = await _authorService.GetByIdAsync(modelId);
+            var result = await _authorDapperService.GetByIdAsync(modelId);
             return Ok(result);
         }
 
@@ -47,7 +50,7 @@ namespace Store.Presentation.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _authorService.GetAllAsync();
+            var result = await _authorDapperService.GetAllAsync();
 
             return Ok(result);
         }

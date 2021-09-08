@@ -19,6 +19,11 @@ using Store.DataAcess.Repositories.EFRepositories;
 using Newtonsoft.Json;
 using Scrutor;
 using Store.BusinessLogic.Options;
+using Store.DataAcess.Options;
+using Store.BusinessLogic.DapperServices.Interfaces;
+using Store.BusinessLogic.DapperServices;
+using Store.DataAcess.Repositories.DapperRepositories;
+using Store.DataAcess.Repositories.DapperRepositories.Interfaces;
 
 namespace Store.Presentation
 {
@@ -35,6 +40,7 @@ namespace Store.Presentation
         {
             services.Configure<StripeOptions>(Configuration.GetSection("Stripe"));
             services.Configure<ApiRoutes>(Configuration.GetSection("ApiRoutes"));
+            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
 
             services.AddDbContext<ShopDbContext>(options =>
                 options
@@ -94,6 +100,22 @@ namespace Store.Presentation
             );
 
             services.AddAutoMapper(typeof(AuthorService), typeof(AuthorRepository));
+
+            services.Scan(scan => scan
+            .FromAssemblyOf<IAuthorDapperService>()
+            .AddClasses()
+            .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+            .AsMatchingInterface()
+            .AsImplementedInterfaces()
+            .WithTransientLifetime()
+
+            .FromAssemblyOf<IAuthorDapperRepository>()
+            .AddClasses()
+            .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+            .AsMatchingInterface()
+            .AsImplementedInterfaces()
+            .WithTransientLifetime()
+            );
 
             services.AddMvc();
         }

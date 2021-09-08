@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Net;
 
 namespace Store.Presentation.Middlewares
 {
@@ -29,7 +30,7 @@ namespace Store.Presentation.Middlewares
             catch (CustomException customExeption)
             {
                 string jsonString = JsonSerializer.Serialize(customExeption.Error);
-                context.Response.StatusCode = customExeption.HResult;
+                context.Response.StatusCode = (int)(customExeption.StatusCode);
                 await context.Response.WriteAsync(jsonString);
             }
             catch (Exception exeption)
@@ -37,6 +38,7 @@ namespace Store.Presentation.Middlewares
                 _loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logger.txt"));
                 var logger = _loggerFactory.CreateLogger("logger.txt");
                 logger.LogError($"{DateTime.Now}, {exeption.Message}, {exeption.StackTrace}");
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
         }
     }

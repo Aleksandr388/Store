@@ -1,4 +1,5 @@
-﻿using Shared.Enums;
+﻿using Dapper.Contrib.Extensions;
+using Shared.Enums;
 using Store.DataAcess.Entities.Base;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace Store.DataAcess.Entities
         public CurencyType Curency { get; set; }
         public EditionType Type { get; set; }
 
+        [Write(false)]
+        [Computed]
         public virtual List<Author> Authors { get; set; } = new List<Author>();
     }
 }

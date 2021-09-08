@@ -47,7 +47,9 @@ namespace Store.BusinessLogic.Providers
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return null;
+            var result = tokenHandler.WriteToken(token);
+
+            return result;
         }
 
         public string CreateRefreshToken(int length)

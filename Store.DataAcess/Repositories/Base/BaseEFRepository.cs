@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Store.DataAcess.Repositories.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Store.DataAcess.Repositories.Base
@@ -39,11 +36,6 @@ namespace Store.DataAcess.Repositories.Base
             var result = await _dbSet.ToListAsync();
 
             return result;
-        }
-
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return await _dbSet.Where(predicate).ToListAsync();
         }
 
         public virtual async Task<TEntity> GetByIdAsync(long id)

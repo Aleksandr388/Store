@@ -12,7 +12,6 @@ namespace Store.DataAcess.Repositories.Interfaces
         public Task DeleteAsync(TEntity model);
         public Task<TEntity> GetByIdAsync(long id);
         public Task<IEnumerable<TEntity>> GetAllAsync();
-        public Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate);
         public Task SaveChagesAsync();
     }
 }
