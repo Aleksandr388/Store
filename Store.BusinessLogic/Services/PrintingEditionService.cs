@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
+using Shared.Constants;
+using Store.BusinessLogic.Models.PaginationModels;
 using Store.BusinessLogic.Models.PrintingEditions;
 using Store.BusinessLogic.Services.Interfaces;
 using Store.DataAcess.Entities;
+using Store.DataAcess.Models;
 using Store.DataAcess.Repositories.Interfaces;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
 using System.Net;
-using Shared.Constants;
-using Store.BusinessLogic.Models.PaginationModels;
-using Store.DataAcess.Models;
+using System.Threading.Tasks;
 
 namespace Store.BusinessLogic.Services
 {
@@ -28,7 +28,7 @@ namespace Store.BusinessLogic.Services
 
         public async Task CreateAsync(PrintingEditionModel model)
         {
-            if (model.AuthorModels is null)
+            if (model.AuthorModels is not null)
             {
                 throw new CustomException(ErrorMessages.ImpossibleToCreateNewAuthor, HttpStatusCode.BadRequest);
             }
@@ -43,7 +43,7 @@ namespace Store.BusinessLogic.Services
 
             var chekListAuthors = _authorRepository.IsAuthorExist(mappedAuthorsList);
 
-            if (!chekListAuthors)
+            if (chekListAuthors)
             {
                 throw new CustomException(ErrorMessages.CanNotNonexistentAuhtor, HttpStatusCode.BadRequest);
             }

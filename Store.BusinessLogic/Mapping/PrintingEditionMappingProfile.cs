@@ -9,7 +9,6 @@ namespace Store.BusinessLogic.Mapping
         public PrintingEditionMappingProfile()
         {
             CreateMap<PrintingEdition, PrintingEditionModel>()
-                .ForMember(x => x.AuthorModels, opt => opt.MapFrom(src => src.Authors))
                 .ReverseMap();
         }
     }

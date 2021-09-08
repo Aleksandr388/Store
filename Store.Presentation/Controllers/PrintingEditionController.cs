@@ -15,7 +15,7 @@ namespace Store.Presentation.Controllers
             _printingEditionService = printingEditionService;
         }
 
-        [HttpPost("Create")]
+        [HttpPost("Craete")]
         public async Task<IActionResult> Create([FromBody] PrintingEditionModel printingEditionModel)
         {
             await _printingEditionService.CreateAsync(printingEditionModel);
@@ -24,14 +24,14 @@ namespace Store.Presentation.Controllers
         }
 
         [HttpPost("Delete")]
-        public async Task<IActionResult> Delete([FromBody] PrintingEditionModel printingEditionModel)
+        public async Task<IActionResult> Delete([FromQuery] PrintingEditionModel printingEditionModel)
         {
             await _printingEditionService.DeleteAsync(printingEditionModel);
 
             return Ok();
         }
 
-        [HttpGet("GetAll")]
+        [HttpPost("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             var result = await _printingEditionService.GetAllAsync();
