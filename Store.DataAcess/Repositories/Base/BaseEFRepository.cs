@@ -23,9 +23,10 @@ namespace Store.DataAcess.Repositories.Base
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(TEntity model)
+        public virtual async Task DeleteAsync(TEntity model)
         {
             _dbSet.Attach(model);
+
             _dbSet.Remove(model);
 
             await _context.SaveChangesAsync();

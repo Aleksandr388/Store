@@ -1,30 +1,27 @@
-﻿using Amazon.Runtime.Internal.Util;
-using Dapper;
+﻿using Dapper;
 using Dapper.Contrib.Extensions;
 using Microsoft.Extensions.Options;
 using Store.DataAcess.Entities;
 using Store.DataAcess.Options;
 using Store.DataAcess.Repositories.Base;
 using Store.DataAcess.Repositories.DapperRepositories.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Store.DataAcess.Repositories.DapperRepositories
 {
-    public class AuthorDapperRepository : BaseDapperRepository<Author>, IAuthorDapperRepository
+    public class PrintingEditionDapperRepository : BaseDapperRepository<PrintingEdition>, IPrintingEditionDapperRepository
     {
         private readonly ConnectionStrings _connectionString;
 
-        public AuthorDapperRepository(IOptions<ConnectionStrings> options) : base(options)
+        public PrintingEditionDapperRepository(IOptions<ConnectionStrings> options) : base(options)
         {
             _connectionString = options.Value;
         }
 
-        public override async Task<IEnumerable<Author>> GetAllAsync()
+        public override async Task<IEnumerable<PrintingEdition>> GetAllAsync()
         {
             using (var connection = new SqlConnection(_connectionString.DefaultConnection))
             {
@@ -35,21 +32,21 @@ namespace Store.DataAcess.Repositories.DapperRepositories
                                LEFT JOIN AuthorPrintingEdition ap ON ap.AuthorsId = a.Id 
                                LEFT JOIN PrintingEditions p on p.Id = ap.PrintingEditionsId";
 
-                var authors = await connection.QueryAsync<Author, PrintingEdition, Author>(query,
-                    (Author, PrintingEdition) =>
+                var editions = await connection.QueryAsync<PrintingEdition, Author, PrintingEdition>(query,
+                    (PrintingEdition, Author) =>
                     {
                         if (PrintingEdition != null)
                         {
-                            Author.PrintingEditions.Add(PrintingEdition);
+                            PrintingEdition.Authors.Add(Author);
                         }
-                        return Author;
+                        return PrintingEdition;
                     });
 
-                return authors;
+                return editions;
             }
         }
 
-        public override async Task<Author> GetByIdAsync(long id)
+        public override async Task<PrintingEdition> GetByIdAsync(long id)
         {
             using (var connection = new SqlConnection(_connectionString.DefaultConnection))
             {
@@ -61,39 +58,39 @@ namespace Store.DataAcess.Repositories.DapperRepositories
                                LEFT JOIN PrintingEditions p on p.Id = ap.PrintingEditionsId
                                WHERE a.Id = {id}";
 
-                var author = await connection.QueryAsync<Author, PrintingEdition, Author>(query,
-                    (Author, PrintingEdition) =>
+                var printingEditions = await connection.QueryAsync<PrintingEdition, Author, PrintingEdition>(query,
+                    (PrintingEdition, Author) =>
                     {
                         if (PrintingEdition is not null)
                         {
-                            Author.PrintingEditions.Add(PrintingEdition);
+                            PrintingEdition.Authors.Add(Author);
                         }
-                        return Author;
+                        return PrintingEdition;
                     });
 
-                return author.FirstOrDefault();
+                return printingEditions.FirstOrDefault();
             }
         }
-        public override async Task UpdateAsync(Author model)
+        public override async Task UpdateAsync(PrintingEdition model)
         {
             using (var connection = new SqlConnection(_connectionString.DefaultConnection))
             {
                 await connection.OpenAsync();
 
-                var pEModels = new List<PrintingEdition>(model.PrintingEditions);
+                var authorsModels = new List<Author>(model.Authors);
 
                 await connection.UpdateAsync(model);
 
-                if (pEModels is not null)
+                if (authorsModels is not null)
                 {
-                    await connection.UpdateAsync(pEModels);
+                    await connection.UpdateAsync(authorsModels);
                 }
 
-                var editionIdss = new List<long>();
+                var authorsList = new List<long>();
 
-                foreach (var item in pEModels)
+                foreach (var item in authorsModels)
                 {
-                    editionIdss.Add(item.Id);
+                    authorsList.Add(item.Id);
                 }
 
                 string qeryForDelete = $@"DELETE FROM AuthorPrintingEdition
@@ -101,7 +98,7 @@ namespace Store.DataAcess.Repositories.DapperRepositories
 
                 await connection.QueryAsync(qeryForDelete);
 
-                foreach (var item in editionIdss)
+                foreach (var item in authorsList)
                 {
                     var queryForUpdateRelatingShip = $@"INSERT INTO AuthorPrintingEdition (AuthorsId, PrintingEditionsId) VALUES ({model.Id}, {item})";
 
@@ -111,4 +108,5 @@ namespace Store.DataAcess.Repositories.DapperRepositories
             }
         }
     }
+}
 }

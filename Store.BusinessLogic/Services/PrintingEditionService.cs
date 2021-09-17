@@ -28,7 +28,7 @@ namespace Store.BusinessLogic.Services
 
         public async Task CreateAsync(PrintingEditionModel model)
         {
-            if (model.AuthorModels is not null)
+            if (model.AuthorModels is null)
             {
                 throw new CustomException(ErrorMessages.ImpossibleToCreateNewAuthor, HttpStatusCode.BadRequest);
             }
@@ -43,7 +43,7 @@ namespace Store.BusinessLogic.Services
 
             var chekListAuthors = _authorRepository.IsAuthorExist(mappedAuthorsList);
 
-            if (chekListAuthors)
+            if (!chekListAuthors)
             {
                 throw new CustomException(ErrorMessages.CanNotNonexistentAuhtor, HttpStatusCode.BadRequest);
             }

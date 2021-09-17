@@ -147,8 +147,7 @@ namespace Store.Presentation
 
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200/")
                        .AllowAnyMethod()
-                       .AllowAnyHeader()
-                       .AllowAnyOrigin());
+                       .AllowAnyHeader());
 
 
             app.UseEndpoints(endpoints =>
